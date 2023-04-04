@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="Bug.java update">
-      <change afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="Implemented version retrival and ordering">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/JiraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/JiraController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Version.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Version.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bug.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bug.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +81,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680595237229</updated>
-      <workItem from="1680595238402" duration="8553000" />
+      <workItem from="1680595238402" duration="11331000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -106,7 +104,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680598075389</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Implemented version retrival and ordering">
+      <created>1680623938339</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1680623938339</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,6 +121,7 @@
     <MESSAGE value="Added Bug and Version entities" />
     <MESSAGE value="Added an empty Jira Controller" />
     <MESSAGE value="Bug.java update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug.java update" />
+    <MESSAGE value="Implemented version retrival and ordering" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented version retrival and ordering" />
   </component>
 </project>

@@ -1,5 +1,6 @@
 package control;
 
+import model.Bug;
 import model.Version;
 
 import java.io.*;
@@ -33,6 +34,13 @@ public class JiraController {
         return sb.toString();
     }
 
+    public static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+        try (InputStream is = new URL(url).openStream()) {
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+            String jsonText = readAll(rd);
+            return new JSONObject(jsonText);
+        }
+    }
     public static JSONArray readJsonArrayFromUrl(String url) throws IOException, JSONException {
         try (InputStream is = new URL(url).openStream()) {
             BufferedReader rd = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
@@ -71,5 +79,33 @@ public class JiraController {
         }
         versions.sort(Comparator.comparing(Version::getReleaseDate)); //ordering version by release date (oldest to newest)
         return versions;
+    }
+
+    public List<Bug> getBugs() throws IOException {
+        final int MaxDisplay = 1000;
+
+        List<Version> versions = this.getAllVersions(); //potrebbe esserci un problema con project name
+        List<Bug> bugs = new ArrayList<>();
+        int upperBound = 0;
+        int lowerBound = 0;
+        int total = 0;
+
+        do {
+            upperBound = lowerBound + MaxDisplay;
+
+            String url = "https://issues.apache.org/jira/rest/api/2/search?jql=project%20%3D%20" + this.projectName +
+                    "%20AND%20issuetype%20%3D%20Bug%20AND%20(%22status%22%20%3D%22resolved%22%20OR%20%22status" +
+                    "%22%20%3D%20%22closed%22)%20AND%20%20%22resolution%22%20%3D%20%22fixed%22%20&fields=key," +
+                    "resolutiondate,versions,created,fixVersions&startAt=" + lowerBound + "&maxResults=" + upperBound;
+            JSONObject json = readJsonFromUrl(url);
+            JSONArray bugsList = readJsonArrayFromUrl(url);
+            total = json.getInt("total");
+
+            for (; lowerBound < total && lowerBound < upperBound; lowerBound++) {
+
+                //to be continued
+            }
+        } while(lowerBound<total);
+        return bugs;
     }
 }
