@@ -6,11 +6,14 @@ public class Version {
     private String name;
     private LocalDateTime releaseDate;
     private String versionId;
+    private int index;
 
-    public Version(String name, LocalDateTime releaseDate, String versionId) {
+
+    public Version(String name, LocalDateTime releaseDate, String versionId, int index) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.versionId = versionId;
+        this.index = index;
     }
 
     public String getName() {
@@ -35,5 +38,13 @@ public class Version {
 
     public void setVersionId(String versionId) {
         this.versionId = versionId;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 }
