@@ -1,6 +1,7 @@
 package control;
 
 import model.Version;
+import model.Bug;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -12,8 +13,13 @@ public class WorkflowController {
     public static void main(String[] args) throws IOException {
         JiraController jc = new JiraController(projectName);
         List<Version> versions = jc.getAllVersions();
-        for(Version v : versions){
+        /*for(Version v : versions){
             System.out.println(v.getIndex() + " " + v.getName() + " date:" + v.getReleaseDate());
+        }*/
+        List<Bug> bugs = jc.getBugs(versions);
+        for(Bug b : bugs){
+            System.out.println("key  " + b.getKey() + "  opening version: " + b.getOv().getName() + "  fixed version:  " +  b.getFv().getName());
         }
+
     }
 }

@@ -16,6 +16,12 @@ public class Version {
         this.index = index;
     }
 
+    public Version(String name, LocalDateTime releaseDate, String versionId) {
+        this.name = name;
+        this.releaseDate = releaseDate;
+        this.versionId = versionId;
+    }
+
     public String getName() {
         return name;
     }

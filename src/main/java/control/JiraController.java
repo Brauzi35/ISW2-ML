@@ -81,14 +81,16 @@ public class JiraController {
         return versions;
     }
 
-    public List<Bug> getBugs() throws IOException {
+    public List<Bug> getBugs(List<Version> versions) throws IOException {
         final int MaxDisplay = 1000;
 
         //List<Version> versions = this.getAllVersions(); //potrebbe esserci (quasi sicuro) un problema con project name
         List<Bug> bugs = new ArrayList<>();
+        BugController bc = new BugController();
         int upperBound = 0;
         int lowerBound = 0;
         int total = 0;
+        JSONArray jsonAv;
 
         do {
             upperBound = lowerBound + MaxDisplay;
@@ -98,7 +100,8 @@ public class JiraController {
                     "%22%20%3D%20%22closed%22)%20AND%20%20%22resolution%22%20%3D%20%22fixed%22%20&fields=key," +
                     "resolutiondate,versions,created,fixVersions&startAt=" + lowerBound + "&maxResults=" + upperBound;
             JSONObject json = readJsonFromUrl(url);
-            JSONArray bugsList = readJsonArrayFromUrl(url);
+            //JSONArray bugsList = readJsonArrayFromUrl(url);
+            JSONArray bugsList = json.getJSONArray("issues");
             total = json.getInt("total");
 
             for (; lowerBound < total && lowerBound < upperBound; lowerBound++) {
@@ -109,12 +112,15 @@ public class JiraController {
                 String fv = jsonTrunc.getJSONObject("fields").get("fixVersions").toString();
                 String rDate = jsonTrunc.getJSONObject("fields").get("resolutiondate").toString();
                 String cDate = jsonTrunc.getJSONObject("fields").get("created").toString();
-
-
+                //building JSONarray containing av for the considered issue
+                jsonAv = bugsList.getJSONObject(lowerBound%MaxDisplay).getJSONObject("fields").getJSONArray("versions");
+                Bug bug = bc.bugAssembler(versions, cDate, rDate, jsonAv, key);
+                bugs.add(bug);
 
 
             }
         } while(lowerBound<total);
-        return bugs;
+        List<Bug> cleanedBugs = bc.bugCleaner(bugs);
+        return cleanedBugs;
     }
 }
