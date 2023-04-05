@@ -84,7 +84,7 @@ public class JiraController {
     public List<Bug> getBugs() throws IOException {
         final int MaxDisplay = 1000;
 
-        List<Version> versions = this.getAllVersions(); //potrebbe esserci un problema con project name
+        //List<Version> versions = this.getAllVersions(); //potrebbe esserci (quasi sicuro) un problema con project name
         List<Bug> bugs = new ArrayList<>();
         int upperBound = 0;
         int lowerBound = 0;
@@ -103,7 +103,16 @@ public class JiraController {
 
             for (; lowerBound < total && lowerBound < upperBound; lowerBound++) {
 
-                //to be continued
+                JSONObject jsonTrunc = bugsList.getJSONObject(lowerBound%MaxDisplay); //get single jsonObject from jsonArray
+                String key = jsonTrunc.get("key").toString();
+                String version = jsonTrunc.getJSONObject("fields").get("versions").toString();
+                String fv = jsonTrunc.getJSONObject("fields").get("fixVersions").toString();
+                String rDate = jsonTrunc.getJSONObject("fields").get("resolutiondate").toString();
+                String cDate = jsonTrunc.getJSONObject("fields").get("created").toString();
+
+
+
+
             }
         } while(lowerBound<total);
         return bugs;
