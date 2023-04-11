@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="Implemented BugController to compute fv,ov,iv and av">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="Printing successfully bugs, not sure if cleanBugs implements the right constraints">
+      <change afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/BugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/BugController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/JiraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/JiraController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bug.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bug.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Version.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Version.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +83,9 @@
       <option name="presentableId" value="Default" />
       <updated>1680595237229</updated>
       <workItem from="1680595238402" duration="11817000" />
-      <workItem from="1680678771454" duration="20253000" />
+      <workItem from="1680678771454" duration="20485000" />
+      <workItem from="1680762610610" duration="12180000" />
+      <workItem from="1681199643494" duration="3673000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -129,7 +129,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680684691004</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Printing successfully bugs, not sure if cleanBugs implements the right constraints">
+      <created>1680713835304</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680713835304</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -142,6 +149,7 @@
     <MESSAGE value="Implemented version retrival and ordering" />
     <MESSAGE value="Implemented getBugs in JiraController - is still not working" />
     <MESSAGE value="Implemented BugController to compute fv,ov,iv and av" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented BugController to compute fv,ov,iv and av" />
+    <MESSAGE value="Printing successfully bugs, not sure if cleanBugs implements the right constraints" />
+    <option name="LAST_COMMIT_MESSAGE" value="Printing successfully bugs, not sure if cleanBugs implements the right constraints" />
   </component>
 </project>

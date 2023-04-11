@@ -18,12 +18,13 @@ public class BugController {
         Version ov = ov_fvCalculator(versions, ovDate);
         Version fv = ov_fvCalculator(versions, fvDate);
         //System.out.println(fvDate);
-        List<Version> av = avBuilder(jsonAv);
+        List<Version> av = avBuilder(jsonAv, versions);
+        //if last av > ov then av is wrong, so it should not be considered
         //need to sort av
         Version iv = null;
         if(!av.isEmpty()) {
             av.sort(Comparator.comparing(Version::getReleaseDate)); //ordering version by release date (oldest to newest)
-            iv = av.get(av.size()-1); //if av is not empty, iv is the oldest among the avs
+            iv = av.get(0);
             bug = new Bug(key, fv, ov, iv, av);
         }
         else{
@@ -48,7 +49,7 @@ public class BugController {
         return vrs;
     }
 
-    public List<Version> avBuilder(JSONArray jsonAv){
+    public List<Version> avBuilder(JSONArray jsonAv, List<Version> versions){
 
         List<Version> av = new ArrayList<>();
         int jlen = jsonAv.length();
@@ -58,13 +59,25 @@ public class BugController {
             released = jsonAv.getJSONObject(i).getBoolean("released");
             if(released){
                 String nameRelease = jsonAv.getJSONObject(i).get("name").toString();
-                String releaseDateStr = jsonAv.getJSONObject(i).get("releaseDate").toString();
+                //String releaseDateStr = jsonAv.getJSONObject(i).get("releaseDate").toString();
+                LocalDateTime releaseDate = null;
+                for(Version v : versions){
+                    //System.out.println(v.getName() + " " + nameRelease + " " + v.getReleaseDate());
+
+                    if(v.getName().equals(nameRelease)){
+                        releaseDate = v.getReleaseDate();
+                    }
+                }
+
                 String releaseId = jsonAv.getJSONObject(i).get("id").toString();
 
-                LocalDateTime releaseDate = LocalDateTime.parse(releaseDateStr + "T00:00:00");
+                //LocalDateTime releaseDate = LocalDateTime.parse(releaseDateStr + "T00:00:00");
 
                 Version v = new Version(nameRelease, releaseDate, releaseId);
-                av.add(v);
+                if(releaseDate != null){
+                    av.add(v);
+                }
+
             }
         }
         return av;
@@ -76,12 +89,17 @@ public class BugController {
         for(Bug b : bugs){
             /* discard issues without FV or OV and issues with OV and FV inconsistent (OV>=FV)
              and issues pre-release (IV=OV=FV)*/
+
             boolean include = true;
             if(b.getFv()==null || b.getOv()==null || b.getOv().getReleaseDate().compareTo(b.getFv().getReleaseDate())>0){
                  include = false;
             }
 
             else if(b.getIv()!=null && b.getOv().getReleaseDate().compareTo(b.getFv().getReleaseDate())==0 && b.getIv().getReleaseDate().compareTo(b.getOv().getReleaseDate())==0){
+                include = false;
+            }
+
+            else if(b.getIv()!=null && b.getOv().getReleaseDate().compareTo(b.getIv().getReleaseDate())<0){
                 include = false;
             }
 
