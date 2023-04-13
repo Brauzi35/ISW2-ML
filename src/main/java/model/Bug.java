@@ -9,7 +9,7 @@ public class Bug {
     private Version ov;
     private Version iv;
     private List<Version> av;
-    private boolean valid;
+    private int index;
 
     public Bug(String key, Version fv, Version ov, Version iv, List<Version> av) {
         this.key = key;
@@ -17,6 +17,7 @@ public class Bug {
         this.ov = ov;
         this.iv = iv;
         this.av = av;
+        this.index = 0; //it will be setted after the creation
     }
 
     public Bug(String key, Version fv, Version ov, List<Version> av) {
@@ -25,6 +26,7 @@ public class Bug {
         this.ov = ov;
         this.iv = null;
         this.av = av;
+        this.index = 0;
     }
 
     public String getKey() {
@@ -67,5 +69,11 @@ public class Bug {
         this.av = av;
     }
 
+    public int getIndex() {
+        return index;
+    }
 
+    public void setIndex(int index) {
+        this.index = index;
+    }
 }

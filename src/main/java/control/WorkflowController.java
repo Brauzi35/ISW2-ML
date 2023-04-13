@@ -28,6 +28,14 @@ public class WorkflowController {
         ProportionController pc = new ProportionController();
         List<Bug> done = pc.iterativeProportion(bugs, versions);
 
+        for(Bug b : done){
+            System.out.println("key  " + b.getKey() + "  opening version: " + b.getOv().getIndex() + "  fixed version:  " +  b.getFv().getIndex());
+            if(b.getIv()!=null){
+                System.out.println("indice iv: " + b.getIv().getIndex());
+            }
+        }
+        System.out.println(done.size());
+
 
     }
 }
