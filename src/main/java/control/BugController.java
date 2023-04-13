@@ -61,19 +61,21 @@ public class BugController {
                 String nameRelease = jsonAv.getJSONObject(i).get("name").toString();
                 //String releaseDateStr = jsonAv.getJSONObject(i).get("releaseDate").toString();
                 LocalDateTime releaseDate = null;
+                int index = 0;
                 for(Version v : versions){
                     //System.out.println(v.getName() + " " + nameRelease + " " + v.getReleaseDate());
 
                     if(v.getName().equals(nameRelease)){
                         releaseDate = v.getReleaseDate();
+                        index = v.getIndex();
                     }
                 }
 
                 String releaseId = jsonAv.getJSONObject(i).get("id").toString();
-
                 //LocalDateTime releaseDate = LocalDateTime.parse(releaseDateStr + "T00:00:00");
 
-                Version v = new Version(nameRelease, releaseDate, releaseId);
+
+                Version v = new Version(nameRelease, releaseDate, releaseId, index);
                 if(releaseDate != null){
                     av.add(v);
                 }
@@ -102,6 +104,7 @@ public class BugController {
             else if(b.getIv()!=null && b.getOv().getReleaseDate().compareTo(b.getIv().getReleaseDate())<0){
                 include = false;
             }
+
 
             if(include){
                 cleanBugList.add(b);

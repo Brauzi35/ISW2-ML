@@ -8,28 +8,38 @@ import java.util.List;
 
 public class ProportionController {
     List<Bug> iterativeProportion(List<Bug> bugs, List<Version> versions){
-        List<Bug> completeBugs = bugs;
+
         List<Bug> toDoBugs = new ArrayList<>();
+        List<Bug> completeBugs = new ArrayList<>();
+        List<Bug> staticbugs = bugs;
 
         for(Bug b : bugs){
             if(b.getIv()==null) {
                 toDoBugs.add(b);
             }
+
+            else if(b.getIv()!= null && b.getOv().getIndex()!=b.getFv().getIndex()){
+                completeBugs.add(b);
+            }
+
         }
+
+
 
         for(Bug b : toDoBugs){
             List<Float> pinc =new ArrayList<>();
             float retP;
             float totP = 0;
             for(Bug bc : completeBugs){
-                if(b.getFv().getReleaseDate().compareTo(bc.getFv().getReleaseDate())>0){
-                    float p = pCalculator(b.getIv().getIndex(), b.getOv().getIndex(), b.getFv().getIndex());
+                if(b.getFv().getReleaseDate().compareTo(bc.getFv().getReleaseDate())>=0){
+                    float p = pCalculator(bc.getIv().getIndex(), bc.getOv().getIndex(), bc.getFv().getIndex());
                     pinc.add(p);
                     totP += p;
                 }
             }
             retP = totP/pinc.size();
-            b.setIv(ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), retP ,versions));
+            //b.setIv(ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), retP ,versions));
+            //System.out.println(retP);
         }
 
         return toDoBugs;
@@ -44,7 +54,7 @@ public class ProportionController {
         return p;
     }
     //IV = FV - (FV - OV) * P
-    public Version ivCalculator(int fv, int ov, float p, List<Version> versions){
+    /*public Version ivCalculator(int fv, int ov, float p, List<Version> versions){
         Version iv = null;
         int sub = fv - ov;
         float mult = sub*p;
@@ -55,6 +65,6 @@ public class ProportionController {
             }
         }
         return iv;
-    }
+    } */
 
 }

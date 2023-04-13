@@ -56,7 +56,6 @@ public class JiraController {
         JSONArray json = readJsonArrayFromUrl(url);
         int tot =json.length();
         int i;
-        int count = 0;
         for (i=0; i<tot; i++){
             String nameRelease = json.getJSONObject(i).get("name").toString();
             String released = json.getJSONObject(i).get("released").toString();
@@ -67,8 +66,7 @@ public class JiraController {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     String dateReleaseStr = json.getJSONObject(i).get("releaseDate").toString();
                     dateRelease = LocalDateTime.parse(dateReleaseStr + "T00:00:00");
-                    count++;
-                    Version element = new Version(nameRelease,dateRelease, releaseId, count);
+                    Version element = new Version(nameRelease,dateRelease, releaseId, 0); //it was count
                     versions.add(element);
                 }catch (JSONException e){
                     Logger logger = Logger.getLogger(JiraController.class.getName());
@@ -78,8 +76,14 @@ public class JiraController {
             }
         }
         versions.sort(Comparator.comparing(Version::getReleaseDate)); //ordering version by release date (oldest to newest)
+        int count = 1;
+        for(Version v : versions){
+            v.setIndex(count);
+            count++;
+        }
         return versions;
     }
+
 
     public List<Bug> getBugs(List<Version> versions) throws IOException {
         final int MaxDisplay = 1000;
