@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed an indexing bug in releases retrival. Working on ProportionController.java">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/BugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/BugController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bug.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bug.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,7 +85,8 @@
       <workItem from="1680595238402" duration="11817000" />
       <workItem from="1680678771454" duration="20485000" />
       <workItem from="1680762610610" duration="12180000" />
-      <workItem from="1681199643494" duration="22531000" />
+      <workItem from="1681199643494" duration="28542000" />
+      <workItem from="1681479494949" duration="6331000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -150,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681379783040</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1">
+      <created>1681393829695</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1681393829695</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +174,7 @@
     <MESSAGE value="Printing successfully bugs, not sure if cleanBugs implements the right constraints" />
     <MESSAGE value="Now CleanBugs implements the right contraints and fixed av data retrival: some fields releaseDate were empty. Also started working on proportion incremental" />
     <MESSAGE value="fixed an indexing bug in releases retrival. Working on ProportionController.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed an indexing bug in releases retrival. Working on ProportionController.java" />
+    <MESSAGE value="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1" />
   </component>
 </project>

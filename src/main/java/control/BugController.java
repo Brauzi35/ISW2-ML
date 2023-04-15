@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,7 +18,6 @@ public class BugController {
         Bug bug = null;
         Version ov = ov_fvCalculator(versions, ovDate);
         Version fv = ov_fvCalculator(versions, fvDate);
-        //System.out.println(fvDate);
         List<Version> av = avBuilder(jsonAv, versions);
         //if last av > ov then av is wrong, so it should not be considered
         //need to sort av
@@ -114,5 +114,21 @@ public class BugController {
         return cleanBugList;
     }
 
+    //should not consider ov = 1 and fv = 1
+    public List<Bug> bugTrimmer(List<Bug> bugs){
+        List<Bug> retBugs = new ArrayList<>();
+        for(Bug b : bugs){
+            if(b.getFv().getIndex()!= 1 && b.getOv().getIndex()!= 1){
+                retBugs.add(b);
+            }
+        }
+        return retBugs;
+    }
+
+    //only take bugs' first half
+    public List<Bug> bugHalver(List<Bug> bugs){
+        List<Bug> retList = bugs.subList(bugs.size()/2, bugs.size());
+        return retList;
+    }
 
 }
