@@ -50,7 +50,9 @@ public class ProportionController {
                     float p = pCalculator(pb.getIv().getIndex(), pb.getOv().getIndex(), pb.getFv().getIndex());
                     pinc.add(p);
                     totP += p;
+
                 }
+                //System.out.println("dimensione e totP " + pinc.size() + " " + totP);
                 retP = totP/pinc.size();
                 System.out.println("bug id: " + b.getKey() + " p is: " + retP);
             }
@@ -79,10 +81,11 @@ public class ProportionController {
     //gets indexes and computes (FV - IV) / (FV - OV)
     public float pCalculator(int iv, int ov, int fv){
         float p;
-        int sub = fv - iv;
-        int den = fv - ov;
-        if(den == 0) den =1;
+        float sub = (float)(fv - iv);
+        float den = (float)(fv - ov);
+        if(den == 0.0) den =(float)1;
         p = sub/den;
+        //System.out.println("sub is: "+ sub + " den is: " + den + " p is: " + p);
         return p;
     }
     //IV = FV - (FV - OV) * P
@@ -102,7 +105,7 @@ public class ProportionController {
     }
 
     public float coldStart() throws IOException {
-        String projname = "TAJO";
+        String projname = "ZOOKEEPER";
         float p;
         ArrayList<Float> all_p = new ArrayList<>();
         JiraController jc = new JiraController(projname);
@@ -111,15 +114,24 @@ public class ProportionController {
         List<Bug> bgs = jc.getBugs(vers);
         for(Bug b : bgs){
             if(b.getIv()!=null){
-                p = pCalculator(b.getIv().getIndex(), b.getOv().getIndex(), b.getFv().getIndex());
-                all_p.add(p);
+                if(b.getOv().getIndex()!=b.getFv().getIndex()) {
+                    p = pCalculator(b.getIv().getIndex(), b.getOv().getIndex(), b.getFv().getIndex());
+                    System.out.println(b.getKey() + "  p cold start: " + p);
+                    all_p.add(p);
+                }
             }
         }
-        //median
-        Collections.sort(all_p);
-        int mid_id = all_p.size()/2;
-        float median = all_p.get(mid_id);
-        return median;
+
+        //Collections.sort(all_p);
+        float avg = 0;
+        for(float f : all_p){
+            avg+= f;
+        }
+        System.out.println("sum: " + avg);
+        avg = avg/ all_p.size();
+
+        System.out.println("p is: " + avg);
+        return avg;
     }
 
 }

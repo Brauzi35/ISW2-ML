@@ -31,14 +31,15 @@ public class WorkflowController {
 
         List<Bug> done1 = bc.bugTrimmer(done);
 
-        for(Bug b : done1){
-            System.out.println("key  " + b.getKey() + "  opening version: " + b.getOv().getIndex() + "  fixed version:  " +  b.getFv().getIndex());
+
+
+        List<Bug> av_bugs = bc.definitiveAvBuilder(done1, versions);
+        for(Bug b : av_bugs){
+            System.out.println("key  " + b.getKey() + "  opening version: " + b.getOv().getIndex() + "  fixed version:  " +  b.getFv().getIndex() + " size av: " + b.getAv().size());
             if(b.getIv()!=null){
                 System.out.println("indice iv: " + b.getIv().getIndex());
             }
         }
-        System.out.println(done1.size());
-
-
+        System.out.println(av_bugs.size());
     }
 }

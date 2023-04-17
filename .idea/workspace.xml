@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="proportion is working, bugs are correctly halved.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/BugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/BugController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
@@ -86,7 +86,7 @@
       <workItem from="1680678771454" duration="20485000" />
       <workItem from="1680762610610" duration="12180000" />
       <workItem from="1681199643494" duration="28542000" />
-      <workItem from="1681479494949" duration="6331000" />
+      <workItem from="1681479494949" duration="17656000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -158,7 +158,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681393829695</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="proportion is working, bugs are correctly halved.">
+      <created>1681576312086</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1681576312086</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -175,6 +182,7 @@
     <MESSAGE value="Now CleanBugs implements the right contraints and fixed av data retrival: some fields releaseDate were empty. Also started working on proportion incremental" />
     <MESSAGE value="fixed an indexing bug in releases retrival. Working on ProportionController.java" />
     <MESSAGE value="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1" />
+    <MESSAGE value="proportion is working, bugs are correctly halved." />
+    <option name="LAST_COMMIT_MESSAGE" value="proportion is working, bugs are correctly halved." />
   </component>
 </project>

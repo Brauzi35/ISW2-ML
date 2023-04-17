@@ -48,7 +48,7 @@ public class BugController {
         }
         return vrs;
     }
-
+    //this method builds a preliminary av, the correct and definitive av is built later
     public List<Version> avBuilder(JSONArray jsonAv, List<Version> versions){
 
         List<Version> av = new ArrayList<>();
@@ -127,8 +127,24 @@ public class BugController {
 
     //only take bugs' first half
     public List<Bug> bugHalver(List<Bug> bugs){
-        List<Bug> retList = bugs.subList(bugs.size()/2, bugs.size());
+        List<Bug> retList = bugs.subList(bugs.size()/2, bugs.size()); //DEVO spezzare le release e non i bug altrimenti rischio di
         return retList;
+    }
+    //this method builds the final av post proportion
+    public List<Bug> definitiveAvBuilder(List<Bug> bugs, List<Version> versions){
+        for(Bug b : bugs){
+            //the final av is [iv, fv)
+            List<Version> av = new ArrayList<>();
+            int iv_idx = b.getIv().getIndex();
+            int fv_idx = b.getFv().getIndex();
+            for(Version v : versions){
+                if(v.getIndex()>=iv_idx && v.getIndex()<fv_idx){
+                    av.add(v);
+                }
+            }
+            b.setAv(av);
+        }
+        return bugs;
     }
 
 }
