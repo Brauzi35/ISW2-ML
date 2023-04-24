@@ -39,7 +39,7 @@ public class ProportionController {
             float retP = 0;
             float totP = 0;
             for(Bug a : completeBugs){
-                if(a.getIndex()<b.getIndex()) previousBugs.add(a); //building a list of all complete bugs that came before the toDoBug considered
+                if(a.getFv().getIndex()<b.getOv().getIndex()) previousBugs.add(a); //building a list of all complete bugs that were closed before the toDoBug considered was opened
             }
 
             if(previousBugs.isEmpty()) System.out.println("sul bug: " + b.getKey() + "devo fare cold start");
@@ -57,12 +57,14 @@ public class ProportionController {
                 System.out.println("bug id: " + b.getKey() + " p is: " + retP);
             }
             if(retP!=0) b.setIv(ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), retP ,versions));
-
+            //
         }
         float median = coldStart();
         for(Bug b : toDoBugs){
             if(b.getIv()==null){
+
                 Version iv = ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), median ,versions);
+                System.out.println("sto calcolando iv del bug: " + b.getKey() + " che dovrebbe essere: "+ iv.getIndex());
                 b.setIv(iv);
             }
         }
@@ -100,12 +102,18 @@ public class ProportionController {
             if(v.getIndex()==res){
                 iv = v;
             }
+
+
+        }
+        //se non appartiene a nessuna versione lo forzo a 1
+        if(res<1){
+            iv = versions.get(0);
         }
         return iv;
     }
 
     public float coldStart() throws IOException {
-        String projname = "ZOOKEEPER";
+        String projname = "TAJO";
         float p;
         ArrayList<Float> all_p = new ArrayList<>();
         JiraController jc = new JiraController(projname);

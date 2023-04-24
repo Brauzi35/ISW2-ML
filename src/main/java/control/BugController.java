@@ -5,7 +5,6 @@ import model.Version;
 import org.json.JSONArray;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -118,18 +117,19 @@ public class BugController {
     public List<Bug> bugTrimmer(List<Bug> bugs){
         List<Bug> retBugs = new ArrayList<>();
         for(Bug b : bugs){
-            if(b.getFv().getIndex()!= 1 && b.getOv().getIndex()!= 1){
-                retBugs.add(b);
+            if(b.getFv().getIndex()== 1 && b.getOv().getIndex()== 1){
+                continue;
             }
+            retBugs.add(b);
         }
         return retBugs;
     }
 
     //only take bugs' first half
-    public List<Bug> bugHalver(List<Bug> bugs){
+    /*public List<Bug> bugHalver(List<Bug> bugs){
         List<Bug> retList = bugs.subList(bugs.size()/2, bugs.size()); //DEVO spezzare le release e non i bug altrimenti rischio di
         return retList;
-    }
+    }*/
     //this method builds the final av post proportion
     public List<Bug> definitiveAvBuilder(List<Bug> bugs, List<Version> versions){
         for(Bug b : bugs){
