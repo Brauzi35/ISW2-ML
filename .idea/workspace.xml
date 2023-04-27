@@ -4,14 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed a bug in cold start: was considering the median for the single project">
-      <change afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/JavaFile.java" afterDir="false" />
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="implemented commits and files info retrival with jgit">
+      <change afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/metriche" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/Instance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/BugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/BugController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +146,7 @@
       <workItem from="1681479494949" duration="39860000" />
       <workItem from="1681996037805" duration="49000" />
       <workItem from="1681996263541" duration="20738000" />
-      <workItem from="1682320798588" duration="3768000" />
+      <workItem from="1682320798588" duration="26929000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -234,7 +232,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681742225050</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="implemented commits and files info retrival with jgit">
+      <created>1682354933484</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1682354933484</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -253,6 +258,7 @@
     <MESSAGE value="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1" />
     <MESSAGE value="proportion is working, bugs are correctly halved." />
     <MESSAGE value="fixed a bug in cold start: was considering the median for the single project" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug in cold start: was considering the median for the single project" />
+    <MESSAGE value="implemented commits and files info retrival with jgit" />
+    <option name="LAST_COMMIT_MESSAGE" value="implemented commits and files info retrival with jgit" />
   </component>
 </project>

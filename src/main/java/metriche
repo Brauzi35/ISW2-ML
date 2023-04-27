@@ -1,0 +1,14 @@
+metriche scelte:
+
+0-Size (LOC)
+1-NRevisions (per release)
+2-NAuth (per release)
+3-LocAdded
+4-MaxLocAdded
+5-AverageLocAdded
+6-Churn
+7-MaxChurn
+8-AverageChurn
+9-Warmth -mia
+
+
