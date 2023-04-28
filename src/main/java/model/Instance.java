@@ -25,9 +25,9 @@ public class Instance {
     private int churn;
     private int maxChurn;
     private int avgChurn;
-    private int warmth;
+    private int nAuthors;
 
-    public Instance(JavaFile javafile, String version, String name, int size, int nr, int locAdded, int maxLocAdded, int avgLocAdded, int churn, int maxChurn, int avgChurn, int warmth) {
+    public Instance(JavaFile javafile, String version, String name, int size, int nr, int locAdded, int maxLocAdded, int avgLocAdded, int churn, int maxChurn, int avgChurn, int nAuthors) {
         this.javafile = javafile;
         this.version = javafile.getVersion().getName();
         this.name = javafile.getFilename();
@@ -39,7 +39,14 @@ public class Instance {
         this.churn = churn;
         this.maxChurn = maxChurn;
         this.avgChurn = avgChurn;
-        this.warmth = warmth;
+        this.nAuthors = nAuthors;
+    }
+
+    public Instance(JavaFile javafile){
+        this.javafile = javafile;
+        this.version = javafile.getVersion().getName();
+        this.name = javafile.getFilename();
+        this.nr = javafile.getCommitList().size(); //don't know if it is correct
     }
 
     public String getName() {
@@ -130,11 +137,11 @@ public class Instance {
         this.avgChurn = avgChurn;
     }
 
-    public int getWarmth() {
-        return warmth;
+    public int getnAuthors() {
+        return nAuthors;
     }
 
-    public void setWarmth(int warmth) {
-        this.warmth = warmth;
+    public void setnAuthors(int nAuthors) {
+        this.nAuthors = nAuthors;
     }
 }

@@ -1,5 +1,6 @@
 package control;
 
+import model.Instance;
 import model.JavaFile;
 import model.Version;
 import org.eclipse.jgit.api.Git;
@@ -118,97 +119,10 @@ public class CodeLineCounter {
         return returnList;
     }
 
-    public static List<List<JavaFile>> getFiles(List<List<RevCommit>> divCommits) throws Exception {
-        Git git = Git.open(new File(localPath));
-        Repository repository = git.getRepository();
-        List<List<JavaFile>> files = new ArrayList<>();
-        int index = 0;
-        for(List<RevCommit> lrc : divCommits){
-            List<JavaFile> temp = new ArrayList<>();
-            for(RevCommit singleRC : lrc){
-                List<JavaFile> ret = getFilesInCommit(repository, singleRC);
-                temp.addAll(ret);
-            }
-            files.add(temp);
-        }
 
-        System.out.println(files.size());
-        int size = 0;
-        for (List<JavaFile> jv : files){
-            size+=jv.size();
-        }
-        System.out.println(size);
-        return files;
-    }
-
-    public static List<JavaFile> getFilesInCommit(Repository repository, RevCommit revcommit) throws Exception {
-
-        try (RevWalk revWalk = new RevWalk(repository)) {
-            RevCommit commit = revWalk.parseCommit(ObjectId.fromString(revcommit.getName()));
-            RevTree tree = commit.getTree();
-            try (TreeWalk treeWalk = new TreeWalk(repository)) {
-                treeWalk.addTree(tree);
-                treeWalk.setRecursive(true);
-                List<String> files = new ArrayList<>();
-                while (treeWalk.next()) {
-                    if(treeWalk.getPathString().endsWith(".java")) {
-                        files.add(treeWalk.getPathString());
-                    }
-                }
-
-                List<JavaFile> javafiles = new ArrayList<>();
-                //ci metto solo il nome e il commit
-                for(String s : files){
-                    List<RevCommit> rc = new ArrayList<>();
-                    rc.add(revcommit);
-                    JavaFile jv = new JavaFile(s, null, rc);
-                    javafiles.add(jv);
-                }
-                return javafiles;
-            }
-        }
-    }
 
     //need to merge all the files having same release and same name in a single file having all commits touching that file
-    public static List<List<JavaFile>> doubleFilesMerger(List<List<JavaFile>> files){
-        List<List<JavaFile>> filesReworked = new ArrayList<>();
-        for(List<JavaFile> jfl : files){
-            List<JavaFile> jfl_clone = jfl; //avoid concurrent mod
-            List<JavaFile> javafiles = new ArrayList<>();
-            while (!jfl_clone.isEmpty()){
-                JavaFile jf = jfl.get(0);
-                jf.setCommitList(new ArrayList<>()); //need empty list to start with
-                List<JavaFile> removeArray = new ArrayList<>();
-                for(JavaFile j : jfl_clone){
-                    if(j.getFilename().equals(jf.getFilename())){
-                        List<RevCommit> comm = jf.getCommitList();
-                        comm.addAll(j.getCommitList());
 
-                       // jfl_clone.remove(j); //concurrent mod
-                        removeArray.add(j);
-                    }
-                }
-                jfl_clone.removeAll(removeArray);
-                javafiles.add(jf);
-            }
-            filesReworked.add(javafiles);
-
-        }
-        /*
-        useful prints
-        System.out.println("size of list of list of file: " + filesReworked.size());
-        int size = 0;
-        for (List<JavaFile> jfl : filesReworked){
-            size+= jfl.size();
-            for (JavaFile jf : jfl){
-                System.out.println("il file: " + jf.getFilename() + " è toccato da :" + jf.getCommitList().size() + " commit");
-            }
-        }
-        System.out.println("numero file in file reworked: " + size);
-
-         */
-        return filesReworked;
-    }
     //each file needs a version: knowing that the first list in filesreworked represent the first version and so on
     //the versioning operation can be done as follows
     public static void fileListVersioner(List<List<JavaFile>> filesReworked, List<Version> versions){
@@ -295,6 +209,19 @@ public class CodeLineCounter {
     }
 
 
+    public static List<Instance> instancesBuilder(List<List<JavaFile>> allfiles){
+        List<Instance> retInstances = new ArrayList<>();
+        //Instance instance = new Instance()
+        for(List<JavaFile> jfl : allfiles){
+            for(JavaFile jf : jfl){
+                Instance instance = new Instance(jf);
+                retInstances.add(instance);
+            }
+        }
+        return retInstances;
+    }
+
+
     public static void main(String[] args) throws Exception {
         Git git = Git.open(new File(localPath));
         Repository repository = git.getRepository();
@@ -306,6 +233,7 @@ public class CodeLineCounter {
         List<List<RevCommit>> dividedCommits = commitsDivider(commits, versionsHalved);
         commitListOrderer(dividedCommits);
         List<List<JavaFile>> listAllFiles = new ArrayList<>();
+
         for(List<RevCommit> lrc : dividedCommits) {
 
             //System.out.println(lrc.get(lrc.size()-1).getCommitterIdent().getWhen()); //ultimo
@@ -316,13 +244,15 @@ public class CodeLineCounter {
             for(JavaFile jf : jfl){
                 System.out.println(jf.getFilename());
             }
+            */
 
-             */
         }
+
 
         fileListVersioner(listAllFiles, versionsHalved); //versioner
         commitsFilePairer(listAllFiles, dividedCommits);
         //prints
+        /*
         for(List<JavaFile> jfl : listAllFiles){
             for (JavaFile jf : jfl){
                 System.out.println("file: " + jf.getFilename() + " at version "+ jf.getVersion().getName() +" is touched by " + jf.getCommitList().size() + " commits");
@@ -333,53 +263,38 @@ public class CodeLineCounter {
 
         }
 
-        /*
-        System.out.println(commit.getShortMessage());
-        System.out.println("");
-        //file toccati dai commit
-        DiffFormatter formatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
-        formatter.setRepository(git.getRepository());
-        formatter.setDiffComparator(RawTextComparator.DEFAULT);
-        formatter.setDetectRenames(true);
+         */
 
-        ObjectId commitId = commit.getId();
-        RevCommit parent = commit.getParent(0);
-        if (parent != null) {
-            ObjectId parentId = parent.getId();
-            List<DiffEntry> diffs = formatter.scan(parentId, commitId);
-            for (DiffEntry diff : diffs) {
-                System.out.println("Changed file: " + diff.getNewPath());
-                //System.out.println(formatter.toFileHeader(diff));
-                int linesDeleted = 0;
-                int linesAdded = 0;
-                for (Edit edit : formatter.toFileHeader(diff).toEditList()) {
-                    linesDeleted += edit.getEndA() - edit.getBeginA();
-                    linesAdded += edit.getEndB() - edit.getBeginB();
-                }
-                System.out.println("linee cancellate: " + linesDeleted + "-------- linee aggiunte: " + linesAdded);
 
+
+        //JavaFile jf = listAllFiles.get(0).get(19);
+        InstanceController ic = new InstanceController();
+
+        //System.out.println(jf.getCommitList().get(0).getCommitTime() + " " + jf.getCommitList().get(1).getCommitTime());
+        //int lines = ic.countLinesOfCode(jf.getCommitList().get(jf.getCommitList().size()-1), jf.getFilename());
+        //System.out.println("file: "+ jf.getFilename() + " has: "+ lines + " lines");
+        List<Instance> instancesList = instancesBuilder(listAllFiles);
+
+        for(Instance i : instancesList){
+
+            int temp = 0;
+            if(i.getJavafile().getCommitList().size() != 0) {
+                temp = ic.countLinesOfCode(i.getJavafile().getCommitList().get(i.getJavafile().getCommitList().size() - 1), i.getName());
+
+                i.setSize(temp);
+            } else{
+                i.setSize(0);
             }
+            i.setnAuthors(ic.nAuthCounter(i));
+
+        }
+        List<Instance> finalInstances = ic.locRepairer(instancesList, versions);
+        for(Instance i : finalInstances){
+            System.out.println(i.getJavafile().getFilename() + " " + i.getVersion() + " has this number of loc: " + i.getSize() +
+                    " and this number of authors: " + i.getnAuthors());
         }
 
 
-        /*
-        List<List<JavaFile>> files = getFiles(dividedCommits);
-        List<List<JavaFile>> filesReworked = doubleFilesMerger(files);
-        List<List<JavaFile>> filesVersioned = fileListVersioner(filesReworked, versionsHalved);
-        int size = 0;
-        for (List<JavaFile> jfl : filesVersioned){
-            size+= jfl.size();
-            System.out.println("size release: " + jfl.size());
-            for (JavaFile jf : jfl){
-                System.out.println("il file: " + jf.getFilename() + " alla versione: "+ jf.getVersion().getName() + " è toccato da :" + jf.getCommitList().size() + " commit");
-
-            }
-
-
-        }
-        System.out.println("dimensione finale: " + size);
-
-     */
     }
 }
 
