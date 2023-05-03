@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="implemented method locRepairer in InstanceController.java">
-      <change afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/LinesMetricCollector.java" afterDir="false" />
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="csv commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output.csv" beforeDir="false" afterPath="$PROJECT_DIR$/output.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/BugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/BugController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Instance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Instance.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +149,7 @@
       <workItem from="1681996263541" duration="20738000" />
       <workItem from="1682320798588" duration="35307000" />
       <workItem from="1682665981971" duration="11989000" />
-      <workItem from="1683041478467" duration="20578000" />
+      <workItem from="1683041478467" duration="32587000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -258,7 +256,21 @@
       <option name="project" value="LOCAL" />
       <updated>1682694669612</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="achived csv writing">
+      <created>1683107499768</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1683107499768</updated>
+    </task>
+    <task id="LOCAL-00017" summary="csv commit">
+      <created>1683107642594</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1683107642594</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,6 +292,8 @@
     <MESSAGE value="implemented commits and files info retrival with jgit" />
     <MESSAGE value="implemented full git commit and file retrival: now is possible ot obtain all project files with relative commits" />
     <MESSAGE value="implemented method locRepairer in InstanceController.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="implemented method locRepairer in InstanceController.java" />
+    <MESSAGE value="achived csv writing" />
+    <MESSAGE value="csv commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="csv commit" />
   </component>
 </project>

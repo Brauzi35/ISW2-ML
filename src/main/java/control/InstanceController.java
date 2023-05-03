@@ -170,6 +170,35 @@ public class InstanceController {
 
     }
 
+    public List<Instance> foo(List<Instance> instances, List<Version> av, String filename){
+        List<Instance> ret = new ArrayList<>();
+        for(Instance i : instances){
+            if(i.getJavafile().getFilename().equals(filename)){
+               for(Version v : av){
+                   if(v.getName().equals(i.getVersion())){
+                       ret.add(i);
+                   }
+               }
+            }
+        }
+        return ret;
+    }
+
+    public List<Instance> isBuggy2(List<Instance> instances, List<Bug> bugs){
+        List<Instance> buggyInstances = new ArrayList<>();
+        for(Instance i : instances){
+            for(RevCommit rc : i.getJavafile().getCommitList()){
+                for(Bug b : bugs){
+                    if(rc.getShortMessage().contains(b.getKey())){ //jira tag = shortmessage
+                        List<Instance> temp = foo(instances, b.getAv(), i.getName());
+                        buggyInstances.addAll(temp);
+                    }
+                }
+            }
+        }
+        return buggyInstances;
+    }
+
     //we say that a class is buggy if is touched by a commit that reports a jira issue
     public String isBuggy(Instance i, List<Bug> av_bugs){
         String yes = "Yes";
@@ -177,11 +206,19 @@ public class InstanceController {
 
         for(RevCommit rc : i.getJavafile().getCommitList()){
             for(Bug b : av_bugs){
+                boolean fveqov = false;
+                if(b.getOv().equals(b.getFv())){
+                    //i.getJavafile().getVersion().getIndex() < b.getFv().getIndex()
+                    fveqov = true;
+                }
 
                 if(rc.getShortMessage().contains(b.getKey())){
-                    System.out.println("entrato nel primo if, lo short message contiene " + b.getKey());
-                    if(i.getJavafile().getVersion().getIndex() >= b.getIv().getIndex() && i.getJavafile().getVersion().getIndex() < b.getFv().getIndex()){
-                        System.out.println("entrato nel secondo if, versione beccata");
+                    System.out.println(""+ i.getName()+" entrato nel primo if, lo short message contiene " + b.getKey());
+                    if(i.getJavafile().getVersion().getIndex() >= b.getIv().getIndex() && i.getJavafile().getVersion().getIndex() <= b.getOv().getIndex() && fveqov){
+
+                        //System.out.println("entrato nel secondo if, versione beccata");
+                        return yes;
+                    } else if (i.getJavafile().getVersion().getIndex() >= b.getIv().getIndex() && i.getJavafile().getVersion().getIndex() <= b.getFv().getIndex() && !fveqov) {
                         return yes;
                     }
                     /*

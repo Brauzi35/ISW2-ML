@@ -137,6 +137,7 @@ public class BugController {
             List<Version> av = new ArrayList<>();
             int iv_idx = b.getIv().getIndex();
             int fv_idx = b.getFv().getIndex();
+            //int ov_idx = b.getOv().getIndex();
             for(Version v : versions){
                 if(v.getIndex()>=iv_idx && v.getIndex()<fv_idx){
                     av.add(v);

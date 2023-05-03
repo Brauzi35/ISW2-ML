@@ -67,7 +67,7 @@ public class CodeLineCounter {
 
                 con queste LOC ottengo la data e l'ora del commit riferite alla timezone dell'autore
              */
-                System.out.println("Commit: " + commit.getName() + " " + commit.getShortMessage());
+                //System.out.println("Commit: " + commit.getName() + " " + commit.getShortMessage());
                 count++;
             }
 
@@ -90,6 +90,7 @@ public class CodeLineCounter {
             List<RevCommit> r = new ArrayList<>();
             for(RevCommit c : commits){
                 Instant instant = c.getCommitterIdent().getWhenAsInstant();
+                //Instant instant = c.getAuthorIdent().getWhenAsInstant();
                 LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
                 if(ldt.compareTo(v.getReleaseDate())<=0){
                     r.add(c);
@@ -104,19 +105,21 @@ public class CodeLineCounter {
             System.out.println(rc.getShortMessage());
         }
         */
-        System.out.println("size of list of lists: " + returnList.size());
+        //System.out.println("size of list of lists: " + returnList.size());
         int count = 0;
         for(List<RevCommit> r : returnList){
 
             count+= r.size();
-            System.out.println("commits in list(using count to difference lists):  " + count);
-
+            //System.out.println("commits in list(using count to difference lists):  " + count);
+            /*
             for(RevCommit rr : r){
                 System.out.println(rr.getShortMessage());
             }
 
+             */
+
         }
-        System.out.println("tot commits divided: " + count);
+        //System.out.println("tot commits divided: " + count);
         return returnList;
     }
 
@@ -191,7 +194,7 @@ public class CodeLineCounter {
                         ObjectId parentId = parent.getId();
                         List<DiffEntry> diffs = formatter.scan(parentId, commitId);
                         for (DiffEntry diff : diffs) {
-                            System.out.println("Changed file: " + diff.getNewPath());
+                            //System.out.println("Changed file: " + diff.getNewPath());
                             //System.out.println(formatter.toFileHeader(diff));
                             for (JavaFile jf : ijfl) {
                                 if (jf.getFilename().equals(diff.getNewPath())) {

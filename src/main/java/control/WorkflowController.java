@@ -44,9 +44,19 @@ public class WorkflowController {
         List<Instance> instances = clc.instanceListBuilder("BOOKKEEPER");
 
         InstanceController ic = new InstanceController();
+        List<Instance> buggyInstances = ic.isBuggy2(instances, av_bugs); //per ora ha size 0
+
+        System.out.println("size buggyIstances "+buggyInstances.size());
         for(Instance i : instances){
-            String buggy = ic.isBuggy(i, av_bugs);
-            i.setBuggyness(buggy);
+            //String buggy = ic.isBuggy(i, av_bugs);
+            //i.setBuggyness(buggy);
+
+            if(buggyInstances.contains(i)){
+                System.out.println("entrato if pazzo");
+                i.setBuggyness("Yes");
+            }
+
+
 
             System.out.println(i.getJavafile().getFilename() + " " + i.getVersion() +
                     "\n has this number of loc: " + i.getSize() +
@@ -60,6 +70,7 @@ public class WorkflowController {
                     "\n and this maxChurn: " + i.getMaxChurn() +
                     "\n is this class buggy? " + i.getBuggyness());
         }
+
         for(Bug b : av_bugs){
             System.out.println("key  " + b.getKey() + "  opening version: " + b.getOv().getIndex() + "  fixed version:  " +  b.getFv().getIndex() + " size av: " + b.getAv().size());
             for(Version f : b.getAv()){
@@ -69,7 +80,9 @@ public class WorkflowController {
                 System.out.println("indice iv: " + b.getIv().getIndex());
             }
         }
-        System.out.println(av_bugs.size());
+
+
+        //System.out.println(av_bugs.size());
         CsvWriter csvw = new CsvWriter();
         csvw.csv_builder(instances);
         }
