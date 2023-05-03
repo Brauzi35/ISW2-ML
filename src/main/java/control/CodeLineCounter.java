@@ -2,6 +2,7 @@ package control;
 
 import model.Instance;
 import model.JavaFile;
+import model.LinesMetricCollector;
 import model.Version;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.ListBranchCommand;
@@ -221,6 +222,60 @@ public class CodeLineCounter {
         return retInstances;
     }
 
+    public List<Instance> instanceListBuilder(String projName) throws IOException, GitAPIException {
+        Git git = Git.open(new File(localPath));
+        Repository repository = git.getRepository();
+
+        List<RevCommit> commits = retrieveAllCommits();
+        JiraController jc = new JiraController(projName);
+        List<Version> versions = jc.getAllVersions();
+        List<Version> versionsHalved = versions.subList(0, versions.size()/2);
+        List<List<RevCommit>> dividedCommits = commitsDivider(commits, versionsHalved);
+        commitListOrderer(dividedCommits);
+        List<List<JavaFile>> listAllFiles = new ArrayList<>();
+
+        for(List<RevCommit> lrc : dividedCommits) {
+
+            List<JavaFile> jfl = getFilesNew(lrc.get(lrc.size()-1));
+            listAllFiles.add(jfl);
+        }
+
+
+        fileListVersioner(listAllFiles, versionsHalved); //versioner
+        commitsFilePairer(listAllFiles, dividedCommits);
+
+
+
+
+        InstanceController ic = new InstanceController();
+
+
+        List<Instance> instancesList = instancesBuilder(listAllFiles);
+
+        for(Instance i : instancesList){
+
+            int temp = 0;
+            if(i.getJavafile().getCommitList().size() != 0) {
+                temp = ic.countLinesOfCode(i.getJavafile().getCommitList().get(i.getJavafile().getCommitList().size() - 1), i.getName());
+
+                i.setSize(temp);
+            } else{
+                i.setSize(0);
+            }
+            i.setnAuthors(ic.nAuthCounter(i));
+            LinesMetricCollector lmc = ic.getLinesMetrics(i);
+            i.setLocAdded(lmc.getAddedLines());
+            i.setChurn(lmc.getChurn());
+            i.setAvgChurn(lmc.getAvgChurn());
+            i.setMaxLocAdded(lmc.getMaxLOC());
+            i.setMaxChurn(lmc.getMaxChurn());
+            i.setAvgLocAdded(lmc.getAvgLOC());
+
+        }
+        List<Instance> finalInstances = ic.locRepairer(instancesList, versions);
+        return finalInstances;
+    }
+
 
     public static void main(String[] args) throws Exception {
         Git git = Git.open(new File(localPath));
@@ -251,28 +306,13 @@ public class CodeLineCounter {
 
         fileListVersioner(listAllFiles, versionsHalved); //versioner
         commitsFilePairer(listAllFiles, dividedCommits);
-        //prints
-        /*
-        for(List<JavaFile> jfl : listAllFiles){
-            for (JavaFile jf : jfl){
-                System.out.println("file: " + jf.getFilename() + " at version "+ jf.getVersion().getName() +" is touched by " + jf.getCommitList().size() + " commits");
-                for(RevCommit aaa : jf.getCommitList()){
-                    System.out.println(aaa.getShortMessage());
-                }
-            }
-
-        }
-
-         */
 
 
 
-        //JavaFile jf = listAllFiles.get(0).get(19);
+
         InstanceController ic = new InstanceController();
 
-        //System.out.println(jf.getCommitList().get(0).getCommitTime() + " " + jf.getCommitList().get(1).getCommitTime());
-        //int lines = ic.countLinesOfCode(jf.getCommitList().get(jf.getCommitList().size()-1), jf.getFilename());
-        //System.out.println("file: "+ jf.getFilename() + " has: "+ lines + " lines");
+
         List<Instance> instancesList = instancesBuilder(listAllFiles);
 
         for(Instance i : instancesList){
@@ -286,13 +326,33 @@ public class CodeLineCounter {
                 i.setSize(0);
             }
             i.setnAuthors(ic.nAuthCounter(i));
+            //i.setLocAdded(ic.getAddedLoc(i, repository));
+            LinesMetricCollector lmc = ic.getLinesMetrics(i);
+            i.setLocAdded(lmc.getAddedLines());
+            i.setChurn(lmc.getChurn());
+            i.setAvgChurn(lmc.getAvgChurn());
+            i.setMaxLocAdded(lmc.getMaxLOC());
+            i.setMaxChurn(lmc.getMaxChurn());
+            i.setAvgLocAdded(lmc.getAvgLOC());
 
         }
         List<Instance> finalInstances = ic.locRepairer(instancesList, versions);
         for(Instance i : finalInstances){
-            System.out.println(i.getJavafile().getFilename() + " " + i.getVersion() + " has this number of loc: " + i.getSize() +
-                    " and this number of authors: " + i.getnAuthors());
+
+
+            System.out.println(i.getJavafile().getFilename() + " " + i.getVersion() +
+                    "\n has this number of loc: " + i.getSize() +
+                    "\n and this number of authors: " + i.getnAuthors() +
+                    "\n and this number of commits: " + i.getNr() +
+                    "\n and this locAdded: " + i.getLocAdded() +
+                    "\n and this AvglocAdded: " + i.getAvgLocAdded() +
+                    "\n and this MaxLoc: " + i.getMaxLocAdded() +
+                    "\n and this churn: " + i.getChurn() +
+                    "\n and this avgChurn: " + i.getAvgChurn() +
+                    "\n and this maxChurn: " + i.getMaxChurn());
         }
+
+
 
 
     }

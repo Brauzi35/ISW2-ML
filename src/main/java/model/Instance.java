@@ -21,13 +21,14 @@ public class Instance {
     private int nr;
     private int locAdded;
     private int maxLocAdded;
-    private int avgLocAdded;
+    private double avgLocAdded;
     private int churn;
     private int maxChurn;
-    private int avgChurn;
+    private double avgChurn;
     private int nAuthors;
+    private String buggyness;
 
-    public Instance(JavaFile javafile, String version, String name, int size, int nr, int locAdded, int maxLocAdded, int avgLocAdded, int churn, int maxChurn, int avgChurn, int nAuthors) {
+    public Instance(JavaFile javafile, String version, String name, int size, int nr, int locAdded, int maxLocAdded, double avgLocAdded, int churn, int maxChurn, double avgChurn, int nAuthors) {
         this.javafile = javafile;
         this.version = javafile.getVersion().getName();
         this.name = javafile.getFilename();
@@ -40,13 +41,15 @@ public class Instance {
         this.maxChurn = maxChurn;
         this.avgChurn = avgChurn;
         this.nAuthors = nAuthors;
+        this.buggyness = "No";
     }
 
     public Instance(JavaFile javafile){
         this.javafile = javafile;
         this.version = javafile.getVersion().getName();
         this.name = javafile.getFilename();
-        this.nr = javafile.getCommitList().size(); //don't know if it is correct
+        this.nr = javafile.getCommitList().size();
+        this.buggyness = "No";
     }
 
     public String getName() {
@@ -105,11 +108,11 @@ public class Instance {
         this.maxLocAdded = maxLocAdded;
     }
 
-    public int getAvgLocAdded() {
+    public double getAvgLocAdded() {
         return avgLocAdded;
     }
 
-    public void setAvgLocAdded(int avgLocAdded) {
+    public void setAvgLocAdded(double avgLocAdded) {
         this.avgLocAdded = avgLocAdded;
     }
 
@@ -129,11 +132,11 @@ public class Instance {
         this.maxChurn = maxChurn;
     }
 
-    public int getAvgChurn() {
+    public double getAvgChurn() {
         return avgChurn;
     }
 
-    public void setAvgChurn(int avgChurn) {
+    public void setAvgChurn(double avgChurn) {
         this.avgChurn = avgChurn;
     }
 
@@ -143,5 +146,13 @@ public class Instance {
 
     public void setnAuthors(int nAuthors) {
         this.nAuthors = nAuthors;
+    }
+
+    public String getBuggyness() {
+        return buggyness;
+    }
+
+    public void setBuggyness(String buggyness) {
+        this.buggyness = buggyness;
     }
 }

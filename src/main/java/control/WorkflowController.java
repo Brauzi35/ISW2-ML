@@ -1,7 +1,10 @@
 package control;
 
+import model.Instance;
+import model.LinesMetricCollector;
 import model.Version;
 import model.Bug;
+import org.eclipse.jgit.api.errors.GitAPIException;
 
 import java.io.IOException;
 import java.util.Comparator;
@@ -10,7 +13,7 @@ import java.util.List;
 public class WorkflowController {
     private static String projectName = "BOOKKEEPER";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, GitAPIException {
         JiraController jc = new JiraController(projectName);
         BugController bc = new BugController();
         List<Version> versions = jc.getAllVersions();
@@ -35,6 +38,28 @@ public class WorkflowController {
 
 
         List<Bug> av_bugs = bc.definitiveAvBuilder(done1, versions);
+
+
+        CodeLineCounter clc = new CodeLineCounter();
+        List<Instance> instances = clc.instanceListBuilder("BOOKKEEPER");
+
+        InstanceController ic = new InstanceController();
+        for(Instance i : instances){
+            String buggy = ic.isBuggy(i, av_bugs);
+            i.setBuggyness(buggy);
+
+            System.out.println(i.getJavafile().getFilename() + " " + i.getVersion() +
+                    "\n has this number of loc: " + i.getSize() +
+                    "\n and this number of authors: " + i.getnAuthors() +
+                    "\n and this number of commits: " + i.getNr() +
+                    "\n and this locAdded: " + i.getLocAdded() +
+                    "\n and this AvglocAdded: " + i.getAvgLocAdded() +
+                    "\n and this MaxLoc: " + i.getMaxLocAdded() +
+                    "\n and this churn: " + i.getChurn() +
+                    "\n and this avgChurn: " + i.getAvgChurn() +
+                    "\n and this maxChurn: " + i.getMaxChurn() +
+                    "\n is this class buggy? " + i.getBuggyness());
+        }
         for(Bug b : av_bugs){
             System.out.println("key  " + b.getKey() + "  opening version: " + b.getOv().getIndex() + "  fixed version:  " +  b.getFv().getIndex() + " size av: " + b.getAv().size());
             for(Version f : b.getAv()){
@@ -45,5 +70,8 @@ public class WorkflowController {
             }
         }
         System.out.println(av_bugs.size());
+        CsvWriter csvw = new CsvWriter();
+        csvw.csv_builder(instances);
+        }
     }
-}
+

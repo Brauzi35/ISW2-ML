@@ -1,12 +1,8 @@
 package control;
 
-import model.Instance;
-import model.JavaFile;
-import model.Version;
+import model.*;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.diff.DiffEntry;
-import org.eclipse.jgit.diff.DiffFormatter;
-import org.eclipse.jgit.diff.RawTextComparator;
+import org.eclipse.jgit.diff.*;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
@@ -17,7 +13,10 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
+import org.eclipse.jgit.util.RawParseUtils;
+import org.eclipse.jgit.util.io.DisabledOutputStream;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -56,7 +55,6 @@ public class InstanceController {
         }
         ret = authors.size();
         return ret;
-        //da finire
     }
 
     //size calculator
@@ -148,5 +146,142 @@ public class InstanceController {
         }
 
 
+
+
+    private int getAddedLines(DiffFormatter diffFormatter, DiffEntry entry) throws IOException {
+
+        int addedLines = 0;
+        for(Edit edit : diffFormatter.toFileHeader(entry).toEditList()) {
+            addedLines += edit.getEndA() - edit.getBeginA();
+
+        }
+        return addedLines;
+
     }
+
+    private int getDeletedLines(DiffFormatter diffFormatter, DiffEntry entry) throws IOException {
+
+        int deletedLines = 0;
+        for(Edit edit : diffFormatter.toFileHeader(entry).toEditList()) {
+            deletedLines += edit.getEndB() - edit.getBeginB();
+
+        }
+        return deletedLines;
+
+    }
+
+    //we say that a class is buggy if is touched by a commit that reports a jira issue
+    public String isBuggy(Instance i, List<Bug> av_bugs){
+        String yes = "Yes";
+        String no = "No";
+
+        for(RevCommit rc : i.getJavafile().getCommitList()){
+            for(Bug b : av_bugs){
+
+                if(rc.getShortMessage().contains(b.getKey())){
+                    System.out.println("entrato nel primo if, lo short message contiene " + b.getKey());
+                    if(i.getJavafile().getVersion().getIndex() >= b.getIv().getIndex() && i.getJavafile().getVersion().getIndex() < b.getFv().getIndex()){
+                        System.out.println("entrato nel secondo if, versione beccata");
+                        return yes;
+                    }
+                    /*
+                    for(Version c : b.getAv()){
+                        System.out.println("version instance: " + i.getVersion() +", version av: " + c.getName());
+                        if(i.getVersion().contains(c.getName())){
+                            System.out.println("entrato nel secondo if, versione beccata");
+                            return yes;
+                        }
+                    }
+
+                     */
+                }
+            }
+        }
+
+        return no;
+
+    }
+
+
+    public LinesMetricCollector getLinesMetrics(Instance i) throws IOException{
+            int removedLines = 0;
+            int addedLines = 0; //addedLoc
+            int maxLOC = 0;
+            double avgLOC = 0;
+            int churn = 0;
+            int maxChurn = 0;
+            double avgChurn = 0;
+
+            List<Integer> counter = new ArrayList<>();
+
+            //int counter = 0;
+
+
+            for(RevCommit comm : i.getJavafile().getCommitList()) {
+                try(DiffFormatter diffFormatter = new DiffFormatter(DisabledOutputStream.INSTANCE)) {
+
+                    RevCommit parentComm = comm.getParent(0);
+
+                    diffFormatter.setRepository(repository);
+                    diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
+
+                    List<DiffEntry> diffs = diffFormatter.scan(parentComm.getTree(), comm.getTree());
+                    System.out.println(i.getName() + " " +i.getVersion());
+                    for(DiffEntry entry : diffs) {
+                        if(entry.getNewPath().equals(i.getName())) {
+                            if(i.getVersion().equals("4.0.0") && i.getJavafile().getCommitList().indexOf(comm) == 0){
+                                //cambiare
+                                int tempcount = countLinesOfCode(comm, i.getName());
+                                addedLines+= tempcount;
+                            }
+                            int tempAdd = getAddedLines(diffFormatter, entry);
+                            int tempRem = getDeletedLines(diffFormatter, entry);
+                            counter.add(tempAdd);
+
+                            addedLines += tempAdd;
+                            removedLines += tempRem;
+
+
+                            int currentLOC = tempAdd;
+                            int currentDiff = Math.abs(tempAdd - tempRem);
+
+
+                            churn = churn + currentDiff;
+
+                            if(currentLOC > maxLOC) {
+                                maxLOC = currentLOC;
+                            }
+                            if(currentDiff > maxChurn) {
+                                maxChurn = currentDiff;
+                            }
+
+
+
+
+                        }
+
+                    }
+
+
+
+
+                } catch(ArrayIndexOutOfBoundsException e) {
+                    //commit has no parents: skip this commit, return an empty list and go on
+
+                }
+            }
+        if(counter.size()!= 0) {
+            avgLOC = addedLines/counter.size();
+            avgChurn = churn/counter.size();
+
+        }
+            return new LinesMetricCollector(removedLines, addedLines, maxLOC, avgLOC, churn, maxChurn, avgChurn);
+        }
+
+
+
+
+
+
+}
 
