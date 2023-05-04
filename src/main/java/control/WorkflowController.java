@@ -13,7 +13,7 @@ import java.util.List;
 public class WorkflowController {
     private static String projectName = "BOOKKEEPER";
 
-    public static void main(String[] args) throws IOException, GitAPIException {
+    public static void main(String[] args) throws Exception {
         JiraController jc = new JiraController(projectName);
         BugController bc = new BugController();
         List<Version> versions = jc.getAllVersions();
@@ -44,7 +44,7 @@ public class WorkflowController {
         List<Instance> instances = clc.instanceListBuilder("BOOKKEEPER");
 
         InstanceController ic = new InstanceController();
-        List<Instance> buggyInstances = ic.isBuggy2(instances, av_bugs); //per ora ha size 0
+        List<Instance> buggyInstances = ic.isBuggy2(instances, av_bugs);
 
         System.out.println("size buggyIstances "+buggyInstances.size());
         for(Instance i : instances){
@@ -52,7 +52,6 @@ public class WorkflowController {
             //i.setBuggyness(buggy);
 
             if(buggyInstances.contains(i)){
-                System.out.println("entrato if pazzo");
                 i.setBuggyness("Yes");
             }
 
@@ -85,6 +84,9 @@ public class WorkflowController {
         //System.out.println(av_bugs.size());
         CsvWriter csvw = new CsvWriter();
         csvw.csv_builder(instances);
+
+        ArffConverter ac = new ArffConverter();
+        ac.csv2arff();
         }
     }
 

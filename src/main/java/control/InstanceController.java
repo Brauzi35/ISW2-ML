@@ -187,9 +187,11 @@ public class InstanceController {
     public List<Instance> isBuggy2(List<Instance> instances, List<Bug> bugs){
         List<Instance> buggyInstances = new ArrayList<>();
         for(Instance i : instances){
+            //System.out.println(i.getName());
             for(RevCommit rc : i.getJavafile().getCommitList()){
                 for(Bug b : bugs){
-                    if(rc.getShortMessage().contains(b.getKey())){ //jira tag = shortmessage
+                    if(rc.getShortMessage().contains(b.getKey()+":")  || rc.getShortMessage().contains(b.getKey()+" ")){ //jira tag = shortmessage
+                        //System.out.println("bug key= " + b.getKey() + " short message: " + rc.getShortMessage());
                         List<Instance> temp = foo(instances, b.getAv(), i.getName());
                         buggyInstances.addAll(temp);
                     }
@@ -266,17 +268,23 @@ public class InstanceController {
                     System.out.println(i.getName() + " " +i.getVersion());
                     for(DiffEntry entry : diffs) {
                         if(entry.getNewPath().equals(i.getName())) {
+                            int tempAdd = 0;
+                            int tempRem = 0;
                             if(i.getVersion().equals("4.0.0") && i.getJavafile().getCommitList().indexOf(comm) == 0){
                                 //cambiare
                                 int tempcount = countLinesOfCode(comm, i.getName());
                                 addedLines+= tempcount;
+                                tempAdd = tempcount;
+                                counter.add(tempcount);
                             }
-                            int tempAdd = getAddedLines(diffFormatter, entry);
-                            int tempRem = getDeletedLines(diffFormatter, entry);
-                            counter.add(tempAdd);
+                            else {
+                                tempAdd = getAddedLines(diffFormatter, entry);
+                                tempRem = getDeletedLines(diffFormatter, entry);
+                                counter.add(tempAdd);
 
-                            addedLines += tempAdd;
-                            removedLines += tempRem;
+                                addedLines += tempAdd;
+                                removedLines += tempRem;
+                            }
 
 
                             int currentLOC = tempAdd;
