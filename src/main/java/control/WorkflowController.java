@@ -1,13 +1,9 @@
 package control;
 
-import model.Instance;
-import model.LinesMetricCollector;
+import model.FinalInstance;
 import model.Version;
 import model.Bug;
-import org.eclipse.jgit.api.errors.GitAPIException;
 
-import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 
 public class WorkflowController {
@@ -41,17 +37,17 @@ public class WorkflowController {
 
 
         CodeLineCounter clc = new CodeLineCounter();
-        List<Instance> instances = clc.instanceListBuilder("BOOKKEEPER");
+        List<FinalInstance> finalInstances = clc.instanceListBuilder("BOOKKEEPER", versions);
 
         InstanceController ic = new InstanceController();
-        List<Instance> buggyInstances = ic.isBuggy2(instances, av_bugs);
+        List<FinalInstance> buggyFinalInstances = ic.isBuggy2(finalInstances, av_bugs);
 
-        System.out.println("size buggyIstances "+buggyInstances.size());
-        for(Instance i : instances){
+        System.out.println("size buggyIstances "+ buggyFinalInstances.size());
+        for(FinalInstance i : finalInstances){
             //String buggy = ic.isBuggy(i, av_bugs);
             //i.setBuggyness(buggy);
 
-            if(buggyInstances.contains(i)){
+            if(buggyFinalInstances.contains(i)){
                 i.setBuggyness("Yes");
             }
 
@@ -83,10 +79,13 @@ public class WorkflowController {
 
         //System.out.println(av_bugs.size());
         CsvWriter csvw = new CsvWriter();
-        csvw.csv_builder(instances);
+        csvw.csv_builder(finalInstances, "output.csv");
 
         ArffConverter ac = new ArffConverter();
-        ac.csv2arff();
+        ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\output.csv", "output.arff");
+
+        WekaController wc = new WekaController();
+        wc.walkForward(finalInstances, versions);
         }
     }
 

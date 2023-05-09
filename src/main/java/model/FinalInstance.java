@@ -12,7 +12,7 @@ package model;
 8-AverageChurn
 9-Warmth -mia
  */
-public class Instance {
+public class FinalInstance {
 
     private JavaFile javafile;
     private String version;
@@ -28,7 +28,7 @@ public class Instance {
     private int nAuthors;
     private String buggyness;
 
-    public Instance(JavaFile javafile, String version, String name, int size, int nr, int locAdded, int maxLocAdded, double avgLocAdded, int churn, int maxChurn, double avgChurn, int nAuthors) {
+    public FinalInstance(JavaFile javafile, String version, String name, int size, int nr, int locAdded, int maxLocAdded, double avgLocAdded, int churn, int maxChurn, double avgChurn, int nAuthors) {
         this.javafile = javafile;
         this.version = javafile.getVersion().getName();
         this.name = javafile.getFilename();
@@ -44,7 +44,7 @@ public class Instance {
         this.buggyness = "No";
     }
 
-    public Instance(JavaFile javafile){
+    public FinalInstance(JavaFile javafile){
         this.javafile = javafile;
         this.version = javafile.getVersion().getName();
         this.name = javafile.getFilename();

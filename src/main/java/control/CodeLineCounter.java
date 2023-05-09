@@ -1,32 +1,22 @@
 package control;
 
-import model.Instance;
+import model.FinalInstance;
 import model.JavaFile;
 import model.LinesMetricCollector;
 import model.Version;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.ListBranchCommand;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffFormatter;
-import org.eclipse.jgit.diff.Edit;
 import org.eclipse.jgit.diff.RawTextComparator;
 import org.eclipse.jgit.errors.RevisionSyntaxException;
 import org.eclipse.jgit.lib.*;
 import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.revwalk.filter.MessageRevFilter;
-import org.eclipse.jgit.revwalk.filter.RevFilter;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -36,15 +26,16 @@ public class CodeLineCounter {
 
 
     static final String localPath = "C:\\Users\\vlrbr\\Desktop\\bookkeeper";
+
     public static List<RevCommit> retrieveAllCommits() throws GitAPIException, RevisionSyntaxException, IOException {
         //String localPath = "C:\\Users\\vlrbr\\Desktop\\bookkeeper";
         File dir = new File(localPath);
         List<RevCommit> commitFinal = new ArrayList<>();
 
-        try (Git git = Git.open(new File(localPath))){
+        try (Git git = Git.open(new File(localPath))) {
 
             //Iterable<RevCommit> commits = git.log().all().setRevFilter(RevFilter.NO_MERGES)
-                    //.setRevFilter(MessageRevFilter.create("BOOKKEEPER-")).call();
+            //.setRevFilter(MessageRevFilter.create("BOOKKEEPER-")).call();
             Iterable<RevCommit> commits = git.log().all().call();
             //cosi prendo tutti i commit
             //Iterable<RevCommit> commits = git.log().all().setRevFilter(msgFilter).call();
@@ -52,14 +43,14 @@ public class CodeLineCounter {
 
             for (RevCommit commit : commits) {
                 //if(commit.getShortMessage().contains("BOOKKEEPER-")) {
-                    commitFinal.add(commit);
-                    //System.out.println("Commit: " + commit.getName() + " " + commit.getShortMessage());
+                commitFinal.add(commit);
+                //System.out.println("Commit: " + commit.getName() + " " + commit.getShortMessage());
 
                 //}
 
             }
             int count = 0;
-            for (RevCommit commit : commitFinal){
+            for (RevCommit commit : commitFinal) {
             /*
                 PersonIdent authorIdent = commit.getAuthorIdent();
                 Date authorDate = authorIdent.getWhen();
@@ -74,7 +65,6 @@ public class CodeLineCounter {
             System.out.println(count);
 
 
-
         } catch (GitAPIException e) {
             System.out.println("Exception occurred while cloning repository: " + e.getMessage());
         }
@@ -82,17 +72,16 @@ public class CodeLineCounter {
     }
 
 
-
-    public static List<List<RevCommit>> commitsDivider(List<RevCommit> commits, List<Version> versions){
+    public static List<List<RevCommit>> commitsDivider(List<RevCommit> commits, List<Version> versions) {
         //getCommitterIdent().getWhen()
         List<List<RevCommit>> returnList = new ArrayList<>();
-        for(Version v : versions){
+        for (Version v : versions) {
             List<RevCommit> r = new ArrayList<>();
-            for(RevCommit c : commits){
+            for (RevCommit c : commits) {
                 Instant instant = c.getCommitterIdent().getWhenAsInstant();
                 //Instant instant = c.getAuthorIdent().getWhenAsInstant();
                 LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-                if(ldt.compareTo(v.getReleaseDate())<=0){
+                if (ldt.compareTo(v.getReleaseDate()) <= 0) {
                     r.add(c);
                 }
             }
@@ -107,9 +96,9 @@ public class CodeLineCounter {
         */
         //System.out.println("size of list of lists: " + returnList.size());
         int count = 0;
-        for(List<RevCommit> r : returnList){
+        for (List<RevCommit> r : returnList) {
 
-            count+= r.size();
+            count += r.size();
             //System.out.println("commits in list(using count to difference lists):  " + count);
             /*
             for(RevCommit rr : r){
@@ -124,16 +113,15 @@ public class CodeLineCounter {
     }
 
 
-
     //need to merge all the files having same release and same name in a single file having all commits touching that file
 
     //each file needs a version: knowing that the first list in filesreworked represent the first version and so on
     //the versioning operation can be done as follows
-    public static void fileListVersioner(List<List<JavaFile>> filesReworked, List<Version> versions){
+    public static void fileListVersioner(List<List<JavaFile>> filesReworked, List<Version> versions) {
         int count = 0;
         List<List<JavaFile>> returnList = filesReworked;
-        for (List<JavaFile> jfl : returnList){
-            for(JavaFile jf : jfl){
+        for (List<JavaFile> jfl : returnList) {
+            for (JavaFile jf : jfl) {
                 jf.setVersion(versions.get(count));
             }
             count++;
@@ -142,8 +130,8 @@ public class CodeLineCounter {
     }
 
 
-    public static void commitListOrderer(List<List<RevCommit>> llrc){
-        for(List<RevCommit> lrc : llrc) {
+    public static void commitListOrderer(List<List<RevCommit>> llrc) {
+        for (List<RevCommit> lrc : llrc) {
             Collections.sort(lrc, Comparator.comparingLong(RevCommit::getCommitTime));
         }
     }
@@ -161,10 +149,9 @@ public class CodeLineCounter {
         while (treeWalk.next()) {
             if (treeWalk.isSubtree()) {
                 treeWalk.enterSubtree();
-            }
-            else {
+            } else {
                 if (treeWalk.getPathString().endsWith(".java") && !treeWalk.getPathString().contains("/test/")) {
-                    String className = treeWalk.getPathString() ;
+                    String className = treeWalk.getPathString();
                     JavaFile jv = new JavaFile(className, null, new ArrayList<>());
                     jfl.add(jv);
 
@@ -213,33 +200,31 @@ public class CodeLineCounter {
     }
 
 
-    public static List<Instance> instancesBuilder(List<List<JavaFile>> allfiles){
-        List<Instance> retInstances = new ArrayList<>();
+    public static List<FinalInstance> instancesBuilder(List<List<JavaFile>> allfiles) {
+        List<FinalInstance> retFinalInstances = new ArrayList<>();
         //Instance instance = new Instance()
-        for(List<JavaFile> jfl : allfiles){
-            for(JavaFile jf : jfl){
-                Instance instance = new Instance(jf);
-                retInstances.add(instance);
+        for (List<JavaFile> jfl : allfiles) {
+            for (JavaFile jf : jfl) {
+                FinalInstance finalInstance = new FinalInstance(jf);
+                retFinalInstances.add(finalInstance);
             }
         }
-        return retInstances;
+        return retFinalInstances;
     }
 
-    public List<Instance> instanceListBuilder(String projName) throws IOException, GitAPIException {
+    public List<FinalInstance> instanceListBuilder(String projName, List<Version> versionsHalved) throws IOException, GitAPIException {
         Git git = Git.open(new File(localPath));
         Repository repository = git.getRepository();
 
         List<RevCommit> commits = retrieveAllCommits();
         JiraController jc = new JiraController(projName);
-        List<Version> versions = jc.getAllVersions();
-        List<Version> versionsHalved = versions.subList(0, versions.size()/2);
         List<List<RevCommit>> dividedCommits = commitsDivider(commits, versionsHalved);
         commitListOrderer(dividedCommits);
         List<List<JavaFile>> listAllFiles = new ArrayList<>();
 
-        for(List<RevCommit> lrc : dividedCommits) {
+        for (List<RevCommit> lrc : dividedCommits) {
 
-            List<JavaFile> jfl = getFilesNew(lrc.get(lrc.size()-1));
+            List<JavaFile> jfl = getFilesNew(lrc.get(lrc.size() - 1));
             listAllFiles.add(jfl);
         }
 
@@ -248,21 +233,19 @@ public class CodeLineCounter {
         commitsFilePairer(listAllFiles, dividedCommits);
 
 
-
-
         InstanceController ic = new InstanceController();
 
 
-        List<Instance> instancesList = instancesBuilder(listAllFiles);
+        List<FinalInstance> instancesList = instancesBuilder(listAllFiles);
 
-        for(Instance i : instancesList){
+        for (FinalInstance i : instancesList) {
 
             int temp = 0;
-            if(i.getJavafile().getCommitList().size() != 0) {
+            if (i.getJavafile().getCommitList().size() != 0) {
                 temp = ic.countLinesOfCode(i.getJavafile().getCommitList().get(i.getJavafile().getCommitList().size() - 1), i.getName());
 
                 i.setSize(temp);
-            } else{
+            } else {
                 i.setSize(0);
             }
             i.setnAuthors(ic.nAuthCounter(i));
@@ -275,11 +258,12 @@ public class CodeLineCounter {
             i.setAvgLocAdded(lmc.getAvgLOC());
 
         }
-        List<Instance> finalInstances = ic.locRepairer(instancesList, versions);
-        return finalInstances;
+        List<FinalInstance> finalFinalInstances = ic.locRepairer(instancesList, versionsHalved); //before it was verions
+        return finalFinalInstances;
     }
+}
 
-
+/*
     public static void main(String[] args) throws Exception {
         Git git = Git.open(new File(localPath));
         Repository repository = git.getRepository();
@@ -303,6 +287,7 @@ public class CodeLineCounter {
                 System.out.println(jf.getFilename());
             }
             */
+    /*
 
         }
 
@@ -360,6 +345,7 @@ public class CodeLineCounter {
 
     }
 }
+*/
 
 /*
 * prendo tutti i commit -> faccio una lista di liste dove la i-esima lista contiene i commit relativi alla stessa

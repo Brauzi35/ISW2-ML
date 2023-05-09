@@ -10,13 +10,10 @@ import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.treewalk.CanonicalTreeParser;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
-import org.eclipse.jgit.util.RawParseUtils;
 import org.eclipse.jgit.util.io.DisabledOutputStream;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -43,11 +40,11 @@ public class InstanceController {
     public InstanceController() throws IOException {
     }
 
-    public int nAuthCounter(Instance instance) {
+    public int nAuthCounter(FinalInstance finalInstance) {
         int ret = 0;
         List<String> authors = new ArrayList<>();
         List<RevCommit> rcl = new ArrayList<>();
-        for (RevCommit rc : instance.getJavafile().getCommitList()) {
+        for (RevCommit rc : finalInstance.getJavafile().getCommitList()) {
             String author = rc.getAuthorIdent().getName();
             if (!authors.contains(author)) {
                 authors.add(author);
@@ -94,46 +91,46 @@ public class InstanceController {
 
 
     //files that have 0 commits will have loc = 0: we fix that by forcing loc of files x.y.z at loc x.y.z-1
-    public List<Instance> locRepairer(List<Instance> instanceList, List<Version> versions) {
+    public List<FinalInstance> locRepairer(List<FinalInstance> finalInstanceList, List<Version> versions) {
 
-        List<Instance> instanceList2 = instanceList;
-        List<Instance> instanceList3 = new ArrayList<>();
-        instanceList3.addAll(instanceList); //era questo il problema
-        List<List<Instance>> instDividedByName = new ArrayList<>();
+        List<FinalInstance> finalInstanceList2 = finalInstanceList;
+        List<FinalInstance> finalInstanceList3 = new ArrayList<>();
+        finalInstanceList3.addAll(finalInstanceList); //era questo il problema
+        List<List<FinalInstance>> instDividedByName = new ArrayList<>();
         do {
-            List<Instance> temp = new ArrayList<>();
-            Instance curr = instanceList.get(0);
+            List<FinalInstance> temp = new ArrayList<>();
+            FinalInstance curr = finalInstanceList.get(0);
             //temp.add(curr);
-            for (Instance i : instanceList) {
+            for (FinalInstance i : finalInstanceList) {
                 if (i.getName().equals(curr.getName())) {
                     temp.add(i);
                 }
             }
             instDividedByName.add(temp);
-            instanceList2.removeAll(temp);
+            finalInstanceList2.removeAll(temp);
 
-        } while (!instanceList2.isEmpty());
+        } while (!finalInstanceList2.isEmpty());
 
 
-            for (List<Instance> li : instDividedByName) {
-                for (Instance i : li) {
+            for (List<FinalInstance> li : instDividedByName) {
+                for (FinalInstance i : li) {
 
                     if (i.getSize() == 0 && li.size() > 1) { //if loc = 0 and is not the first version
                         int ind = -1;
 
-                        System.out.println(instanceList3.size());
-                        for (Instance j : instanceList3) {
+                        System.out.println(finalInstanceList3.size());
+                        for (FinalInstance j : finalInstanceList3) {
 
 
                             if (j.getName().equals(i.getName()) && j.getVersion().equals(i.getVersion())) {
 
-                                ind = instanceList3.indexOf(j);
+                                ind = finalInstanceList3.indexOf(j);
                             }
                         }
                         int curr = li.indexOf(i);
                         if (ind != -1) {
 
-                            instanceList3.get(ind).setSize(li.get(curr - 1).getSize());
+                            finalInstanceList3.get(ind).setSize(li.get(curr - 1).getSize());
                             i.setSize(li.get(curr - 1).getSize());
                         }
 
@@ -141,7 +138,7 @@ public class InstanceController {
                 }
             }
 
-        return instanceList3;
+        return finalInstanceList3;
 
         }
 
@@ -152,7 +149,7 @@ public class InstanceController {
 
         int addedLines = 0;
         for(Edit edit : diffFormatter.toFileHeader(entry).toEditList()) {
-            addedLines += edit.getEndA() - edit.getBeginA();
+            addedLines += edit.getEndB() - edit.getBeginB();
 
         }
         return addedLines;
@@ -163,16 +160,16 @@ public class InstanceController {
 
         int deletedLines = 0;
         for(Edit edit : diffFormatter.toFileHeader(entry).toEditList()) {
-            deletedLines += edit.getEndB() - edit.getBeginB();
+            deletedLines += edit.getEndA() - edit.getBeginA();
 
         }
         return deletedLines;
 
     }
 
-    public List<Instance> foo(List<Instance> instances, List<Version> av, String filename){
-        List<Instance> ret = new ArrayList<>();
-        for(Instance i : instances){
+    public List<FinalInstance> foo(List<FinalInstance> finalInstances, List<Version> av, String filename){
+        List<FinalInstance> ret = new ArrayList<>();
+        for(FinalInstance i : finalInstances){
             if(i.getJavafile().getFilename().equals(filename)){
                for(Version v : av){
                    if(v.getName().equals(i.getVersion())){
@@ -184,25 +181,25 @@ public class InstanceController {
         return ret;
     }
 
-    public List<Instance> isBuggy2(List<Instance> instances, List<Bug> bugs){
-        List<Instance> buggyInstances = new ArrayList<>();
-        for(Instance i : instances){
+    public List<FinalInstance> isBuggy2(List<FinalInstance> finalInstances, List<Bug> bugs){
+        List<FinalInstance> buggyFinalInstances = new ArrayList<>();
+        for(FinalInstance i : finalInstances){
             //System.out.println(i.getName());
             for(RevCommit rc : i.getJavafile().getCommitList()){
                 for(Bug b : bugs){
                     if(rc.getShortMessage().contains(b.getKey()+":")  || rc.getShortMessage().contains(b.getKey()+" ")){ //jira tag = shortmessage
                         //System.out.println("bug key= " + b.getKey() + " short message: " + rc.getShortMessage());
-                        List<Instance> temp = foo(instances, b.getAv(), i.getName());
-                        buggyInstances.addAll(temp);
+                        List<FinalInstance> temp = foo(finalInstances, b.getAv(), i.getName());
+                        buggyFinalInstances.addAll(temp);
                     }
                 }
             }
         }
-        return buggyInstances;
+        return buggyFinalInstances;
     }
 
     //we say that a class is buggy if is touched by a commit that reports a jira issue
-    public String isBuggy(Instance i, List<Bug> av_bugs){
+    public String isBuggy(FinalInstance i, List<Bug> av_bugs){
         String yes = "Yes";
         String no = "No";
 
@@ -242,7 +239,7 @@ public class InstanceController {
     }
 
 
-    public LinesMetricCollector getLinesMetrics(Instance i) throws IOException{
+    public LinesMetricCollector getLinesMetrics(FinalInstance i) throws IOException{
             int removedLines = 0;
             int addedLines = 0; //addedLoc
             int maxLOC = 0;
@@ -252,6 +249,7 @@ public class InstanceController {
             double avgChurn = 0;
 
             List<Integer> counter = new ArrayList<>();
+
 
             //int counter = 0;
 
@@ -292,6 +290,7 @@ public class InstanceController {
 
 
                             churn = churn + currentDiff;
+                            System.out.println(churn);
 
                             if(currentLOC > maxLOC) {
                                 maxLOC = currentLOC;
@@ -306,6 +305,8 @@ public class InstanceController {
                         }
 
                     }
+
+                    System.out.println(counter);
 
 
 

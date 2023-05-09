@@ -5,19 +5,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Instance;
+import model.FinalInstance;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
 public class CsvWriter {
 
-    public void csv_builder(List<Instance> instances) throws IOException {
+    public void csv_builder(List<FinalInstance> finalInstances, String csvname) throws IOException {
         String[] headers = {"Version", "Filename", "NR", "NAUTHORS" ,"LOC", "LOC_ADDED", "AVGLOCADDED"
                 , "MAXLOCADDED", "CHURN", "AVGCHURN", "MAXCHURN", "BUGGY"};
 
         List<List<String>> data = new ArrayList<>();
 
-        for(Instance i : instances){
+        for(FinalInstance i : finalInstances){
             List<String> temp = new ArrayList<>();
             temp.add(i.getVersion());
             temp.add(i.getName());
@@ -34,7 +34,8 @@ public class CsvWriter {
             data.add(temp);
         }
 
-        FileWriter out = new FileWriter("output.csv");
+
+        FileWriter out = new FileWriter(csvname);
         CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers));
 
         for (List<String> row : data) {
