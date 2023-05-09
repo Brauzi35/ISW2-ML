@@ -4,17 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed bug in buggy yes or no computation regarding short message format">
-      <change afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="milestone 2 completed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output.csv" beforeDir="false" afterPath="$PROJECT_DIR$/output.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Instance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/FinalInstance.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +52,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.WekaController">
+  <component name="RunManager" selected="Application.WorkflowController">
     <configuration name="CodeLineCounter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="control.CodeLineCounter" />
       <module name="ISW2-ML" />
@@ -128,8 +120,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WekaController" />
         <item itemvalue="Application.WorkflowController" />
+        <item itemvalue="Application.WekaController" />
         <item itemvalue="Application.CodeLineCounter" />
         <item itemvalue="Application.GetCommits" />
         <item itemvalue="Application.CountJavaLinesByCommit" />
@@ -156,7 +148,7 @@
       <workItem from="1683041478467" duration="57948000" />
       <workItem from="1683364695753" duration="11068000" />
       <workItem from="1683447087927" duration="423000" />
-      <workItem from="1683555901374" duration="16341000" />
+      <workItem from="1683555901374" duration="17036000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -291,7 +283,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683196756450</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="milestone 2 completed">
+      <created>1683648124426</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1683648124426</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -317,6 +316,7 @@
     <MESSAGE value="csv commit" />
     <MESSAGE value="fixed bug in buggy yes or no computation" />
     <MESSAGE value="fixed bug in buggy yes or no computation regarding short message format" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed bug in buggy yes or no computation regarding short message format" />
+    <MESSAGE value="milestone 2 completed" />
+    <option name="LAST_COMMIT_MESSAGE" value="milestone 2 completed" />
   </component>
 </project>
