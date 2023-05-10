@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed versions: I was halving them too soon">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="now it also works for STORM">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output.arff" beforeDir="false" afterPath="$PROJECT_DIR$/output.arff" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output.csv" beforeDir="false" afterPath="$PROJECT_DIR$/output.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
     </list>
@@ -57,7 +58,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.WorkflowController">
+  <component name="RunManager" selected="Application.WekaController">
     <configuration name="CodeLineCounter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="control.CodeLineCounter" />
       <module name="ISW2-ML" />
@@ -125,8 +126,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WorkflowController" />
         <item itemvalue="Application.WekaController" />
+        <item itemvalue="Application.WorkflowController" />
         <item itemvalue="Application.CodeLineCounter" />
         <item itemvalue="Application.GetCommits" />
         <item itemvalue="Application.CountJavaLinesByCommit" />
@@ -154,7 +155,7 @@
       <workItem from="1683364695753" duration="11068000" />
       <workItem from="1683447087927" duration="423000" />
       <workItem from="1683555901374" duration="17301000" />
-      <workItem from="1683703975331" duration="10885000" />
+      <workItem from="1683703975331" duration="15514000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -310,7 +311,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683708176275</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="now it also works for STORM">
+      <created>1683721830994</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1683721830994</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,6 +347,7 @@
     <MESSAGE value="milestone 2 completed" />
     <MESSAGE value="fixed pom, don't know why it was broken though" />
     <MESSAGE value="fixed versions: I was halving them too soon" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed versions: I was halving them too soon" />
+    <MESSAGE value="now it also works for STORM" />
+    <option name="LAST_COMMIT_MESSAGE" value="now it also works for STORM" />
   </component>
 </project>

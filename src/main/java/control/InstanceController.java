@@ -41,17 +41,6 @@ public class InstanceController {
     }
 
 
-/*
-    static {
-        try {
-            git = Git.open(new File(localPathBk));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
- */
-
 
 
 
@@ -95,9 +84,8 @@ public class InstanceController {
                     Scanner scanner = new Scanner(content);
                     while (scanner.hasNextLine()) {
                         String line = scanner.nextLine().trim();
-                        //if (!line.isEmpty() && !line.startsWith("//")) {
                         linesOfCode++;
-                        //}
+
                     }
                     return linesOfCode;
                 }
@@ -116,7 +104,7 @@ public class InstanceController {
 
         List<FinalInstance> finalInstanceList2 = finalInstanceList;
         List<FinalInstance> finalInstanceList3 = new ArrayList<>();
-        finalInstanceList3.addAll(finalInstanceList); //era questo il problema
+        finalInstanceList3.addAll(finalInstanceList);
         List<List<FinalInstance>> instDividedByName = new ArrayList<>();
         do {
             List<FinalInstance> temp = new ArrayList<>();
@@ -138,8 +126,6 @@ public class InstanceController {
 
                     if (i.getSize() == 0 && li.size() > 1) { //if loc = 0 and is not the first version
                         int ind = -1;
-
-                        System.out.println(finalInstanceList3.size());
                         for (FinalInstance j : finalInstanceList3) {
 
 
@@ -220,45 +206,6 @@ public class InstanceController {
     }
 
     //we say that a class is buggy if is touched by a commit that reports a jira issue
-    public String isBuggy(FinalInstance i, List<Bug> av_bugs){
-        String yes = "Yes";
-        String no = "No";
-
-        for(RevCommit rc : i.getJavafile().getCommitList()){
-            for(Bug b : av_bugs){
-                boolean fveqov = false;
-                if(b.getOv().equals(b.getFv())){
-                    //i.getJavafile().getVersion().getIndex() < b.getFv().getIndex()
-                    fveqov = true;
-                }
-
-                if(rc.getShortMessage().contains(b.getKey())){
-                    System.out.println(""+ i.getName()+" entrato nel primo if, lo short message contiene " + b.getKey());
-                    if(i.getJavafile().getVersion().getIndex() >= b.getIv().getIndex() && i.getJavafile().getVersion().getIndex() <= b.getOv().getIndex() && fveqov){
-
-                        //System.out.println("entrato nel secondo if, versione beccata");
-                        return yes;
-                    } else if (i.getJavafile().getVersion().getIndex() >= b.getIv().getIndex() && i.getJavafile().getVersion().getIndex() <= b.getFv().getIndex() && !fveqov) {
-                        return yes;
-                    }
-                    /*
-                    for(Version c : b.getAv()){
-                        System.out.println("version instance: " + i.getVersion() +", version av: " + c.getName());
-                        if(i.getVersion().contains(c.getName())){
-                            System.out.println("entrato nel secondo if, versione beccata");
-                            return yes;
-                        }
-                    }
-
-                     */
-                }
-            }
-        }
-
-        return no;
-
-    }
-
 
     public LinesMetricCollector getLinesMetrics(FinalInstance i) throws IOException{
             int removedLines = 0;
@@ -270,10 +217,6 @@ public class InstanceController {
             double avgChurn = 0;
 
             List<Integer> counter = new ArrayList<>();
-
-
-            //int counter = 0;
-
 
             for(RevCommit comm : i.getJavafile().getCommitList()) {
                 RevCommit parentComm = comm.getParent(0);
@@ -339,8 +282,8 @@ public class InstanceController {
                 }
             }
         if(counter.size()!= 0) {
-            avgLOC = addedLines/counter.size();
-            avgChurn = churn/counter.size();
+            avgLOC = (double)addedLines/counter.size();
+            avgChurn = (double)churn/counter.size();
 
         }
             return new LinesMetricCollector(removedLines, addedLines, maxLOC, avgLOC, churn, maxChurn, avgChurn);

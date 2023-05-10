@@ -72,7 +72,7 @@ public class ProportionController {
         List<Bug> retBugs = bugs;
         for(Bug b : retBugs){
             for(Bug db : toDoBugs){
-                if(db.getKey()==b.getKey()){
+                if(db.getKey().equals(b.getKey())){
                     Collections.replaceAll(retBugs, b, db);
                 }
             }

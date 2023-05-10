@@ -140,20 +140,16 @@ public class WekaController {
 
     //fs= feature selection without sampling (greedy backward search)
     public static void randomForestEvalFS(Instances training, Instances testing, Evaluation eval){
-        double precisionDmax = 0.0;
-        double recallDmax = 0.0;
-        double aucDmax = 0.0;
-        double kappaDmax = 0.0;
+
         double precisionD = 0.0;
         double recallD = 0.0;
         double aucD = 0.0;
         double kappaD = 0.0;
         try{
-            for(int i = 1; i<11; i++) {
+
                 CfsSubsetEval subsetEval = new CfsSubsetEval();
                 BestFirst search = new BestFirst();
-                String[] options = {"-N", String.valueOf(i)};
-                search.setOptions(options);
+
 
 
                 AttributeSelection filter = new AttributeSelection();
@@ -175,18 +171,12 @@ public class WekaController {
                 recallD = eval.recall(0);
                 kappaD = eval.kappa();
                 aucD = eval.areaUnderROC(0);
-                if(precisionD>precisionDmax && recallD>recallDmax){
-                    precisionDmax = precisionD;
-                    recallDmax = recallD;
-                    kappaDmax = kappaD;
-                    aucDmax = aucD;
-                }
-            }
 
-            precision.get(1).add(precisionDmax);
-            recall.get(1).add(recallDmax);
-            kappa.get(1).add(kappaDmax);
-            auc.get(1).add(aucDmax);
+
+            precision.get(1).add(precisionD);
+            recall.get(1).add(recallD);
+            kappa.get(1).add(kappaD);
+            auc.get(1).add(aucD);
 
 
         } catch (Exception e){
@@ -198,10 +188,7 @@ public class WekaController {
     }
 
     public static void randomForestEvalFSOS(Instances training, Instances testing, Evaluation eval) throws Exception {
-        double precisionDmax = 0.0;
-        double recallDmax = 0.0;
-        double aucDmax = 0.0;
-        double kappaDmax = 0.0;
+
         double precisionD = 0.0;
         double recallD = 0.0;
         double aucD = 0.0;
@@ -213,11 +200,10 @@ public class WekaController {
 
 
         try{
-            for(int i = 1; i<11; i++) {
+
                 CfsSubsetEval subsetEval = new CfsSubsetEval();
                 BestFirst search = new BestFirst();
-                String[] options = {"-N", String.valueOf(i)};
-                search.setOptions(options);
+
 
 
                 AttributeSelection filter = new AttributeSelection();
@@ -239,18 +225,12 @@ public class WekaController {
                 recallD = eval.recall(0);
                 kappaD = eval.kappa();
                 aucD = eval.areaUnderROC(0);
-                if(precisionD>precisionDmax && recallD>recallDmax){
-                    precisionDmax = precisionD;
-                    recallDmax = recallD;
-                    kappaDmax = kappaD;
-                    aucDmax = aucD;
-                }
-            }
 
-            precision.get(2).add(precisionDmax);
-            recall.get(2).add(recallDmax);
-            kappa.get(2).add(kappaDmax);
-            auc.get(2).add(aucDmax);
+
+            precision.get(2).add(precisionD);
+            recall.get(2).add(recallD);
+            kappa.get(2).add(kappaD);
+            auc.get(2).add(aucD);
 
 
         } catch (Exception e){
@@ -285,20 +265,14 @@ public class WekaController {
 
 
     public static void naiveBayesEvalFS(Instances training, Instances testing, Evaluation eval){
-        double precisionDmax = 0.0;
-        double recallDmax = 0.0;
-        double aucDmax = 0.0;
-        double kappaDmax = 0.0;
         double precisionD = 0.0;
         double recallD = 0.0;
         double aucD = 0.0;
         double kappaD = 0.0;
         try{
-            for (int i = 1; i<11; i++){
+
                 CfsSubsetEval subsetEval = new CfsSubsetEval();
                 BestFirst search = new BestFirst();
-                String[] options = {"-N", String.valueOf(i)};
-                search.setOptions(options);
 
                 AttributeSelection filter = new AttributeSelection();
                 filter.setEvaluator(subsetEval);
@@ -320,18 +294,13 @@ public class WekaController {
                 recallD = eval.recall(0);
                 kappaD = eval.kappa();
                 aucD = eval.areaUnderROC(0);
-                if(precisionD>precisionDmax && recallD>recallDmax){
-                    precisionDmax = precisionD;
-                    recallDmax = recallD;
-                    kappaDmax = kappaD;
-                    aucDmax = aucD;
-                }
-            }
 
-            precision.get(4).add(precisionDmax);
-            recall.get(4).add(recallDmax);
-            kappa.get(4).add(kappaDmax);
-            auc.get(4).add(aucDmax);
+
+
+            precision.get(4).add(precisionD);
+            recall.get(4).add(recallD);
+            kappa.get(4).add(kappaD);
+            auc.get(4).add(aucD);
 
 
         } catch (Exception e){
@@ -343,10 +312,7 @@ public class WekaController {
     }
 
     public static void naiveBayesEvalFSOS(Instances training, Instances testing, Evaluation eval) throws Exception {
-        double precisionDmax = 0.0;
-        double recallDmax = 0.0;
-        double aucDmax = 0.0;
-        double kappaDmax = 0.0;
+
         double precisionD = 0.0;
         double recallD = 0.0;
         double aucD = 0.0;
@@ -357,11 +323,9 @@ public class WekaController {
         smote.setInputFormat(training);
         training = Filter.useFilter(training, smote);
         try{
-            for (int i = 1; i<11; i++){
+
                 CfsSubsetEval subsetEval = new CfsSubsetEval();
                 BestFirst search = new BestFirst();
-                String[] options = {"-N", String.valueOf(i)};
-                search.setOptions(options);
 
                 AttributeSelection filter = new AttributeSelection();
                 filter.setEvaluator(subsetEval);
@@ -383,18 +347,13 @@ public class WekaController {
                 recallD = eval.recall(0);
                 kappaD = eval.kappa();
                 aucD = eval.areaUnderROC(0);
-                if(precisionD>precisionDmax && recallD>recallDmax){
-                    precisionDmax = precisionD;
-                    recallDmax = recallD;
-                    kappaDmax = kappaD;
-                    aucDmax = aucD;
-                }
-            }
 
-            precision.get(5).add(precisionDmax);
-            recall.get(5).add(recallDmax);
-            kappa.get(5).add(kappaDmax);
-            auc.get(5).add(aucDmax);
+
+
+            precision.get(5).add(precisionD);
+            recall.get(5).add(recallD);
+            kappa.get(5).add(kappaD);
+            auc.get(5).add(aucD);
 
 
         } catch (Exception e){
@@ -413,20 +372,16 @@ public class WekaController {
         training = Filter.useFilter(training, smote);
 
         try{
-            double precisionDmax = 0.0;
-            double recallDmax = 0.0;
-            double aucDmax = 0.0;
-            double kappaDmax = 0.0;
+
             double precisionD = 0.0;
             double recallD = 0.0;
             double aucD = 0.0;
             double kappaD = 0.0;
 
-            for(int i = 1; i<11; i++) {
+
                 CfsSubsetEval subsetEval = new CfsSubsetEval();
                 BestFirst search = new BestFirst();
-                String[] options = {"-N", String.valueOf(i)};
-                search.setOptions(options);
+
 
                 AttributeSelection filter = new AttributeSelection();
                 filter.setEvaluator(subsetEval);
@@ -448,18 +403,13 @@ public class WekaController {
                 recallD = eval.recall(0);
                 kappaD = eval.kappa();
                 aucD = eval.areaUnderROC(0);
-                if(precisionD>precisionDmax && recallD>recallDmax){
-                    precisionDmax = precisionD;
-                    recallDmax = recallD;
-                    kappaDmax = kappaD;
-                    aucDmax = aucD;
-                }
-            }
 
-            precision.get(8).add(precisionDmax);
-            recall.get(8).add(recallDmax);
-            kappa.get(8).add(kappaDmax);
-            auc.get(8).add(aucDmax);
+
+
+            precision.get(8).add(precisionD);
+            recall.get(8).add(recallD);
+            kappa.get(8).add(kappaD);
+            auc.get(8).add(aucD);
 
 
         } catch (Exception e){
@@ -472,20 +422,15 @@ public class WekaController {
 
     public static void ibkEvalFS(Instances training, Instances testing, Evaluation eval){
         try{
-            double precisionDmax = 0.0;
-            double recallDmax = 0.0;
-            double aucDmax = 0.0;
-            double kappaDmax = 0.0;
+
             double precisionD = 0.0;
             double recallD = 0.0;
             double aucD = 0.0;
             double kappaD = 0.0;
 
-            for(int i = 1; i<11; i++) {
+
                 CfsSubsetEval subsetEval = new CfsSubsetEval();
                 BestFirst search = new BestFirst();
-                String[] options = {"-N", String.valueOf(i)};
-                search.setOptions(options);
 
                 AttributeSelection filter = new AttributeSelection();
                 filter.setEvaluator(subsetEval);
@@ -507,18 +452,13 @@ public class WekaController {
                 recallD = eval.recall(0);
                 kappaD = eval.kappa();
                 aucD = eval.areaUnderROC(0);
-                if(precisionD>precisionDmax && recallD>recallDmax){
-                    precisionDmax = precisionD;
-                    recallDmax = recallD;
-                    kappaDmax = kappaD;
-                    aucDmax = aucD;
-                }
-            }
 
-            precision.get(7).add(precisionDmax);
-            recall.get(7).add(recallDmax);
-            kappa.get(7).add(kappaDmax);
-            auc.get(7).add(aucDmax);
+
+
+            precision.get(7).add(precisionD);
+            recall.get(7).add(recallD);
+            kappa.get(7).add(kappaD);
+            auc.get(7).add(aucD);
 
 
         } catch (Exception e){
@@ -587,6 +527,7 @@ public class WekaController {
 
     public static void main(String args[]){
         try {
+            projNameBis = "storm";
             //9 classifiers
             for(int n = 0; n<9; n++){
                 recall.add(new ArrayList<>());
@@ -594,11 +535,14 @@ public class WekaController {
                 auc.add(new ArrayList<>());
                 kappa.add(new ArrayList<>());
             }
+            JiraController jc = new JiraController(projNameBis.toUpperCase());
+            List<Version> versions = jc.getAllVersions();
+            versions=versions.subList(0, versions.size()/2);
 
-            for(int i = 2; i<6; i++){
-                System.out.println("iteration: " + (i-2));
-                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis+ String.valueOf(i) +"Training.arff";
-                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis + String.valueOf(i) +"Testing.arff";
+            for(Version v : versions){
+
+                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis+ String.valueOf(v.getIndex()) +"Training.arff";
+                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis + String.valueOf(v.getIndex()) +"Testing.arff";
                 wekaFlowClassification(trainingPath, testingPath);
 
             }

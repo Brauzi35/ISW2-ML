@@ -1,9 +1,8 @@
 package control;
 
+import model.Bug;
 import model.FinalInstance;
 import model.Version;
-import model.Bug;
-import weka.core.Instance;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,19 +46,14 @@ public class WorkflowController {
         List<Bug> done = pc.iterativeProportion(bugs, versions);
 
         List<Bug> done1 = bc.bugTrimmer(done);
-
-
-
         List<Bug> av_bugs = bc.definitiveAvBuilder(done1, versions);
 
 
         CodeLineCounter clc = new CodeLineCounter("C:\\Users\\vlrbr\\Desktop\\" + projectName.toLowerCase());
-        List<FinalInstance> finalInstances = clc.instanceListBuilder("BOOKKEEPER", versions);
+        List<FinalInstance> finalInstances = clc.instanceListBuilder(projectName, versions);
 
         InstanceController ic = new InstanceController(projectName.toLowerCase());
         List<FinalInstance> buggyFinalInstances = ic.isBuggy2(finalInstances, av_bugs);
-
-        System.out.println("size buggyIstances "+ buggyFinalInstances.size());
         for(FinalInstance i : finalInstances){
 
 
@@ -81,24 +75,9 @@ public class WorkflowController {
                     "\n and this maxChurn: " + i.getMaxChurn() +
                     "\n is this class buggy? " + i.getBuggyness());
         }
-        /*
-        for(Bug b : av_bugs){
-            System.out.println("key  " + b.getKey() + "  opening version: " + b.getOv().getIndex() + "  fixed version:  " +  b.getFv().getIndex() + " size av: " + b.getAv().size());
-            for(Version f : b.getAv()){
-                System.out.println("av id: "+f.getIndex());
-            }
-            if(b.getIv()!=null){
-                System.out.println("indice iv: " + b.getIv().getIndex());
-            }
-        }
 
-         */
         List<FinalInstance> finalInstancesHalved = instancesHalver(versions, finalInstances);
 
-        //System.out.println("ELEMENTI NUOVA LISTA: " + finalInstancesHalved.size());
-
-
-        //System.out.println(av_bugs.size());
         CsvWriter csvw = new CsvWriter();
         csvw.csv_builder(finalInstancesHalved, "output.csv");
 

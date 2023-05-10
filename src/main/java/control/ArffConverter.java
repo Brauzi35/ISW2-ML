@@ -30,9 +30,6 @@ public class ArffConverter {
 
 
 
-
-
-
         // save ARFF
         ArffSaver saver = new ArffSaver();
         saver.setInstances(newData);//set the dataset we want to convert
