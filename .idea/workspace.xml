@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed pom, don't know why it was broken though">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed versions: I was halving them too soon">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper3Testing.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper3Testing.arff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper3Testing.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper3Testing.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper4Testing.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper4Testing.arff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper4Testing.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper4Testing.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper5Testing.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper5Testing.arff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper5Testing.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper5Testing.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output.arff" beforeDir="false" afterPath="$PROJECT_DIR$/output.arff" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output.csv" beforeDir="false" afterPath="$PROJECT_DIR$/output.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
     </list>
@@ -63,7 +57,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.WekaController">
+  <component name="RunManager" selected="Application.WorkflowController">
     <configuration name="CodeLineCounter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="control.CodeLineCounter" />
       <module name="ISW2-ML" />
@@ -131,8 +125,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WekaController" />
         <item itemvalue="Application.WorkflowController" />
+        <item itemvalue="Application.WekaController" />
         <item itemvalue="Application.CodeLineCounter" />
         <item itemvalue="Application.GetCommits" />
         <item itemvalue="Application.CountJavaLinesByCommit" />
@@ -160,7 +154,7 @@
       <workItem from="1683364695753" duration="11068000" />
       <workItem from="1683447087927" duration="423000" />
       <workItem from="1683555901374" duration="17301000" />
-      <workItem from="1683703975331" duration="4154000" />
+      <workItem from="1683703975331" duration="10885000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -309,7 +303,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683648686387</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="fixed versions: I was halving them too soon">
+      <created>1683708176275</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1683708176275</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -337,6 +338,7 @@
     <MESSAGE value="fixed bug in buggy yes or no computation regarding short message format" />
     <MESSAGE value="milestone 2 completed" />
     <MESSAGE value="fixed pom, don't know why it was broken though" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed pom, don't know why it was broken though" />
+    <MESSAGE value="fixed versions: I was halving them too soon" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed versions: I was halving them too soon" />
   </component>
 </project>

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkflowController {
-    private static String projectName = "BOOKKEEPER";
+    private static String projectName = "STORM"; //change to STORM or BOOKKEEPER depending on the project
 
     public static List<FinalInstance> instancesHalver(List<Version> versions, List<FinalInstance> instances) {
         versions = versions.subList(0, versions.size() / 2);
@@ -53,10 +53,10 @@ public class WorkflowController {
         List<Bug> av_bugs = bc.definitiveAvBuilder(done1, versions);
 
 
-        CodeLineCounter clc = new CodeLineCounter();
+        CodeLineCounter clc = new CodeLineCounter("C:\\Users\\vlrbr\\Desktop\\" + projectName.toLowerCase());
         List<FinalInstance> finalInstances = clc.instanceListBuilder("BOOKKEEPER", versions);
 
-        InstanceController ic = new InstanceController();
+        InstanceController ic = new InstanceController(projectName.toLowerCase());
         List<FinalInstance> buggyFinalInstances = ic.isBuggy2(finalInstances, av_bugs);
 
         System.out.println("size buggyIstances "+ buggyFinalInstances.size());
@@ -105,7 +105,7 @@ public class WorkflowController {
         ArffConverter ac = new ArffConverter();
         ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\output.csv", "output.arff");
 
-        WekaController wc = new WekaController();
+        WekaController wc = new WekaController(projectName.toLowerCase());
         wc.walkForward(finalInstancesHalved, versions.subList(0, versions.size() / 2));
         }
     }

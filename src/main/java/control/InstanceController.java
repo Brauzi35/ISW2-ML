@@ -3,6 +3,7 @@ package control;
 import model.*;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.diff.*;
+import org.eclipse.jgit.errors.MissingObjectException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
@@ -24,21 +25,36 @@ import java.util.Scanner;
 
 public class InstanceController {
 
-    static final String localPath = "C:\\Users\\vlrbr\\Desktop\\bookkeeper";
+    static String localPathBk;
     static Git git;
 
+    static Repository repository;
+
+    public InstanceController(String projName) throws IOException {
+        localPathBk = "C:\\Users\\vlrbr\\Desktop\\" + projName;
+        try {
+            git = Git.open(new File(localPathBk));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        repository = git.getRepository();
+    }
+
+
+/*
     static {
         try {
-            git = Git.open(new File(localPath));
+            git = Git.open(new File(localPathBk));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    static Repository repository = git.getRepository();
+ */
 
-    public InstanceController() throws IOException {
-    }
+
+
+
 
     public int nAuthCounter(FinalInstance finalInstance) {
         int ret = 0;
@@ -86,8 +102,13 @@ public class InstanceController {
                     return linesOfCode;
                 }
             }
+        } catch(MissingObjectException mob){
+
         }
+        return 0;
     }
+
+
 
 
     //files that have 0 commits will have loc = 0: we fix that by forcing loc of files x.y.z at loc x.y.z-1
@@ -128,7 +149,7 @@ public class InstanceController {
                             }
                         }
                         int curr = li.indexOf(i);
-                        if (ind != -1) {
+                        if (ind != -1 && curr > 0) {
 
                             finalInstanceList3.get(ind).setSize(li.get(curr - 1).getSize());
                             i.setSize(li.get(curr - 1).getSize());
@@ -255,65 +276,66 @@ public class InstanceController {
 
 
             for(RevCommit comm : i.getJavafile().getCommitList()) {
-                try(DiffFormatter diffFormatter = new DiffFormatter(DisabledOutputStream.INSTANCE)) {
+                RevCommit parentComm = comm.getParent(0);
+                if(comm.getParentCount()>0) {
 
-                    RevCommit parentComm = comm.getParent(0);
+                    try (DiffFormatter diffFormatter = new DiffFormatter(DisabledOutputStream.INSTANCE)) {
 
-                    diffFormatter.setRepository(repository);
-                    diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
 
-                    List<DiffEntry> diffs = diffFormatter.scan(parentComm.getTree(), comm.getTree());
-                    System.out.println(i.getName() + " " +i.getVersion());
-                    for(DiffEntry entry : diffs) {
-                        if(entry.getNewPath().equals(i.getName())) {
-                            int tempAdd = 0;
-                            int tempRem = 0;
-                            if(i.getVersion().equals("4.0.0") && i.getJavafile().getCommitList().indexOf(comm) == 0){
-                                //cambiare
-                                int tempcount = countLinesOfCode(comm, i.getName());
-                                addedLines+= tempcount;
-                                tempAdd = tempcount;
-                                counter.add(tempcount);
+
+                        diffFormatter.setRepository(repository);
+                        diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
+
+                        List<DiffEntry> diffs = diffFormatter.scan(parentComm.getTree(), comm.getTree());
+                        System.out.println(i.getName() + " " + i.getVersion());
+                        for (DiffEntry entry : diffs) {
+                            if (entry.getNewPath().equals(i.getName())) {
+                                int tempAdd = 0;
+                                int tempRem = 0;
+                                if (i.getVersion().equals("4.0.0") && i.getJavafile().getCommitList().indexOf(comm) == 0) {
+                                    //cambiare
+                                    int tempcount = countLinesOfCode(comm, i.getName());
+                                    addedLines += tempcount;
+                                    tempAdd = tempcount;
+                                    counter.add(tempcount);
+                                } else {
+                                    tempAdd = getAddedLines(diffFormatter, entry);
+                                    tempRem = getDeletedLines(diffFormatter, entry);
+                                    counter.add(tempAdd);
+
+                                    addedLines += tempAdd;
+                                    removedLines += tempRem;
+                                }
+
+
+                                int currentLOC = tempAdd;
+                                int currentDiff = Math.abs(tempAdd - tempRem);
+
+
+                                churn = churn + currentDiff;
+                                System.out.println(churn);
+
+                                if (currentLOC > maxLOC) {
+                                    maxLOC = currentLOC;
+                                }
+                                if (currentDiff > maxChurn) {
+                                    maxChurn = currentDiff;
+                                }
+
+
                             }
-                            else {
-                                tempAdd = getAddedLines(diffFormatter, entry);
-                                tempRem = getDeletedLines(diffFormatter, entry);
-                                counter.add(tempAdd);
-
-                                addedLines += tempAdd;
-                                removedLines += tempRem;
-                            }
-
-
-                            int currentLOC = tempAdd;
-                            int currentDiff = Math.abs(tempAdd - tempRem);
-
-
-                            churn = churn + currentDiff;
-                            System.out.println(churn);
-
-                            if(currentLOC > maxLOC) {
-                                maxLOC = currentLOC;
-                            }
-                            if(currentDiff > maxChurn) {
-                                maxChurn = currentDiff;
-                            }
-
-
-
 
                         }
 
+                        System.out.println(counter);
+
+
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        //commit has no parents: skip this commit, return an empty list and go on
+
+                    } catch (MissingObjectException moe){
+                        //commit has no parents
                     }
-
-                    System.out.println(counter);
-
-
-
-
-                } catch(ArrayIndexOutOfBoundsException e) {
-                    //commit has no parents: skip this commit, return an empty list and go on
-
                 }
             }
         if(counter.size()!= 0) {

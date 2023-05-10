@@ -28,6 +28,15 @@ import java.util.Random;
 
 public class WekaController {
 
+    private String projName;
+
+    static String projNameBis;
+
+    public WekaController(String projName) {
+        this.projName = projName;
+        projNameBis = projName;
+    }
+
     static List<List<Double>> precision = new ArrayList<>();
     static List<List<Double>> recall = new ArrayList<>();
     static List<List<Double>> auc = new ArrayList<>();
@@ -52,10 +61,10 @@ public class WekaController {
 
         List<Bug> av_bugs = bc.definitiveAvBuilder(done1, versions);
 
-        CodeLineCounter clc = new CodeLineCounter();
+        CodeLineCounter clc = new CodeLineCounter("C:\\Users\\vlrbr\\Desktop\\" + this.projName);
         List<FinalInstance> finalInstances = clc.instanceListBuilder(projectName, versions);
 
-        InstanceController ic = new InstanceController();
+        InstanceController ic = new InstanceController(projNameBis);
         List<FinalInstance> buggyFinalInstances = ic.isBuggy2(finalInstances, av_bugs);
 
         for(FinalInstance i : finalInstances) {
@@ -75,7 +84,7 @@ public class WekaController {
     public void walkForward(List<FinalInstance> finalInstances, List<Version> versions) throws Exception {
         //training set must be relistic, testing must be as true as possible
         for(Version v : versions.subList(1, versions.size())){
-            String partialName = "bookkeeper" + String.valueOf(v.getIndex());
+            String partialName = this.projName + String.valueOf(v.getIndex());
             //building testing set
             List<FinalInstance> instancesTesting = new ArrayList<>();
             List<String> arff_paths_testing = new ArrayList<>();
@@ -101,7 +110,7 @@ public class WekaController {
             //"C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Training.arff"
 
             //training builder
-            recalculator(partialName+"Training.csv",partialName+"Training.arff", "BOOKKEEPER",v.getIndex()-1);
+            recalculator(partialName+"Training.csv",partialName+"Training.arff", this.projName.toUpperCase(),v.getIndex()-1);
             arff_paths_training.add("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Training.arff");
         }
 
@@ -588,8 +597,8 @@ public class WekaController {
 
             for(int i = 2; i<6; i++){
                 System.out.println("iteration: " + (i-2));
-                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\bookkeeper"+ String.valueOf(i) +"Training.arff";
-                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\bookkeeper"+ String.valueOf(i) +"Testing.arff";
+                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis+ String.valueOf(i) +"Training.arff";
+                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis + String.valueOf(i) +"Testing.arff";
                 wekaFlowClassification(trainingPath, testingPath);
 
             }

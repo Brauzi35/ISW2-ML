@@ -24,8 +24,15 @@ import java.util.*;
 
 public class CodeLineCounter {
 
+   private String path;
+   static String localPath;
 
-    static final String localPath = "C:\\Users\\vlrbr\\Desktop\\bookkeeper";
+    public CodeLineCounter(String localPathpass) {
+        //static final String localPath = "C:\\Users\\vlrbr\\Desktop\\bookkeeper";
+       localPath = localPathpass;
+    }
+
+
 
     public static List<RevCommit> retrieveAllCommits() throws GitAPIException, RevisionSyntaxException, IOException {
         //String localPath = "C:\\Users\\vlrbr\\Desktop\\bookkeeper";
@@ -223,9 +230,10 @@ public class CodeLineCounter {
         List<List<JavaFile>> listAllFiles = new ArrayList<>();
 
         for (List<RevCommit> lrc : dividedCommits) {
-
-            List<JavaFile> jfl = getFilesNew(lrc.get(lrc.size() - 1));
-            listAllFiles.add(jfl);
+            if(lrc.size()>0) {
+                List<JavaFile> jfl = getFilesNew(lrc.get(lrc.size() - 1));
+                listAllFiles.add(jfl);
+            }
         }
 
 
@@ -233,7 +241,7 @@ public class CodeLineCounter {
         commitsFilePairer(listAllFiles, dividedCommits);
 
 
-        InstanceController ic = new InstanceController();
+        InstanceController ic = new InstanceController(projName);
 
 
         List<FinalInstance> instancesList = instancesBuilder(listAllFiles);
