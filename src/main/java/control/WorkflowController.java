@@ -3,18 +3,35 @@ package control;
 import model.FinalInstance;
 import model.Version;
 import model.Bug;
+import weka.core.Instance;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WorkflowController {
     private static String projectName = "BOOKKEEPER";
+
+    public static List<FinalInstance> instancesHalver(List<Version> versions, List<FinalInstance> instances) {
+        versions = versions.subList(0, versions.size() / 2);
+        List<FinalInstance> ret = new ArrayList<>();
+        for (Version v : versions) {
+            for (FinalInstance i : instances) {
+                if (v.getName().equals(i.getVersion())){
+                    ret.add(i);
+                }
+
+            }
+
+        }
+        return ret;
+    }
 
     public static void main(String[] args) throws Exception {
         JiraController jc = new JiraController(projectName);
         BugController bc = new BugController();
         List<Version> versions = jc.getAllVersions();
         //get half versions
-        versions = versions.subList(0, versions.size()/2);
+        //versions = versions.subList(0, versions.size()/2);
         for(Version v : versions){
             System.out.println(v.getIndex() + " " + v.getName() + " date:" + v.getReleaseDate());
         }
@@ -44,8 +61,7 @@ public class WorkflowController {
 
         System.out.println("size buggyIstances "+ buggyFinalInstances.size());
         for(FinalInstance i : finalInstances){
-            //String buggy = ic.isBuggy(i, av_bugs);
-            //i.setBuggyness(buggy);
+
 
             if(buggyFinalInstances.contains(i)){
                 i.setBuggyness("Yes");
@@ -65,7 +81,7 @@ public class WorkflowController {
                     "\n and this maxChurn: " + i.getMaxChurn() +
                     "\n is this class buggy? " + i.getBuggyness());
         }
-
+        /*
         for(Bug b : av_bugs){
             System.out.println("key  " + b.getKey() + "  opening version: " + b.getOv().getIndex() + "  fixed version:  " +  b.getFv().getIndex() + " size av: " + b.getAv().size());
             for(Version f : b.getAv()){
@@ -76,16 +92,21 @@ public class WorkflowController {
             }
         }
 
+         */
+        List<FinalInstance> finalInstancesHalved = instancesHalver(versions, finalInstances);
+
+        //System.out.println("ELEMENTI NUOVA LISTA: " + finalInstancesHalved.size());
+
 
         //System.out.println(av_bugs.size());
         CsvWriter csvw = new CsvWriter();
-        csvw.csv_builder(finalInstances, "output.csv");
+        csvw.csv_builder(finalInstancesHalved, "output.csv");
 
         ArffConverter ac = new ArffConverter();
         ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\output.csv", "output.arff");
 
         WekaController wc = new WekaController();
-        wc.walkForward(finalInstances, versions);
+        wc.walkForward(finalInstancesHalved, versions.subList(0, versions.size() / 2));
         }
     }
 

@@ -169,7 +169,7 @@ public class CodeLineCounter {
             List<JavaFile> ijfl = listAllFiles.get(i);
             List<RevCommit> ircl = dividedCommits.get(i);
             for (RevCommit rc : ircl) {
-                if (!rc.equals(dividedCommits.get(0).get(0))) {
+                if (!rc.equals(dividedCommits.get(0).get(0)) && rc.getParentCount()>0) {
                     DiffFormatter formatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
                     formatter.setRepository(git.getRepository());
                     formatter.setDiffComparator(RawTextComparator.DEFAULT);

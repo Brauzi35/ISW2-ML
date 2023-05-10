@@ -17,6 +17,7 @@ import weka.core.converters.ConverterUtils.DataSource;
 import weka.core.Instance;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
+import weka.filters.supervised.instance.SMOTE;
 
 
 import java.io.BufferedReader;
@@ -187,6 +188,70 @@ public class WekaController {
 
     }
 
+    public static void randomForestEvalFSOS(Instances training, Instances testing, Evaluation eval) throws Exception {
+        double precisionDmax = 0.0;
+        double recallDmax = 0.0;
+        double aucDmax = 0.0;
+        double kappaDmax = 0.0;
+        double precisionD = 0.0;
+        double recallD = 0.0;
+        double aucD = 0.0;
+        double kappaD = 0.0;
+        //smote oversampling
+        SMOTE smote = new SMOTE();
+        smote.setInputFormat(training);
+        training = Filter.useFilter(training, smote);
+
+
+        try{
+            for(int i = 1; i<11; i++) {
+                CfsSubsetEval subsetEval = new CfsSubsetEval();
+                BestFirst search = new BestFirst();
+                String[] options = {"-N", String.valueOf(i)};
+                search.setOptions(options);
+
+
+                AttributeSelection filter = new AttributeSelection();
+                filter.setEvaluator(subsetEval);
+                filter.setSearch(search);
+                filter.setInputFormat(training);
+
+                Instances filteredTraining = Filter.useFilter(training, filter);
+                Instances filteredTesting = Filter.useFilter(testing, filter);
+
+                int numAttrFiltered = filteredTraining.numAttributes();
+                filteredTraining.setClassIndex(numAttrFiltered - 1);
+
+                RandomForest randomForestClassifier = new RandomForest();
+                randomForestClassifier.buildClassifier(filteredTraining);
+                eval.evaluateModel(randomForestClassifier, filteredTesting);
+
+                precisionD = eval.precision(0);
+                recallD = eval.recall(0);
+                kappaD = eval.kappa();
+                aucD = eval.areaUnderROC(0);
+                if(precisionD>precisionDmax && recallD>recallDmax){
+                    precisionDmax = precisionD;
+                    recallDmax = recallD;
+                    kappaDmax = kappaD;
+                    aucDmax = aucD;
+                }
+            }
+
+            precision.get(2).add(precisionDmax);
+            recall.get(2).add(recallDmax);
+            kappa.get(2).add(kappaDmax);
+            auc.get(2).add(aucDmax);
+
+
+        } catch (Exception e){
+            System.out.println("Random forest feature selection smote error! \n"
+                    + e.getMessage());
+        }
+
+
+    }
+
 
 
     public static void naiveBayesEval(Instances training, Instances testing, Evaluation eval){
@@ -258,6 +323,134 @@ public class WekaController {
             recall.get(4).add(recallDmax);
             kappa.get(4).add(kappaDmax);
             auc.get(4).add(aucDmax);
+
+
+        } catch (Exception e){
+            System.out.println("Naive feature selection error! \n"
+                    + e.getMessage());
+        }
+
+
+    }
+
+    public static void naiveBayesEvalFSOS(Instances training, Instances testing, Evaluation eval) throws Exception {
+        double precisionDmax = 0.0;
+        double recallDmax = 0.0;
+        double aucDmax = 0.0;
+        double kappaDmax = 0.0;
+        double precisionD = 0.0;
+        double recallD = 0.0;
+        double aucD = 0.0;
+        double kappaD = 0.0;
+
+        //smote oversampling
+        SMOTE smote = new SMOTE();
+        smote.setInputFormat(training);
+        training = Filter.useFilter(training, smote);
+        try{
+            for (int i = 1; i<11; i++){
+                CfsSubsetEval subsetEval = new CfsSubsetEval();
+                BestFirst search = new BestFirst();
+                String[] options = {"-N", String.valueOf(i)};
+                search.setOptions(options);
+
+                AttributeSelection filter = new AttributeSelection();
+                filter.setEvaluator(subsetEval);
+                filter.setSearch(search);
+                filter.setInputFormat(training);
+
+                Instances filteredTraining = Filter.useFilter(training, filter);
+                Instances filteredTesting = Filter.useFilter(testing, filter);
+
+                int numAttrFiltered = filteredTraining.numAttributes();
+                filteredTraining.setClassIndex(numAttrFiltered - 1);
+
+                NaiveBayes naiveBayes = new NaiveBayes();
+                naiveBayes.buildClassifier(filteredTraining);
+                eval.evaluateModel(naiveBayes, filteredTesting);
+
+
+                precisionD = eval.precision(0);
+                recallD = eval.recall(0);
+                kappaD = eval.kappa();
+                aucD = eval.areaUnderROC(0);
+                if(precisionD>precisionDmax && recallD>recallDmax){
+                    precisionDmax = precisionD;
+                    recallDmax = recallD;
+                    kappaDmax = kappaD;
+                    aucDmax = aucD;
+                }
+            }
+
+            precision.get(5).add(precisionDmax);
+            recall.get(5).add(recallDmax);
+            kappa.get(5).add(kappaDmax);
+            auc.get(5).add(aucDmax);
+
+
+        } catch (Exception e){
+            System.out.println("Naive feature selection error! \n"
+                    + e.getMessage());
+        }
+
+
+    }
+
+    public static void ibkEvalFSOS(Instances training, Instances testing, Evaluation eval) throws Exception {
+
+        //smote oversampling
+        SMOTE smote = new SMOTE();
+        smote.setInputFormat(training);
+        training = Filter.useFilter(training, smote);
+
+        try{
+            double precisionDmax = 0.0;
+            double recallDmax = 0.0;
+            double aucDmax = 0.0;
+            double kappaDmax = 0.0;
+            double precisionD = 0.0;
+            double recallD = 0.0;
+            double aucD = 0.0;
+            double kappaD = 0.0;
+
+            for(int i = 1; i<11; i++) {
+                CfsSubsetEval subsetEval = new CfsSubsetEval();
+                BestFirst search = new BestFirst();
+                String[] options = {"-N", String.valueOf(i)};
+                search.setOptions(options);
+
+                AttributeSelection filter = new AttributeSelection();
+                filter.setEvaluator(subsetEval);
+                filter.setSearch(search);
+                filter.setInputFormat(training);
+
+                Instances filteredTraining = Filter.useFilter(training, filter);
+                Instances filteredTesting = Filter.useFilter(testing, filter);
+
+                int numAttrFiltered = filteredTraining.numAttributes();
+                filteredTraining.setClassIndex(numAttrFiltered - 1);
+
+
+                IBk ibkClassifier = new IBk();
+                ibkClassifier.buildClassifier(filteredTraining);
+                eval.evaluateModel(ibkClassifier, filteredTesting);
+
+                precisionD = eval.precision(0);
+                recallD = eval.recall(0);
+                kappaD = eval.kappa();
+                aucD = eval.areaUnderROC(0);
+                if(precisionD>precisionDmax && recallD>recallDmax){
+                    precisionDmax = precisionD;
+                    recallDmax = recallD;
+                    kappaDmax = kappaD;
+                    aucDmax = aucD;
+                }
+            }
+
+            precision.get(8).add(precisionDmax);
+            recall.get(8).add(recallDmax);
+            kappa.get(8).add(kappaDmax);
+            auc.get(8).add(aucDmax);
 
 
         } catch (Exception e){
@@ -365,6 +558,11 @@ public class WekaController {
             randomForestEvalFS(training, testing, eval);
             naiveBayesEvalFS(training, testing, eval);
             ibkEvalFS(training, testing, eval);
+            randomForestEvalFSOS(training, testing, eval);
+            naiveBayesEvalFSOS(training, testing, eval);
+            ibkEvalFSOS(training, testing, eval);
+
+
 
 
 
