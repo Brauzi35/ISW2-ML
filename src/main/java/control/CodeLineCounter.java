@@ -23,49 +23,31 @@ import java.time.ZoneId;
 import java.util.*;
 
 public class CodeLineCounter {
-
-   private String path;
    static String localPath;
 
     public CodeLineCounter(String localPathpass) {
-        //static final String localPath = "C:\\Users\\vlrbr\\Desktop\\bookkeeper";
        localPath = localPathpass;
     }
 
 
 
     public static List<RevCommit> retrieveAllCommits() throws GitAPIException, RevisionSyntaxException, IOException {
-        //String localPath = "C:\\Users\\vlrbr\\Desktop\\bookkeeper";
-        File dir = new File(localPath);
+
         List<RevCommit> commitFinal = new ArrayList<>();
 
         try (Git git = Git.open(new File(localPath))) {
 
-            //Iterable<RevCommit> commits = git.log().all().setRevFilter(RevFilter.NO_MERGES)
-            //.setRevFilter(MessageRevFilter.create("BOOKKEEPER-")).call();
             Iterable<RevCommit> commits = git.log().all().call();
             //cosi prendo tutti i commit
-            //Iterable<RevCommit> commits = git.log().all().setRevFilter(msgFilter).call();
-            //Iterable<RevCommit> commits = git.log().setRevFilter(MessageRevFilter.create("BOOKKEEPER-"));//.call();
 
             for (RevCommit commit : commits) {
-                //if(commit.getShortMessage().contains("BOOKKEEPER-")) {
-                commitFinal.add(commit);
-                //System.out.println("Commit: " + commit.getName() + " " + commit.getShortMessage());
 
-                //}
+                commitFinal.add(commit);
+
 
             }
             int count = 0;
             for (RevCommit commit : commitFinal) {
-            /*
-                PersonIdent authorIdent = commit.getAuthorIdent();
-                Date authorDate = authorIdent.getWhen();
-                TimeZone authorTimeZone = authorIdent.getTimeZone();
-
-                con queste LOC ottengo la data e l'ora del commit riferite alla timezone dell'autore
-             */
-                //System.out.println("Commit: " + commit.getName() + " " + commit.getShortMessage());
                 count++;
             }
 
@@ -80,7 +62,7 @@ public class CodeLineCounter {
 
 
     public static List<List<RevCommit>> commitsDivider(List<RevCommit> commits, List<Version> versions) {
-        //getCommitterIdent().getWhen()
+
         List<List<RevCommit>> returnList = new ArrayList<>();
         for (Version v : versions) {
             List<RevCommit> r = new ArrayList<>();
@@ -271,89 +253,6 @@ public class CodeLineCounter {
     }
 }
 
-/*
-    public static void main(String[] args) throws Exception {
-        Git git = Git.open(new File(localPath));
-        Repository repository = git.getRepository();
-
-        List<RevCommit> commits = retrieveAllCommits();
-        JiraController jc = new JiraController("BOOKKEEPER");
-        List<Version> versions = jc.getAllVersions();
-        List<Version> versionsHalved = versions.subList(0, versions.size()/2);
-        List<List<RevCommit>> dividedCommits = commitsDivider(commits, versionsHalved);
-        commitListOrderer(dividedCommits);
-        List<List<JavaFile>> listAllFiles = new ArrayList<>();
-
-        for(List<RevCommit> lrc : dividedCommits) {
-
-            //System.out.println(lrc.get(lrc.size()-1).getCommitterIdent().getWhen()); //ultimo
-            List<JavaFile> jfl = getFilesNew(lrc.get(lrc.size()-1));
-            listAllFiles.add(jfl);
-            //System.out.println("AOOO " +jfl.size());
-            /*
-            for(JavaFile jf : jfl){
-                System.out.println(jf.getFilename());
-            }
-            */
-    /*
-
-        }
-
-
-        fileListVersioner(listAllFiles, versionsHalved); //versioner
-        commitsFilePairer(listAllFiles, dividedCommits);
-
-
-
-
-        InstanceController ic = new InstanceController();
-
-
-        List<Instance> instancesList = instancesBuilder(listAllFiles);
-
-        for(Instance i : instancesList){
-
-            int temp = 0;
-            if(i.getJavafile().getCommitList().size() != 0) {
-                temp = ic.countLinesOfCode(i.getJavafile().getCommitList().get(i.getJavafile().getCommitList().size() - 1), i.getName());
-
-                i.setSize(temp);
-            } else{
-                i.setSize(0);
-            }
-            i.setnAuthors(ic.nAuthCounter(i));
-            //i.setLocAdded(ic.getAddedLoc(i, repository));
-            LinesMetricCollector lmc = ic.getLinesMetrics(i);
-            i.setLocAdded(lmc.getAddedLines());
-            i.setChurn(lmc.getChurn());
-            i.setAvgChurn(lmc.getAvgChurn());
-            i.setMaxLocAdded(lmc.getMaxLOC());
-            i.setMaxChurn(lmc.getMaxChurn());
-            i.setAvgLocAdded(lmc.getAvgLOC());
-
-        }
-        List<Instance> finalInstances = ic.locRepairer(instancesList, versions);
-        for(Instance i : finalInstances){
-
-
-            System.out.println(i.getJavafile().getFilename() + " " + i.getVersion() +
-                    "\n has this number of loc: " + i.getSize() +
-                    "\n and this number of authors: " + i.getnAuthors() +
-                    "\n and this number of commits: " + i.getNr() +
-                    "\n and this locAdded: " + i.getLocAdded() +
-                    "\n and this AvglocAdded: " + i.getAvgLocAdded() +
-                    "\n and this MaxLoc: " + i.getMaxLocAdded() +
-                    "\n and this churn: " + i.getChurn() +
-                    "\n and this avgChurn: " + i.getAvgChurn() +
-                    "\n and this maxChurn: " + i.getMaxChurn());
-        }
-
-
-
-
-    }
-}
-*/
 
 /*
 * prendo tutti i commit -> faccio una lista di liste dove la i-esima lista contiene i commit relativi alla stessa

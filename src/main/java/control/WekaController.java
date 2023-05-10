@@ -5,26 +5,18 @@ import model.FinalInstance;
 import model.Version;
 import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.CfsSubsetEval;
-import weka.attributeSelection.GreedyStepwise;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.lazy.IBk;
-import weka.classifiers.trees.J48;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
-import weka.core.converters.ConverterUtils;
 import weka.core.converters.ConverterUtils.DataSource;
-import weka.core.Instance;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.supervised.instance.SMOTE;
 
-
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class WekaController {
 
@@ -93,7 +85,6 @@ public class WekaController {
             for(FinalInstance i : finalInstances){
                 if(i.getVersion().equals(v.getName())){
                     instancesTesting.add(i);
-                    //System.out.println("ciaeee " + i.getName() + " " + i.getVersion());
                 }
             }
 
@@ -104,12 +95,9 @@ public class WekaController {
 
             ArffConverter ac = new ArffConverter();
             ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Testing.csv", partialName + "Testing.arff");
-            //testing done
-            //"C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Testing.arff"
-            arff_paths_testing.add("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Testing.arff");
-            //"C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Training.arff"
 
-            //training builder
+            arff_paths_testing.add("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Testing.arff");
+
             recalculator(partialName+"Training.csv",partialName+"Training.arff", this.projName.toUpperCase(),v.getIndex()-1);
             arff_paths_training.add("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Training.arff");
         }

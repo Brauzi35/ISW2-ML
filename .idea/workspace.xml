@@ -4,13 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="now it also works for STORM">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed a bug in WorkflowController.java and removed some smells">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper2Testing.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper2Testing.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper2Testing.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper2Testing.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper2Training.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper2Training.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper2Training.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper2Training.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper3Testing.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper3Testing.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper3Testing.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper3Testing.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper3Training.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper3Training.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper3Training.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper3Training.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper4Testing.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper4Testing.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper4Testing.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper4Testing.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper4Training.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper4Training.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper4Training.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper4Training.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper5Testing.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper5Testing.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper5Testing.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper5Testing.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper5Training.arff" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper5Training.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper5Training.csv" beforeDir="false" afterPath="$PROJECT_DIR$/bookkeeper5Training.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output.arff" beforeDir="false" afterPath="$PROJECT_DIR$/output.arff" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/output.csv" beforeDir="false" afterPath="$PROJECT_DIR$/output.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/BugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/BugController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
     </list>
@@ -58,7 +74,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.WekaController">
+  <component name="RunManager" selected="Application.WorkflowController">
     <configuration name="CodeLineCounter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="control.CodeLineCounter" />
       <module name="ISW2-ML" />
@@ -126,8 +142,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WekaController" />
         <item itemvalue="Application.WorkflowController" />
+        <item itemvalue="Application.WekaController" />
         <item itemvalue="Application.CodeLineCounter" />
         <item itemvalue="Application.GetCommits" />
         <item itemvalue="Application.CountJavaLinesByCommit" />
@@ -155,7 +171,7 @@
       <workItem from="1683364695753" duration="11068000" />
       <workItem from="1683447087927" duration="423000" />
       <workItem from="1683555901374" duration="17301000" />
-      <workItem from="1683703975331" duration="15514000" />
+      <workItem from="1683703975331" duration="17591000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -318,7 +334,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683721830994</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="fixed a bug in WorkflowController.java and removed some smells">
+      <created>1683727807018</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1683727807018</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -348,6 +371,7 @@
     <MESSAGE value="fixed pom, don't know why it was broken though" />
     <MESSAGE value="fixed versions: I was halving them too soon" />
     <MESSAGE value="now it also works for STORM" />
-    <option name="LAST_COMMIT_MESSAGE" value="now it also works for STORM" />
+    <MESSAGE value="fixed a bug in WorkflowController.java and removed some smells" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed a bug in WorkflowController.java and removed some smells" />
   </component>
 </project>

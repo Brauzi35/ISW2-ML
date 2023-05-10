@@ -1,16 +1,13 @@
 package control;
 
 
-import weka.core.Attribute;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;
 import weka.filters.Filter;
-import weka.filters.unsupervised.attribute.Add;
 import weka.filters.unsupervised.attribute.Remove;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class ArffConverter {
 

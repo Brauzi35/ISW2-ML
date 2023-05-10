@@ -6,7 +6,6 @@ import org.json.JSONArray;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -15,8 +14,8 @@ public class BugController {
     * and return a valid entity */
     public Bug bugAssembler(List<Version> versions, String ovDate, String fvDate, JSONArray jsonAv, String key){
         Bug bug = null;
-        Version ov = ov_fvCalculator(versions, ovDate);
-        Version fv = ov_fvCalculator(versions, fvDate);
+        Version ov = ovFvCalculator(versions, ovDate);
+        Version fv = ovFvCalculator(versions, fvDate);
         List<Version> av = avBuilder(jsonAv, versions);
         //if last av > ov then av is wrong, so it should not be considered
         //need to sort av
@@ -34,7 +33,7 @@ public class BugController {
     }
     /* this method computes ov or fv given the list of all the versions and a date (resolution
     or creation) */
-    public Version ov_fvCalculator(List<Version> versions, String stringDate){
+    public Version ovFvCalculator(List<Version> versions, String stringDate){
         //is the most recent version that was submitted before creationDate
         Version vrs = null;
         String newDate = stringDate.substring(0, stringDate.length() - 9); //discard last 9 characters
@@ -58,12 +57,9 @@ public class BugController {
             released = jsonAv.getJSONObject(i).getBoolean("released");
             if(released){
                 String nameRelease = jsonAv.getJSONObject(i).get("name").toString();
-                //String releaseDateStr = jsonAv.getJSONObject(i).get("releaseDate").toString();
                 LocalDateTime releaseDate = null;
                 int index = 0;
                 for(Version v : versions){
-                    //System.out.println(v.getName() + " " + nameRelease + " " + v.getReleaseDate());
-
                     if(v.getName().equals(nameRelease)){
                         releaseDate = v.getReleaseDate();
                         index = v.getIndex();
@@ -71,7 +67,6 @@ public class BugController {
                 }
 
                 String releaseId = jsonAv.getJSONObject(i).get("id").toString();
-                //LocalDateTime releaseDate = LocalDateTime.parse(releaseDateStr + "T00:00:00");
 
 
                 Version v = new Version(nameRelease, releaseDate, releaseId, index);
@@ -126,20 +121,15 @@ public class BugController {
     }
 
     //only take bugs' first half
-    /*public List<Bug> bugHalver(List<Bug> bugs){
-        List<Bug> retList = bugs.subList(bugs.size()/2, bugs.size()); //DEVO spezzare le release e non i bug altrimenti rischio di
-        return retList;
-    }*/
     //this method builds the final av post proportion
     public List<Bug> definitiveAvBuilder(List<Bug> bugs, List<Version> versions){
         for(Bug b : bugs){
             //the final av is [iv, fv)
             List<Version> av = new ArrayList<>();
-            int iv_idx = b.getIv().getIndex();
-            int fv_idx = b.getFv().getIndex();
-            //int ov_idx = b.getOv().getIndex();
+            int ivIdx = b.getIv().getIndex();
+            int fvIdx = b.getFv().getIndex();
             for(Version v : versions){
-                if(v.getIndex()>=iv_idx && v.getIndex()<fv_idx){
+                if(v.getIndex()>=ivIdx && v.getIndex()<fvIdx){
                     av.add(v);
                 }
             }
