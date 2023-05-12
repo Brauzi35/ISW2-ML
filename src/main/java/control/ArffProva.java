@@ -1,0 +1,48 @@
+package control;
+
+import weka.core.Attribute;
+import weka.core.FastVector;
+import weka.core.Instances;
+import weka.core.converters.ArffLoader;
+import weka.core.converters.ArffSaver;
+
+import java.io.*;
+
+public class ArffProva {
+
+    public static void main(String[] args) throws Exception {
+        for(int i=2; i<15; i++){
+            String partialName = "storm" + String.valueOf(i) + "Training.arff";
+            String filePath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName;
+
+            // Numero di riga da modificare
+            int lineToModify = 13;
+
+            // Nuovo contenuto della riga
+            String newLineContent = "@attribute BUGGY {Yes,No}";
+
+            // Leggi il contenuto del file originale
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            String line;
+            StringBuilder fileContent = new StringBuilder();
+            int currentLine = 1;
+            while ((line = reader.readLine()) != null) {
+                if (currentLine == lineToModify) {
+                    // Sostituisci la riga con il nuovo contenuto
+                    fileContent.append(newLineContent).append(System.lineSeparator());
+                } else {
+                    // Mantieni le righe originali
+                    fileContent.append(line).append(System.lineSeparator());
+                }
+                currentLine++;
+            }
+            reader.close();
+
+            // Scrivi il nuovo contenuto nel file ARFF
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+            writer.write(fileContent.toString());
+            writer.close();
+        }
+    }
+
+}

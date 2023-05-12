@@ -47,6 +47,62 @@ public class CsvWriter {
 
     }
 
+    public void csvFinal(List<List<Double>> precision, List<List<Double>> recall, List<List<Double>> auc, List<List<Double>> kappa
+    , List<List<Double>> tp, List<List<Double>> tn, List<List<Double>> fp, List<List<Double>> fn, String projname) throws IOException {
+        String[] headers = {"Dataset", "#Training Release", "Classifier", "Balancing", "Feature Selection"
+                , "Sensitivity", "TP", "FP", "TN", "FN", "Precision", "Recall", "AUC", "Kappa"};
+
+        List<List<String>> data = new ArrayList<>();
+        for(int i = 0; i<precision.size()-1; i++){
+            List<String> temp = new ArrayList<>();
+            int reminder = i%3;
+            for(int j = 0; j< precision.get(0).size()-1; j++){
+                temp.add(projname);
+                temp.add(String.valueOf(j));
+                switch (reminder){
+                    case 0:
+                        temp.add("Random Forest");
+                        break;
+                    case 1:
+                        temp.add("Naive Bayes");
+                        break;
+                    case 2:
+                        temp.add("Ibk");
+                        break;
+                }
+                temp.add("prova");
+                temp.add("prova");
+                temp.add("prova");
+                temp.add(String.valueOf(tp.get(i).get(j)));
+                temp.add(String.valueOf(fp.get(i).get(j)));
+                temp.add(String.valueOf(tn.get(i).get(j)));
+                temp.add(String.valueOf(fn.get(i).get(j)));
+                temp.add(String.valueOf(precision.get(i).get(j)));
+                temp.add(String.valueOf(recall.get(i).get(j)));
+                temp.add(String.valueOf(auc.get(i).get(j)));
+                temp.add(String.valueOf(kappa.get(i).get(j)));
+                data.add(temp);
+
+
+
+            }
+
+        }
+
+        FileWriter out = new FileWriter(projname + "FinalEval.csv");
+        CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers));
+
+        for (List<String> row : data) {
+            printer.printRecord(row);
+        }
+
+        printer.close();
+        out.close();
+
+
+
+    }
+
 
 }
 

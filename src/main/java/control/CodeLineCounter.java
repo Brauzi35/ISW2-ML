@@ -78,26 +78,14 @@ public class CodeLineCounter {
             returnList.add(r);
         }
         //commits not considered because committed after last release considered
-        /*
-        for(RevCommit rc : commits){
-            System.out.println(rc.getShortMessage());
-        }
-        */
-        //System.out.println("size of list of lists: " + returnList.size());
+
         int count = 0;
         for (List<RevCommit> r : returnList) {
 
             count += r.size();
-            //System.out.println("commits in list(using count to difference lists):  " + count);
-            /*
-            for(RevCommit rr : r){
-                System.out.println(rr.getShortMessage());
-            }
-
-             */
 
         }
-        //System.out.println("tot commits divided: " + count);
+
         return returnList;
     }
 
@@ -115,7 +103,7 @@ public class CodeLineCounter {
             }
             count++;
         }
-        //return returnList;
+
     }
 
 
@@ -170,8 +158,6 @@ public class CodeLineCounter {
                         ObjectId parentId = parent.getId();
                         List<DiffEntry> diffs = formatter.scan(parentId, commitId);
                         for (DiffEntry diff : diffs) {
-                            //System.out.println("Changed file: " + diff.getNewPath());
-                            //System.out.println(formatter.toFileHeader(diff));
                             for (JavaFile jf : ijfl) {
                                 if (jf.getFilename().equals(diff.getNewPath())) {
                                     List<RevCommit> fileCommits = jf.getCommitList();
@@ -239,7 +225,7 @@ public class CodeLineCounter {
                 i.setSize(0);
             }
             i.setnAuthors(ic.nAuthCounter(i));
-            LinesMetricCollector lmc = ic.getLinesMetrics(i);
+            LinesMetricCollector lmc = ic.getLinesMetrics(i, versionsHalved.get(0));
             i.setLocAdded(lmc.getAddedLines());
             i.setChurn(lmc.getChurn());
             i.setAvgChurn(lmc.getAvgChurn());

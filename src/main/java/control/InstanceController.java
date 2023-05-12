@@ -207,7 +207,7 @@ public class InstanceController {
 
     //we say that a class is buggy if is touched by a commit that reports a jira issue
 
-    public LinesMetricCollector getLinesMetrics(FinalInstance i) throws IOException{
+    public LinesMetricCollector getLinesMetrics(FinalInstance i, Version first) throws IOException{
             int removedLines = 0;
             int addedLines = 0; //addedLoc
             int maxLOC = 0;
@@ -235,7 +235,7 @@ public class InstanceController {
                             if (entry.getNewPath().equals(i.getName())) {
                                 int tempAdd = 0;
                                 int tempRem = 0;
-                                if (i.getVersion().equals("4.0.0") && i.getJavafile().getCommitList().indexOf(comm) == 0) {
+                                if (i.getVersion().equals(first.getName()) && i.getJavafile().getCommitList().indexOf(comm) == 0) {
                                     //cambiare
                                     int tempcount = countLinesOfCode(comm, i.getName());
                                     addedLines += tempcount;
