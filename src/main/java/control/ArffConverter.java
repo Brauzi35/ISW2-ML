@@ -26,7 +26,6 @@ public class ArffConverter {
         removeFilter.setOptions(options);
         removeFilter.setInputFormat(data);
         Instances newData = Filter.useFilter(data, removeFilter);
-        //non funziona fino a save arff
 
 
 

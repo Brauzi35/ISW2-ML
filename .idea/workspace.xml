@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="Creating new csv">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="evaded the end of my life">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/ArffProva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ArffProva.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/JiraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/JiraController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,7 +152,7 @@
       <workItem from="1683555901374" duration="17301000" />
       <workItem from="1683703975331" duration="25678000" />
       <workItem from="1683800573794" duration="18130000" />
-      <workItem from="1684223504185" duration="8918000" />
+      <workItem from="1684223504185" duration="10206000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -341,14 +336,20 @@
       <option name="project" value="LOCAL" />
       <updated>1683911859176</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="evaded the end of my life">
+      <created>1684249279856</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1684249279856</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added an empty Jira Controller" />
     <MESSAGE value="Bug.java update" />
     <MESSAGE value="Implemented version retrival and ordering" />
     <MESSAGE value="Implemented getBugs in JiraController - is still not working" />
@@ -373,6 +374,7 @@
     <MESSAGE value="fixed a bug in WorkflowController.java and removed some smells" />
     <MESSAGE value="removed some smells" />
     <MESSAGE value="Creating new csv" />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating new csv" />
+    <MESSAGE value="evaded the end of my life" />
+    <option name="LAST_COMMIT_MESSAGE" value="evaded the end of my life" />
   </component>
 </project>

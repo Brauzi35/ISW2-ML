@@ -21,21 +21,23 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CodeLineCounter {
-   static String localPath;
+   private String localPath;
 
     public CodeLineCounter(String localPathpass) {
-       localPath = localPathpass;
+       this.localPath = localPathpass;
     }
 
 
 
-    public static List<RevCommit> retrieveAllCommits() throws GitAPIException, RevisionSyntaxException, IOException {
+    public List<RevCommit> retrieveAllCommits() throws RevisionSyntaxException, IOException {
 
         List<RevCommit> commitFinal = new ArrayList<>();
 
-        try (Git git = Git.open(new File(localPath))) {
+        try (Git git = Git.open(new File(this.localPath))) {
 
             Iterable<RevCommit> commits = git.log().all().call();
             //cosi prendo tutti i commit
@@ -46,16 +48,10 @@ public class CodeLineCounter {
 
 
             }
-            int count = 0;
-            for (RevCommit commit : commitFinal) {
-                count++;
-            }
-
-            System.out.println(count);
-
-
         } catch (GitAPIException e) {
-            System.out.println("Exception occurred while cloning repository: " + e.getMessage());
+            Logger logger = Logger.getLogger(CodeLineCounter.class.getName());
+            String out ="GitAPIException";
+            logger.log(Level.INFO, out);
         }
         return commitFinal;
     }
@@ -68,7 +64,6 @@ public class CodeLineCounter {
             List<RevCommit> r = new ArrayList<>();
             for (RevCommit c : commits) {
                 Instant instant = c.getCommitterIdent().getWhenAsInstant();
-                //Instant instant = c.getAuthorIdent().getWhenAsInstant();
                 LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
                 if (ldt.compareTo(v.getReleaseDate()) <= 0) {
                     r.add(c);
@@ -77,15 +72,7 @@ public class CodeLineCounter {
             commits.removeAll(r);
             returnList.add(r);
         }
-        //commits not considered because committed after last release considered
-
-        int count = 0;
-        for (List<RevCommit> r : returnList) {
-
-            count += r.size();
-
-        }
-
+        //commits not considered if committed after last release considered
         return returnList;
     }
 
@@ -113,9 +100,9 @@ public class CodeLineCounter {
         }
     }
 
-    public static List<JavaFile> getFilesNew(RevCommit commit) throws IOException {
+    public List<JavaFile> getFilesNew(RevCommit commit) throws IOException {
         ObjectId treeId = commit.getTree().getId();
-        Git git = Git.open(new File(localPath));
+        Git git = Git.open(new File(this.localPath));
         Repository repository = git.getRepository();
         TreeWalk treeWalk = new TreeWalk(repository);
 
@@ -138,38 +125,44 @@ public class CodeLineCounter {
         return jfl;
     }
 
-    public static void commitsFilePairer(List<List<JavaFile>> listAllFiles, List<List<RevCommit>> dividedCommits) throws IOException {
+    public void commFilePairerBis(RevCommit rc, Git git, List<List<RevCommit>> dividedCommits, List<JavaFile> ijfl, List<RevCommit> ircl) throws IOException {
+        if (!rc.equals(dividedCommits.get(0).get(0)) && rc.getParentCount()>0) {
+            DiffFormatter formatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
+            formatter.setRepository(git.getRepository());
+            formatter.setDiffComparator(RawTextComparator.DEFAULT);
+            formatter.setDetectRenames(true);
+
+            ObjectId commitId = rc.getId();
+            RevCommit parent = rc.getParent(0);
+            if (parent != null) {
+                ObjectId parentId = parent.getId();
+                List<DiffEntry> diffs = formatter.scan(parentId, commitId);
+                for (DiffEntry diff : diffs) {
+                    for (JavaFile jf : ijfl) {
+                        if (jf.getFilename().equals(diff.getNewPath())) {
+                            List<RevCommit> fileCommits = jf.getCommitList();
+                            fileCommits.add(rc);
+                            jf.setCommitList(fileCommits);
+                            break;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    public void commitsFilePairer(List<List<JavaFile>> listAllFiles, List<List<RevCommit>> dividedCommits) throws IOException {
         int size = listAllFiles.size();
-        Git git = Git.open(new File(localPath));
+        Git git = Git.open(new File(this.localPath));
         //for cycle for working on listAllFiles[i] and dividedCommits[i]
         for (int i = 0; i < size; i++) {
             List<JavaFile> ijfl = listAllFiles.get(i);
             List<RevCommit> ircl = dividedCommits.get(i);
             for (RevCommit rc : ircl) {
-                if (!rc.equals(dividedCommits.get(0).get(0)) && rc.getParentCount()>0) {
-                    DiffFormatter formatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
-                    formatter.setRepository(git.getRepository());
-                    formatter.setDiffComparator(RawTextComparator.DEFAULT);
-                    formatter.setDetectRenames(true);
 
-                    ObjectId commitId = rc.getId();
-                    RevCommit parent = rc.getParent(0);
-                    if (parent != null) {
-                        ObjectId parentId = parent.getId();
-                        List<DiffEntry> diffs = formatter.scan(parentId, commitId);
-                        for (DiffEntry diff : diffs) {
-                            for (JavaFile jf : ijfl) {
-                                if (jf.getFilename().equals(diff.getNewPath())) {
-                                    List<RevCommit> fileCommits = jf.getCommitList();
-                                    fileCommits.add(rc);
-                                    jf.setCommitList(fileCommits);
-                                    break;
-                                }
-                            }
+                commFilePairerBis(rc, git, dividedCommits, ijfl, ircl);
 
-                        }
-                    }
-                }
             }
         }
     }
@@ -177,7 +170,6 @@ public class CodeLineCounter {
 
     public static List<FinalInstance> instancesBuilder(List<List<JavaFile>> allfiles) {
         List<FinalInstance> retFinalInstances = new ArrayList<>();
-        //Instance instance = new Instance()
         for (List<JavaFile> jfl : allfiles) {
             for (JavaFile jf : jfl) {
                 FinalInstance finalInstance = new FinalInstance(jf);
@@ -188,17 +180,13 @@ public class CodeLineCounter {
     }
 
     public List<FinalInstance> instanceListBuilder(String projName, List<Version> versionsHalved) throws IOException, GitAPIException {
-        Git git = Git.open(new File(localPath));
-        Repository repository = git.getRepository();
-
         List<RevCommit> commits = retrieveAllCommits();
-        JiraController jc = new JiraController(projName);
         List<List<RevCommit>> dividedCommits = commitsDivider(commits, versionsHalved);
         commitListOrderer(dividedCommits);
         List<List<JavaFile>> listAllFiles = new ArrayList<>();
 
         for (List<RevCommit> lrc : dividedCommits) {
-            if(lrc.size()>0) {
+            if(!lrc.isEmpty()) {
                 List<JavaFile> jfl = getFilesNew(lrc.get(lrc.size() - 1));
                 listAllFiles.add(jfl);
             }
@@ -217,7 +205,7 @@ public class CodeLineCounter {
         for (FinalInstance i : instancesList) {
 
             int temp = 0;
-            if (i.getJavafile().getCommitList().size() != 0) {
+            if (!i.getJavafile().getCommitList().isEmpty()) {
                 temp = ic.countLinesOfCode(i.getJavafile().getCommitList().get(i.getJavafile().getCommitList().size() - 1), i.getName());
 
                 i.setSize(temp);
@@ -234,8 +222,7 @@ public class CodeLineCounter {
             i.setAvgLocAdded(lmc.getAvgLOC());
 
         }
-        List<FinalInstance> finalFinalInstances = ic.locRepairer(instancesList, versionsHalved); //before it was verions
-        return finalFinalInstances;
+        return ic.locRepairer(instancesList, versionsHalved);
     }
 }
 
