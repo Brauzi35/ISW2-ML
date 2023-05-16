@@ -546,13 +546,23 @@ public class WekaEvaluationsController {
 
 
 
+    public static void listFiller(List<List<Double>> thing){
+        for(List<Double> small : thing){
+            if(small.isEmpty()){
+                for(int i = 0; i<13; i++){
+                    small.add(0.0);
+                }
+            }
+        }
+    }
+
 
     public static void main(String args[]) throws IOException {
         try {
-            projNameBis = "storm";
+            projNameBis = "bookkeeper"; //bookkeeper or storm
 
-            //24 classifiers
-            for (int n = 0; n < 24; n++) {
+            //25 classifiers
+            for (int n = 0; n < 25; n++) {
                 recall.add(new ArrayList<>());
                 precision.add(new ArrayList<>());
                 auc.add(new ArrayList<>());
@@ -584,12 +594,33 @@ public class WekaEvaluationsController {
 
             }
 
-            //System.out.println("precision: " + precision + "\n recall: " + recall + "\n auc: " + auc + "\n kappa: " + kappa);
+            System.out.println("precision: " + precision + "\n recall: " + recall + "\n auc: " +
+                    auc + "\n kappa: " + kappa + "\n tp: " + tp + "\n tn: " + tn + "\n fp: " + fp + "\n fn: " + fn);
             CsvWriter csvWriter = new CsvWriter();
-            csvWriter.csvFinal(precision, recall, auc, kappa, tp, tn, fp, fn, projNameBis);
+
+            List<List<Double>> precision2 = precision;
+            List<List<Double>> recall2 = recall;
+            List<List<Double>> auc2 = auc;
+            List<List<Double>> kappa2 = kappa;
+            List<List<Double>> fp2 = fp;
+            List<List<Double>> fn2 = fn;
+            List<List<Double>> tp2 = tp;
+            List<List<Double>> tn2 = tn;
+            listFiller(precision2);
+            listFiller(recall2);
+            listFiller(auc2);
+            listFiller(kappa2);
+            listFiller(fp2);
+            listFiller(fn2);
+            listFiller(tp2);
+            listFiller(tn2);
+
+
+            csvWriter.csvFinal(precision2, recall2, auc2, kappa2, tp2, tn2, fp2, fn2, projNameBis);
 
         } catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace());
+
         }
     }
 

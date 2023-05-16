@@ -1,18 +1,15 @@
 package control;
 
-import weka.core.Attribute;
-import weka.core.FastVector;
-import weka.core.Instances;
-import weka.core.converters.ArffLoader;
-import weka.core.converters.ArffSaver;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 public class ArffProva {
 
     public static void main(String[] args) throws Exception {
         for(int i=2; i<15; i++){
-            String partialName = "storm" + String.valueOf(i) + "Training.arff";
+            String partialName = "storm" + i + "Training.arff";
             String filePath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName;
 
             // Numero di riga da modificare

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkflowController {
-    private static String projectName = "STORM"; //change to STORM or BOOKKEEPER depending on the project
+    private static String projectName = "BOOKKEEPER"; //change to STORM or BOOKKEEPER depending on the project
 
     public static List<FinalInstance> instancesHalver(List<Version> versions, List<FinalInstance> instances) {
         versions = versions.subList(0, versions.size() / 2);
@@ -79,7 +79,7 @@ public class WorkflowController {
         List<FinalInstance> finalInstancesHalved = instancesHalver(versions, finalInstances);
 
         CsvWriter csvw = new CsvWriter();
-        csvw.csv_builder(finalInstancesHalved, "output.csv");
+        csvw.csvBuilder(finalInstancesHalved, "output.csv");
 
         ArffConverter ac = new ArffConverter();
         ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\output.csv", "output.arff");

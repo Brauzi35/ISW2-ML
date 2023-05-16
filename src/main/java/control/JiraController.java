@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 public class JiraController {
     //da jira voglio prendere issues e versioni
+    private static final String FIELDS = "fields";  // Compliant
     private String projectName;
 
     public JiraController(String projectName) {
@@ -63,7 +64,6 @@ public class JiraController {
             if(released.equalsIgnoreCase("true")){
                 try{
                     LocalDateTime dateRelease;
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                     String dateReleaseStr = json.getJSONObject(i).get("releaseDate").toString();
                     dateRelease = LocalDateTime.parse(dateReleaseStr + "T00:00:00");
                     Version element = new Version(nameRelease,dateRelease, releaseId, 0); //it was count
@@ -104,7 +104,6 @@ public class JiraController {
                     "%22%20%3D%20%22closed%22)%20AND%20%20%22resolution%22%20%3D%20%22fixed%22%20&fields=key," +
                     "resolutiondate,versions,created,fixVersions&startAt=" + lowerBound + "&maxResults=" + upperBound;
             JSONObject json = readJsonFromUrl(url);
-            //JSONArray bugsList = readJsonArrayFromUrl(url);
             JSONArray bugsList = json.getJSONArray("issues");
             total = json.getInt("total");
 
@@ -112,12 +111,12 @@ public class JiraController {
 
                 JSONObject jsonTrunc = bugsList.getJSONObject(lowerBound%MaxDisplay); //get single jsonObject from jsonArray
                 String key = jsonTrunc.get("key").toString();
-                String version = jsonTrunc.getJSONObject("fields").get("versions").toString();
-                String fv = jsonTrunc.getJSONObject("fields").get("fixVersions").toString();
-                String rDate = jsonTrunc.getJSONObject("fields").get("resolutiondate").toString();
-                String cDate = jsonTrunc.getJSONObject("fields").get("created").toString();
+                String version = jsonTrunc.getJSONObject(FIELDS).get("versions").toString();
+                String fv = jsonTrunc.getJSONObject(FIELDS).get("fixVersions").toString();
+                String rDate = jsonTrunc.getJSONObject(FIELDS).get("resolutiondate").toString();
+                String cDate = jsonTrunc.getJSONObject(FIELDS).get("created").toString();
                 //building JSONarray containing av for the considered issue
-                jsonAv = bugsList.getJSONObject(lowerBound%MaxDisplay).getJSONObject("fields").getJSONArray("versions");
+                jsonAv = bugsList.getJSONObject(lowerBound%MaxDisplay).getJSONObject(FIELDS).getJSONArray("versions");
                 Bug bug = bc.bugAssembler(versions, cDate, rDate, jsonAv, key);
                 bugs.add(bug);
 

@@ -66,7 +66,7 @@ public class WekaController {
         }
 
         CsvWriter csvw = new CsvWriter();
-        csvw.csv_builder(finalInstances, csvname);
+        csvw.csvBuilder(finalInstances, csvname);
 
         ArffConverter ac = new ArffConverter();
         ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + csvname, arffname);
@@ -91,7 +91,7 @@ public class WekaController {
 
 
             CsvWriter csvw = new CsvWriter();
-            csvw.csv_builder(instancesTesting, partialName + "Testing.csv");
+            csvw.csvBuilder(instancesTesting, partialName + "Testing.csv");
 
             ArffConverter ac = new ArffConverter();
             ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Testing.csv", partialName + "Testing.arff");
