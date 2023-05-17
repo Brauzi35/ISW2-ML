@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="evaded the end of my life">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="removed smells from CodeLineCounter.java">
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/FinalMetrics.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ArffConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +153,7 @@
       <workItem from="1683555901374" duration="17301000" />
       <workItem from="1683703975331" duration="25678000" />
       <workItem from="1683800573794" duration="18130000" />
-      <workItem from="1684223504185" duration="10206000" />
+      <workItem from="1684223504185" duration="11463000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -343,14 +344,20 @@
       <option name="project" value="LOCAL" />
       <updated>1684249279856</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="removed smells from CodeLineCounter.java">
+      <created>1684250551102</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1684250551102</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Bug.java update" />
     <MESSAGE value="Implemented version retrival and ordering" />
     <MESSAGE value="Implemented getBugs in JiraController - is still not working" />
     <MESSAGE value="Implemented BugController to compute fv,ov,iv and av" />
@@ -375,6 +382,7 @@
     <MESSAGE value="removed some smells" />
     <MESSAGE value="Creating new csv" />
     <MESSAGE value="evaded the end of my life" />
-    <option name="LAST_COMMIT_MESSAGE" value="evaded the end of my life" />
+    <MESSAGE value="removed smells from CodeLineCounter.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed smells from CodeLineCounter.java" />
   </component>
 </project>

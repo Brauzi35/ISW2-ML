@@ -1,14 +1,12 @@
 package control;
 
-import model.Version;
+import model.*;
 import weka.classifiers.Classifier;
 import weka.classifiers.CostMatrix;
 import weka.classifiers.meta.Bagging;
 import weka.classifiers.meta.CostSensitiveClassifier;
 import weka.classifiers.trees.RandomForest;
 
-import model.Bug;
-import model.FinalInstance;
 import model.Version;
 import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.CfsSubsetEval;
@@ -615,8 +613,17 @@ public class WekaEvaluationsController {
             listFiller(tp2);
             listFiller(tn2);
 
-
-            csvWriter.csvFinal(precision2, recall2, auc2, kappa2, tp2, tn2, fp2, fn2, projNameBis);
+            FinalMetrics fm = new FinalMetrics();
+            fm.setAuc(auc2);
+            fm.setFn(fn2);
+            fm.setKappa(kappa2);
+            fm.setPrecision(precision2);
+            fm.setProjname(projNameBis);
+            fm.setTn(tn2);
+            fm.setTp(tp2);
+            fm.setRecall(recall2);
+            fm.setFp(fp2);
+            csvWriter.csvFinal(fm);
 
         } catch (Exception e){
             System.out.println(e.getStackTrace());

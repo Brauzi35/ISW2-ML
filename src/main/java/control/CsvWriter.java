@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.FinalInstance;
+import model.FinalMetrics;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
@@ -47,8 +48,18 @@ public class CsvWriter {
 
     }
 
-    public void csvFinal(List<List<Double>> precision, List<List<Double>> recall, List<List<Double>> auc, List<List<Double>> kappa
-    , List<List<Double>> tp, List<List<Double>> tn, List<List<Double>> fp, List<List<Double>> fn, String projname){
+    public void csvFinal(FinalMetrics fm){
+        List<List<Double>> precision = fm.getPrecision();
+        List<List<Double>> recall = fm.getRecall();
+        List<List<Double>> auc = fm.getAuc();
+        List<List<Double>> kappa= fm.getKappa();
+        List<List<Double>> tp = fm.getTp();
+        List<List<Double>> tn = fm.getTn();
+        List<List<Double>> fp = fm.getFp();
+        List<List<Double>> fn = fm.getFn();
+        String projname = fm.getProjname();
+
+
         try {
             String[] headers = {"Dataset", "#Training Release", "Classifier", "Balancing", "Feature Selection"
                     , "Sensitivity", "TP", "FP", "TN", "FN", "Precision", "Recall", "AUC", "Kappa"};
@@ -73,6 +84,9 @@ public class CsvWriter {
                             break;
                         case 2:
                             temp.add("Ibk");
+                            break;
+                        default:
+                            temp.add("Error");
                             break;
                     }
                     temp.add("prova");
