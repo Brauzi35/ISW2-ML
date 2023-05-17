@@ -222,7 +222,7 @@ public class CodeLineCounter {
             i.setAvgLocAdded(lmc.getAvgLOC());
 
         }
-        return ic.locRepairer(instancesList, versionsHalved);
+        return ic.locRepairer(instancesList);
     }
 }
 

@@ -22,22 +22,20 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class InstanceController {
 
-    static String localPathBk;
-    static Git git;
+    private String localPathBk;
+    private Git git;
 
-    static Repository repository;
+    private Repository repository;
 
     public InstanceController(String projName) throws IOException {
-        localPathBk = "C:\\Users\\vlrbr\\Desktop\\" + projName;
-        try {
-            git = Git.open(new File(localPathBk));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        repository = git.getRepository();
+        this.localPathBk = "C:\\Users\\vlrbr\\Desktop\\" + projName;
+        this.git = Git.open(new File(this.localPathBk));
+        this.repository = this.git.getRepository();
     }
 
 
@@ -48,7 +46,6 @@ public class InstanceController {
     public int nAuthCounter(FinalInstance finalInstance) {
         int ret = 0;
         List<String> authors = new ArrayList<>();
-        List<RevCommit> rcl = new ArrayList<>();
         for (RevCommit rc : finalInstance.getJavafile().getCommitList()) {
             String author = rc.getAuthorIdent().getName();
             if (!authors.contains(author)) {
@@ -61,9 +58,9 @@ public class InstanceController {
 
     //size calculator
     public int countLinesOfCode(RevCommit commit, String filePath) throws IOException {
-        try (RevWalk walk = new RevWalk(repository)) {
+        try (RevWalk walk = new RevWalk(this.repository)) {
             RevTree tree = walk.parseCommit(commit.getId()).getTree();
-            try (TreeWalk treeWalk = new TreeWalk(repository)) {
+            try (TreeWalk treeWalk = new TreeWalk(this.repository)) {
                 treeWalk.addTree(tree);
                 treeWalk.setRecursive(true);
                 treeWalk.setFilter(PathFilter.create(filePath));
@@ -73,7 +70,7 @@ public class InstanceController {
                 }
 
                 ObjectId objectId = treeWalk.getObjectId(0);
-                try (ObjectReader reader = repository.newObjectReader()) {
+                try (ObjectReader reader = this.repository.newObjectReader()) {
                     ObjectLoader loader = reader.open(objectId);
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     loader.copyTo(byteArrayOutputStream);
@@ -83,7 +80,7 @@ public class InstanceController {
                     int linesOfCode = 0;
                     Scanner scanner = new Scanner(content);
                     while (scanner.hasNextLine()) {
-                        String line = scanner.nextLine().trim();
+                        scanner.nextLine().trim();
                         linesOfCode++;
 
                     }
@@ -91,16 +88,46 @@ public class InstanceController {
                 }
             }
         } catch(MissingObjectException mob){
+            Logger logger = Logger.getLogger(JiraController.class.getName());
+            String out ="MissingObjectException";
+            logger.log(Level.INFO, out);
 
         }
         return 0;
+    }
+
+    public List<FinalInstance> locRepBis(List<List<FinalInstance>> instDividedByName, List<FinalInstance> finalInstanceList3){
+        for (List<FinalInstance> li : instDividedByName) {
+            for (FinalInstance i : li) {
+
+                if (i.getSize() == 0 && li.size() > 1) { //if loc = 0 and is not the first version
+                    int ind = -1;
+                    for (FinalInstance j : finalInstanceList3) {
+
+
+                        if (j.getName().equals(i.getName()) && j.getVersion().equals(i.getVersion())) {
+
+                            ind = finalInstanceList3.indexOf(j);
+                        }
+                    }
+                    int curr = li.indexOf(i);
+                    if (ind != -1 && curr > 0) {
+
+                        finalInstanceList3.get(ind).setSize(li.get(curr - 1).getSize());
+                        i.setSize(li.get(curr - 1).getSize());
+                    }
+
+                }
+            }
+        }
+        return finalInstanceList3;
     }
 
 
 
 
     //files that have 0 commits will have loc = 0: we fix that by forcing loc of files x.y.z at loc x.y.z-1
-    public List<FinalInstance> locRepairer(List<FinalInstance> finalInstanceList, List<Version> versions) {
+    public List<FinalInstance> locRepairer(List<FinalInstance> finalInstanceList) {
 
         List<FinalInstance> finalInstanceList2 = finalInstanceList;
         List<FinalInstance> finalInstanceList3 = new ArrayList<>();
@@ -109,7 +136,6 @@ public class InstanceController {
         do {
             List<FinalInstance> temp = new ArrayList<>();
             FinalInstance curr = finalInstanceList.get(0);
-            //temp.add(curr);
             for (FinalInstance i : finalInstanceList) {
                 if (i.getName().equals(curr.getName())) {
                     temp.add(i);
@@ -120,7 +146,7 @@ public class InstanceController {
 
         } while (!finalInstanceList2.isEmpty());
 
-
+            /*
             for (List<FinalInstance> li : instDividedByName) {
                 for (FinalInstance i : li) {
 
@@ -145,7 +171,10 @@ public class InstanceController {
                 }
             }
 
-        return finalInstanceList3;
+             */
+
+        //return finalInstanceList3;
+        return locRepBis(instDividedByName, finalInstanceList3);
 
         }
 
@@ -191,11 +220,10 @@ public class InstanceController {
     public List<FinalInstance> isBuggy2(List<FinalInstance> finalInstances, List<Bug> bugs){
         List<FinalInstance> buggyFinalInstances = new ArrayList<>();
         for(FinalInstance i : finalInstances){
-            //System.out.println(i.getName());
+
             for(RevCommit rc : i.getJavafile().getCommitList()){
                 for(Bug b : bugs){
                     if(rc.getShortMessage().contains(b.getKey()+":")  || rc.getShortMessage().contains(b.getKey()+" ")){ //jira tag = shortmessage
-                        //System.out.println("bug key= " + b.getKey() + " short message: " + rc.getShortMessage());
                         List<FinalInstance> temp = foo(finalInstances, b.getAv(), i.getName());
                         buggyFinalInstances.addAll(temp);
                     }
@@ -226,7 +254,7 @@ public class InstanceController {
 
 
 
-                        diffFormatter.setRepository(repository);
+                        diffFormatter.setRepository(this.repository);
                         diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
 
                         List<DiffEntry> diffs = diffFormatter.scan(parentComm.getTree(), comm.getTree());
