@@ -146,34 +146,7 @@ public class InstanceController {
 
         } while (!finalInstanceList2.isEmpty());
 
-            /*
-            for (List<FinalInstance> li : instDividedByName) {
-                for (FinalInstance i : li) {
 
-                    if (i.getSize() == 0 && li.size() > 1) { //if loc = 0 and is not the first version
-                        int ind = -1;
-                        for (FinalInstance j : finalInstanceList3) {
-
-
-                            if (j.getName().equals(i.getName()) && j.getVersion().equals(i.getVersion())) {
-
-                                ind = finalInstanceList3.indexOf(j);
-                            }
-                        }
-                        int curr = li.indexOf(i);
-                        if (ind != -1 && curr > 0) {
-
-                            finalInstanceList3.get(ind).setSize(li.get(curr - 1).getSize());
-                            i.setSize(li.get(curr - 1).getSize());
-                        }
-
-                    }
-                }
-            }
-
-             */
-
-        //return finalInstanceList3;
         return locRepBis(instDividedByName, finalInstanceList3);
 
         }
@@ -235,6 +208,8 @@ public class InstanceController {
 
     //we say that a class is buggy if is touched by a commit that reports a jira issue
 
+
+
     public LinesMetricCollector getLinesMetrics(FinalInstance i, Version first) throws IOException{
             int removedLines = 0;
             int addedLines = 0; //addedLoc
@@ -258,7 +233,6 @@ public class InstanceController {
                         diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
 
                         List<DiffEntry> diffs = diffFormatter.scan(parentComm.getTree(), comm.getTree());
-                        System.out.println(i.getName() + " " + i.getVersion());
                         for (DiffEntry entry : diffs) {
                             if (entry.getNewPath().equals(i.getName())) {
                                 int tempAdd = 0;
@@ -298,14 +272,15 @@ public class InstanceController {
 
                         }
 
-                        System.out.println(counter);
-
-
                     } catch (ArrayIndexOutOfBoundsException e) {
-                        //commit has no parents: skip this commit, return an empty list and go on
+                        Logger logger = Logger.getLogger(JiraController.class.getName());
+                        String out ="ArrayIndexOutOfBoundsException";
+                        logger.log(Level.INFO, out);
 
                     } catch (MissingObjectException moe){
-                        //commit has no parents
+                        Logger logger = Logger.getLogger(JiraController.class.getName());
+                        String out ="MissingObjectException";
+                        logger.log(Level.INFO, out);
                     }
                 }
             }

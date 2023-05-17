@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="csv writer smells fix">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="InstanceController.java half smells fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -151,7 +152,7 @@
       <workItem from="1683555901374" duration="17301000" />
       <workItem from="1683703975331" duration="25678000" />
       <workItem from="1683800573794" duration="18130000" />
-      <workItem from="1684223504185" duration="12800000" />
+      <workItem from="1684223504185" duration="14004000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -356,14 +357,20 @@
       <option name="project" value="LOCAL" />
       <updated>1684307927778</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="InstanceController.java half smells fix">
+      <created>1684309276753</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1684309276754</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implemented getBugs in JiraController - is still not working" />
     <MESSAGE value="Implemented BugController to compute fv,ov,iv and av" />
     <MESSAGE value="Printing successfully bugs, not sure if cleanBugs implements the right constraints" />
     <MESSAGE value="Now CleanBugs implements the right contraints and fixed av data retrival: some fields releaseDate were empty. Also started working on proportion incremental" />
@@ -388,6 +395,7 @@
     <MESSAGE value="evaded the end of my life" />
     <MESSAGE value="removed smells from CodeLineCounter.java" />
     <MESSAGE value="csv writer smells fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="csv writer smells fix" />
+    <MESSAGE value="InstanceController.java half smells fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="InstanceController.java half smells fix" />
   </component>
 </project>

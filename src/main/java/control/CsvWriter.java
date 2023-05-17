@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.FinalInstance;
 import model.FinalMetrics;
@@ -64,7 +66,7 @@ public class CsvWriter {
             String[] headers = {"Dataset", "#Training Release", "Classifier", "Balancing", "Feature Selection"
                     , "Sensitivity", "TP", "FP", "TN", "FN", "Precision", "Recall", "AUC", "Kappa"};
 
-            System.out.println(precision + "\n " + tp);
+
 
             List<List<String>> data = new ArrayList<>();
             for (int i = 0; i < tp.size() - 1; i++) {
@@ -117,8 +119,11 @@ public class CsvWriter {
             printer.close();
             out.close();
 
-            System.out.println("fatto chiuso tutto");
         } catch (IOException ioException){
+
+            Logger logger = Logger.getLogger(JiraController.class.getName());
+            String out ="IOException";
+            logger.log(Level.INFO, out);
 
         }
 
