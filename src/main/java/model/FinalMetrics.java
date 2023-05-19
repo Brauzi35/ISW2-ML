@@ -14,6 +14,7 @@ public class FinalMetrics {
     private String projname;
 
     public FinalMetrics() {
+        //empty constructor
     }
 
     public List<List<Double>> getPrecision() {

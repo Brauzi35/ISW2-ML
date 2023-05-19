@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="InstanceController.java half smells fix">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="InstanceController.java some smells fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/FinalInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/FinalInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/FinalMetrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/FinalMetrics.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +153,11 @@
       <workItem from="1683555901374" duration="17301000" />
       <workItem from="1683703975331" duration="25678000" />
       <workItem from="1683800573794" duration="18130000" />
-      <workItem from="1684223504185" duration="14004000" />
+      <workItem from="1684223504185" duration="14117000" />
+      <workItem from="1684310429150" duration="13000" />
+      <workItem from="1684310470731" duration="156000" />
+      <workItem from="1684310662943" duration="12000" />
+      <workItem from="1684482407978" duration="1628000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -364,14 +369,20 @@
       <option name="project" value="LOCAL" />
       <updated>1684309276754</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="InstanceController.java some smells fix">
+      <created>1684310406262</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1684310406262</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Implemented BugController to compute fv,ov,iv and av" />
     <MESSAGE value="Printing successfully bugs, not sure if cleanBugs implements the right constraints" />
     <MESSAGE value="Now CleanBugs implements the right contraints and fixed av data retrival: some fields releaseDate were empty. Also started working on proportion incremental" />
     <MESSAGE value="fixed an indexing bug in releases retrival. Working on ProportionController.java" />
@@ -396,6 +407,7 @@
     <MESSAGE value="removed smells from CodeLineCounter.java" />
     <MESSAGE value="csv writer smells fix" />
     <MESSAGE value="InstanceController.java half smells fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="InstanceController.java half smells fix" />
+    <MESSAGE value="InstanceController.java some smells fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="InstanceController.java some smells fix" />
   </component>
 </project>

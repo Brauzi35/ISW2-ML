@@ -28,21 +28,7 @@ public class FinalInstance {
     private int nAuthors;
     private String buggyness;
 
-    public FinalInstance(JavaFile javafile, String version, String name, int size, int nr, int locAdded, int maxLocAdded, double avgLocAdded, int churn, int maxChurn, double avgChurn, int nAuthors) {
-        this.javafile = javafile;
-        this.version = javafile.getVersion().getName();
-        this.name = javafile.getFilename();
-        this.size = size;
-        this.nr = javafile.getCommitList().size(); //don't know if it is correct
-        this.locAdded = locAdded;
-        this.maxLocAdded = maxLocAdded;
-        this.avgLocAdded = avgLocAdded;
-        this.churn = churn;
-        this.maxChurn = maxChurn;
-        this.avgChurn = avgChurn;
-        this.nAuthors = nAuthors;
-        this.buggyness = "No";
-    }
+
 
     public FinalInstance(JavaFile javafile){
         this.javafile = javafile;

@@ -21,12 +21,14 @@ import java.util.List;
 public class WekaController {
 
     private String projName;
+    private String path;
 
-    static String projNameBis;
+    //private String projNameBis;
 
     public WekaController(String projName) {
         this.projName = projName;
-        projNameBis = projName;
+       // projNameBis = projName;
+        this.path = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\";
     }
 
     static List<List<Double>> precision = new ArrayList<>();
@@ -51,13 +53,13 @@ public class WekaController {
 
 
 
-        List<Bug> av_bugs = bc.definitiveAvBuilder(done1, versions);
+        List<Bug> avBugs = bc.definitiveAvBuilder(done1, versions);
 
         CodeLineCounter clc = new CodeLineCounter("C:\\Users\\vlrbr\\Desktop\\" + this.projName);
         List<FinalInstance> finalInstances = clc.instanceListBuilder(projectName, versions);
 
-        InstanceController ic = new InstanceController(projNameBis);
-        List<FinalInstance> buggyFinalInstances = ic.isBuggy2(finalInstances, av_bugs);
+        InstanceController ic = new InstanceController(this.projName);
+        List<FinalInstance> buggyFinalInstances = ic.isBuggy2(finalInstances, avBugs);
 
         for(FinalInstance i : finalInstances) {
             if (buggyFinalInstances.contains(i)) {
@@ -69,7 +71,7 @@ public class WekaController {
         csvw.csvBuilder(finalInstances, csvname);
 
         ArffConverter ac = new ArffConverter();
-        ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + csvname, arffname);
+        ac.csv2arff(this.path + csvname, arffname);
     }
 
 
@@ -94,12 +96,12 @@ public class WekaController {
             csvw.csvBuilder(instancesTesting, partialName + "Testing.csv");
 
             ArffConverter ac = new ArffConverter();
-            ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Testing.csv", partialName + "Testing.arff");
+            ac.csv2arff(this.path + partialName + "Testing.csv", partialName + "Testing.arff");
 
-            arff_paths_testing.add("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Testing.arff");
+            arff_paths_testing.add(this.path + partialName + "Testing.arff");
 
             recalculator(partialName+"Training.csv",partialName+"Training.arff", this.projName.toUpperCase(),v.getIndex()-1);
-            arff_paths_training.add("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + partialName + "Training.arff");
+            arff_paths_training.add(this.path + partialName + "Training.arff");
         }
 
 
@@ -513,9 +515,9 @@ public class WekaController {
 
 
 
-    public static void main(String args[]){
+    public void main(String args[]){
         try {
-            projNameBis = "storm";
+            this.projName = "storm";
             //9 classifiers
             for(int n = 0; n<9; n++){
                 recall.add(new ArrayList<>());
@@ -523,14 +525,14 @@ public class WekaController {
                 auc.add(new ArrayList<>());
                 kappa.add(new ArrayList<>());
             }
-            JiraController jc = new JiraController(projNameBis.toUpperCase());
+            JiraController jc = new JiraController(this.projName.toUpperCase());
             List<Version> versions = jc.getAllVersions();
             versions=versions.subList(0, versions.size()/2);
 
             for(Version v : versions){
 
-                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis+ String.valueOf(v.getIndex()) +"Training.arff";
-                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis + String.valueOf(v.getIndex()) +"Testing.arff";
+                String trainingPath = this.path+ this.projName+ v.getIndex() +"Training.arff";
+                String testingPath = this.path+ this.projName + v.getIndex() +"Testing.arff";
                 wekaFlowClassification(trainingPath, testingPath);
 
             }
