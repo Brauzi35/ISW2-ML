@@ -125,7 +125,7 @@ public class CodeLineCounter {
         return jfl;
     }
 
-    public void commFilePairerBis(RevCommit rc, Git git, List<List<RevCommit>> dividedCommits, List<JavaFile> ijfl, List<RevCommit> ircl) throws IOException {
+    public void commFilePairerBis(RevCommit rc, Git git, List<List<RevCommit>> dividedCommits, List<JavaFile> ijfl) throws IOException {
         if (!rc.equals(dividedCommits.get(0).get(0)) && rc.getParentCount()>0) {
             DiffFormatter formatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
             formatter.setRepository(git.getRepository());
@@ -161,7 +161,7 @@ public class CodeLineCounter {
             List<RevCommit> ircl = dividedCommits.get(i);
             for (RevCommit rc : ircl) {
 
-                commFilePairerBis(rc, git, dividedCommits, ijfl, ircl);
+                commFilePairerBis(rc, git, dividedCommits, ijfl);
 
             }
         }
@@ -179,7 +179,7 @@ public class CodeLineCounter {
         return retFinalInstances;
     }
 
-    public List<FinalInstance> instanceListBuilder(String projName, List<Version> versionsHalved) throws IOException, GitAPIException {
+    public List<FinalInstance> instanceListBuilder(String projName, List<Version> versionsHalved) throws IOException {
         List<RevCommit> commits = retrieveAllCommits();
         List<List<RevCommit>> dividedCommits = commitsDivider(commits, versionsHalved);
         commitListOrderer(dividedCommits);

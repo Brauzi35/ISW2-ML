@@ -87,15 +87,10 @@ public class BugController {
              and issues pre-release (IV=OV=FV)*/
 
             boolean include = true;
-            if(b.getFv()==null || b.getOv()==null || b.getOv().getReleaseDate().compareTo(b.getFv().getReleaseDate())>0){
-                 include = false;
-            }
 
-            else if(b.getIv()!=null && b.getOv().getReleaseDate().compareTo(b.getFv().getReleaseDate())==0 && b.getIv().getReleaseDate().compareTo(b.getOv().getReleaseDate())==0){
-                include = false;
-            }
-
-            else if(b.getIv()!=null && b.getOv().getReleaseDate().compareTo(b.getIv().getReleaseDate())<0){
+            if ((b.getFv() == null || b.getOv() == null || b.getOv().getReleaseDate().compareTo(b.getFv().getReleaseDate()) > 0) ||
+                    (b.getIv() != null && (b.getOv().getReleaseDate().compareTo(b.getFv().getReleaseDate()) == 0 && b.getIv().getReleaseDate().compareTo(b.getOv().getReleaseDate()) == 0)) ||
+                    (b.getIv() != null && b.getOv().getReleaseDate().compareTo(b.getIv().getReleaseDate()) < 0)) {
                 include = false;
             }
 

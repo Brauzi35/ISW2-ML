@@ -111,8 +111,11 @@ public class JiraController {
 
                 JSONObject jsonTrunc = bugsList.getJSONObject(lowerBound%MaxDisplay); //get single jsonObject from jsonArray
                 String key = jsonTrunc.get("key").toString();
+                /*
                 String version = jsonTrunc.getJSONObject(FIELDS).get("versions").toString();
                 String fv = jsonTrunc.getJSONObject(FIELDS).get("fixVersions").toString();
+
+                 */
                 String rDate = jsonTrunc.getJSONObject(FIELDS).get("resolutiondate").toString();
                 String cDate = jsonTrunc.getJSONObject(FIELDS).get("created").toString();
                 //building JSONarray containing av for the considered issue
@@ -123,7 +126,6 @@ public class JiraController {
 
             }
         } while(lowerBound<total);
-        List<Bug> cleanedBugs = bc.bugCleaner(bugs);
-        return cleanedBugs;
+        return bc.bugCleaner(bugs);
     }
 }

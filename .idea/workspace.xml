@@ -4,11 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="InstanceController.java some smells fix">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper2Testing.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper2Testing.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper2Training.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper2Training.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper3Testing.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper3Testing.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper3Training.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper3Training.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper4Testing.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper4Testing.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper4Training.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper4Training.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper5Testing.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper5Testing.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper5Training.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookkeeper5Training.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/output.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/BugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/BugController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/JiraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/JiraController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/FinalInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/FinalInstance.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/FinalMetrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/FinalMetrics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +47,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -43,10 +69,14 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.formatter.settings.were.checked&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.go.migrated.go.modules.settings&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -54,7 +84,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.WorkflowController">
+  <component name="RunManager" selected="Application.WekaEvaluationsController">
     <configuration name="ArffProva" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="control.ArffProva" />
       <module name="ISW2-ML" />
@@ -122,8 +152,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WorkflowController" />
         <item itemvalue="Application.WekaEvaluationsController" />
+        <item itemvalue="Application.WorkflowController" />
         <item itemvalue="Application.ArffProva" />
         <item itemvalue="Application.WekaController" />
         <item itemvalue="Application.CodeLineCounter" />
@@ -157,7 +187,16 @@
       <workItem from="1684310429150" duration="13000" />
       <workItem from="1684310470731" duration="156000" />
       <workItem from="1684310662943" duration="12000" />
-      <workItem from="1684482407978" duration="1628000" />
+      <workItem from="1684482407978" duration="1681000" />
+      <workItem from="1684484906190" duration="18000" />
+      <workItem from="1684488923025" duration="1116000" />
+      <workItem from="1684661081418" duration="58000" />
+      <workItem from="1684785386296" duration="783000" />
+      <workItem from="1708443297103" duration="2448000" />
+      <workItem from="1711710290777" duration="8000" />
+      <workItem from="1712147377242" duration="721000" />
+      <workItem from="1712587102243" duration="3424000" />
+      <workItem from="1712735345731" duration="6149000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -376,14 +415,20 @@
       <option name="project" value="LOCAL" />
       <updated>1684310406262</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="fixed some other smells 2">
+      <created>1684484201924</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1684484201924</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Printing successfully bugs, not sure if cleanBugs implements the right constraints" />
     <MESSAGE value="Now CleanBugs implements the right contraints and fixed av data retrival: some fields releaseDate were empty. Also started working on proportion incremental" />
     <MESSAGE value="fixed an indexing bug in releases retrival. Working on ProportionController.java" />
     <MESSAGE value="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1" />
@@ -408,6 +453,11 @@
     <MESSAGE value="csv writer smells fix" />
     <MESSAGE value="InstanceController.java half smells fix" />
     <MESSAGE value="InstanceController.java some smells fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="InstanceController.java some smells fix" />
+    <MESSAGE value="fixed some other smells 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 2" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>false</integration-enabled>
+    <settings-migrated>true</settings-migrated>
   </component>
 </project>

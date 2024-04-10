@@ -81,8 +81,8 @@ public class WekaController {
             String partialName = this.projName + String.valueOf(v.getIndex());
             //building testing set
             List<FinalInstance> instancesTesting = new ArrayList<>();
-            List<String> arff_paths_testing = new ArrayList<>();
-            List<String> arff_paths_training = new ArrayList<>();
+            List<String> arffpathstesting = new ArrayList<>();
+            List<String> arffpathstraining = new ArrayList<>();
 
             for(FinalInstance i : finalInstances){
                 if(i.getVersion().equals(v.getName())){
@@ -91,6 +91,7 @@ public class WekaController {
             }
 
 
+            String ta = "Testing.csv";
 
             CsvWriter csvw = new CsvWriter();
             csvw.csvBuilder(instancesTesting, partialName + "Testing.csv");
@@ -98,10 +99,10 @@ public class WekaController {
             ArffConverter ac = new ArffConverter();
             ac.csv2arff(this.path + partialName + "Testing.csv", partialName + "Testing.arff");
 
-            arff_paths_testing.add(this.path + partialName + "Testing.arff");
+            arffpathstesting.add(this.path + partialName + "Testing.arff");
 
             recalculator(partialName+"Training.csv",partialName+"Training.arff", this.projName.toUpperCase(),v.getIndex()-1);
-            arff_paths_training.add(this.path + partialName + "Training.arff");
+            arffpathstraining.add(this.path + partialName + "Training.arff");
         }
 
 

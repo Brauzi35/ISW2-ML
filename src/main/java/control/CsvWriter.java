@@ -21,6 +21,7 @@ public class CsvWriter {
         List<List<String>> data = new ArrayList<>();
 
         for(FinalInstance i : finalInstances){
+
             List<String> temp = new ArrayList<>();
             temp.add(i.getVersion());
             temp.add(i.getName());
@@ -50,6 +51,57 @@ public class CsvWriter {
 
     }
 
+    private String definingFunc(int i, int flag){ //flag: 1 = Balancing, 2 = Feature Selection, 3 = Sensitivity
+
+
+        
+        if(flag == 1){ //balancing
+            if(i < 6){
+                return "false";
+            } else if (i < 9) { //6-7-8
+                return "true";
+            } else if (i < 12) {
+                return "false";
+            } else if (i < 15) {
+                return "true";
+            } else if (i < 18) {
+                return "false";
+            } else if (i < 21) {
+                return "true";
+            } else{
+                return "true";
+            }
+        } else if (flag == 2) { //feature selection
+            if(i < 3){
+                return "false";
+            } else if (i < 6) {
+                return "true";
+            } else if (i < 12) {
+                return "false";
+            } else if (i < 18) {
+                return "true";
+            } else if (i < 21) {
+                return "false";
+            } else{
+                return "true";
+            }
+        } else if (flag == 3) { //sensitivity
+            if(i < 9){
+                return "false";
+            } else if (i < 12) {
+                return "true";
+            } else if (i < 15) {
+                return "false";
+            } else if (i < 21) {
+                return "true";
+            } else{
+                return "true";
+            }
+        }
+
+        return "error";
+    }
+
     public void csvFinal(FinalMetrics fm){
         List<List<Double>> precision = fm.getPrecision();
         List<List<Double>> recall = fm.getRecall();
@@ -71,12 +123,12 @@ public class CsvWriter {
             List<List<String>> data = new ArrayList<>();
             for (int i = 0; i < tp.size() - 1; i++) {
 
-
+                System.out.println("iterazione:" + i);
                 int reminder = i % 3;
-                for (int j = 0; j < tp.get(0).size() - 1; j++) {
+                for (int j = 0; j < tp.get(0).size(); j++) { //era size - 1
                     List<String> temp = new ArrayList<>();
                     temp.add(projname);
-                    temp.add(String.valueOf(j));
+                    temp.add(String.valueOf(j+1)); //not working
                     switch (reminder) {
                         case 0:
                             temp.add("Random Forest");
@@ -91,9 +143,9 @@ public class CsvWriter {
                             temp.add("Error");
                             break;
                     }
-                    temp.add("prova");
-                    temp.add("prova");
-                    temp.add("prova");
+                    temp.add(definingFunc(i, 1));
+                    temp.add(definingFunc(i, 2));
+                    temp.add(definingFunc(i, 3));
                     temp.add(String.valueOf(tp.get(i).get(j)));
                     temp.add(String.valueOf(fp.get(i).get(j)));
                     temp.add(String.valueOf(tn.get(i).get(j)));

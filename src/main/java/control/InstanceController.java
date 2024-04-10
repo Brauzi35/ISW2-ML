@@ -258,7 +258,6 @@ public class InstanceController {
 
 
                                 churn = churn + currentDiff;
-                                System.out.println(churn);
 
                                 if (currentLOC > maxLOC) {
                                     maxLOC = currentLOC;
@@ -284,7 +283,7 @@ public class InstanceController {
                     }
                 }
             }
-        if(counter.size()!= 0) {
+        if(!counter.isEmpty()) { //is not empty
             avgLOC = (double)addedLines/counter.size();
             avgChurn = (double)churn/counter.size();
 

@@ -513,10 +513,10 @@ public class WekaEvaluationsController {
                 recall.get(22).add(eval.recall(0));
                 auc.get(22).add(eval.areaUnderROC(0));
                 kappa.get(22).add(eval.kappa());
-                fp.get(23).add(eval.numFalsePositives(0));
-                fn.get(23).add(eval.numFalseNegatives(0));
-                tp.get(23).add(eval.numTruePositives(0));
-                tn.get(23).add(eval.numTrueNegatives(0));
+                fp.get(22).add(eval.numFalsePositives(0)); // was 23
+                fn.get(22).add(eval.numFalseNegatives(0));
+                tp.get(22).add(eval.numTruePositives(0));
+                tn.get(22).add(eval.numTrueNegatives(0));
 
 
 
@@ -529,10 +529,10 @@ public class WekaEvaluationsController {
                 recall.get(23).add(eval.recall(0));
                 auc.get(23).add(eval.areaUnderROC(0));
                 kappa.get(23).add(eval.kappa());
-                fp.get(24).add(eval.numFalsePositives(0));
-                fn.get(24).add(eval.numFalseNegatives(0));
-                tp.get(24).add(eval.numTruePositives(0));
-                tn.get(24).add(eval.numTrueNegatives(0));
+                fp.get(23).add(eval.numFalsePositives(0)); // was 24
+                fn.get(23).add(eval.numFalseNegatives(0));
+                tp.get(23).add(eval.numTruePositives(0));
+                tn.get(23).add(eval.numTrueNegatives(0));
 
             }
         } catch (Exception e){

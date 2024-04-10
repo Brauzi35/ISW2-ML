@@ -42,7 +42,7 @@ public class ProportionController {
                 if(a.getFv().getIndex()<b.getOv().getIndex()) previousBugs.add(a); //building a list of all complete bugs that were closed before the toDoBug considered was opened
             }
 
-            if(previousBugs.isEmpty()) System.out.println("sul bug: " + b.getKey() + "devo fare cold start");
+            if(previousBugs.isEmpty()) System.err.println("sul bug: " + b.getKey() + "devo fare cold start");
 
             else{
 
@@ -52,9 +52,9 @@ public class ProportionController {
                     totP += p;
 
                 }
-                //System.out.println("dimensione e totP " + pinc.size() + " " + totP);
+
                 retP = totP/pinc.size();
-                System.out.println("bug id: " + b.getKey() + " p is: " + retP);
+                System.err.println("bug id: " + b.getKey() + " p is: " + retP);
             }
             if(retP!=0) b.setIv(ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), retP ,versions));
             //
@@ -64,7 +64,7 @@ public class ProportionController {
             if(b.getIv()==null){
 
                 Version iv = ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), median ,versions);
-                System.out.println("sto calcolando iv del bug: " + b.getKey() + " che dovrebbe essere: "+ iv.getIndex());
+                System.err.println("sto calcolando iv del bug: " + b.getKey() + " che dovrebbe essere: "+ iv.getIndex());
                 b.setIv(iv);
             }
         }
@@ -83,11 +83,10 @@ public class ProportionController {
     //gets indexes and computes (FV - IV) / (FV - OV)
     public float pCalculator(int iv, int ov, int fv){
         float p;
-        float sub = (float)(fv - iv);
-        float den = (float)(fv - ov);
-        if(den == 0.0) den =(float)1;
+        float sub = (fv - iv);
+        float den = (fv - ov);
+        if(den == 0.0) den =1;
         p = sub/den;
-        //System.out.println("sub is: "+ sub + " den is: " + den + " p is: " + p);
         return p;
     }
     //IV = FV - (FV - OV) * P
@@ -115,30 +114,30 @@ public class ProportionController {
     public float coldStart() throws IOException {
         String projname = "TAJO";
         float p;
-        ArrayList<Float> all_p = new ArrayList<>();
+        ArrayList<Float> allp = new ArrayList<>();
         JiraController jc = new JiraController(projname);
 
         List<Version> vers = jc.getAllVersions();
         List<Bug> bgs = jc.getBugs(vers);
         for(Bug b : bgs){
-            if(b.getIv()!=null){
-                if(b.getOv().getIndex()!=b.getFv().getIndex()) {
+            if(b.getIv()!=null && b.getOv().getIndex()!=b.getFv().getIndex()){
+
                     p = pCalculator(b.getIv().getIndex(), b.getOv().getIndex(), b.getFv().getIndex());
-                    System.out.println(b.getKey() + "  p cold start: " + p);
-                    all_p.add(p);
-                }
+                    System.err.println(b.getKey() + "  p cold start: " + p);
+                    allp.add(p);
+
             }
         }
 
         //Collections.sort(all_p);
         float avg = 0;
-        for(float f : all_p){
+        for(float f : allp){
             avg+= f;
         }
-        System.out.println("sum: " + avg);
-        avg = avg/ all_p.size();
+        System.err.println("sum: " + avg);
+        avg = avg/ allp.size();
 
-        System.out.println("p is: " + avg);
+        System.err.println("p is: " + avg);
         return avg;
     }
 
