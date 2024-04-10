@@ -163,15 +163,16 @@ public class CodeLineCounter {
 
     public void commitsFilePairer(List<List<JavaFile>> listAllFiles, List<List<RevCommit>> dividedCommits) throws IOException {
         int size = listAllFiles.size();
-        Git git = Git.open(new File(this.localPath));
-        //for cycle for working on listAllFiles[i] and dividedCommits[i]
-        for (int i = 0; i < size; i++) {
-            List<JavaFile> ijfl = listAllFiles.get(i);
-            List<RevCommit> ircl = dividedCommits.get(i);
-            for (RevCommit rc : ircl) {
+        try (Git git = Git.open(new File(this.localPath))) {
+            //for cycle for working on listAllFiles[i] and dividedCommits[i]
+            for (int i = 0; i < size; i++) {
+                List<JavaFile> ijfl = listAllFiles.get(i);
+                List<RevCommit> ircl = dividedCommits.get(i);
+                for (RevCommit rc : ircl) {
 
-                commFilePairerBis(rc, git, dividedCommits, ijfl);
+                    commFilePairerBis(rc, git, dividedCommits, ijfl);
 
+                }
             }
         }
     }

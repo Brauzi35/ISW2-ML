@@ -39,15 +39,16 @@ public class CsvWriter {
         }
 
 
-        FileWriter out = new FileWriter(csvname);
-        CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers));
+        try (FileWriter out = new FileWriter(csvname)) {
+            try (CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers))) {
 
-        for (List<String> row : data) {
-            printer.printRecord(row);
+                for (List<String> row : data) {
+                    printer.printRecord(row);
+                }
+
+
+            }
         }
-
-        printer.close();
-        out.close();
 
     }
 
@@ -56,35 +57,9 @@ public class CsvWriter {
 
         
         if(flag == 1){ //balancing
-            if(i < 6){
-                return "false";
-            } else if (i < 9) { //6-7-8
-                return "true";
-            } else if (i < 12) {
-                return "false";
-            } else if (i < 15) {
-                return "true";
-            } else if (i < 18) {
-                return "false";
-            } else if (i < 21) {
-                return "true";
-            } else{
-                return "true";
-            }
+            return balancingFunc(i);
         } else if (flag == 2) { //feature selection
-            if(i < 3){
-                return "false";
-            } else if (i < 6) {
-                return "true";
-            } else if (i < 12) {
-                return "false";
-            } else if (i < 18) {
-                return "true";
-            } else if (i < 21) {
-                return "false";
-            } else{
-                return "true";
-            }
+            return featureSelectionFunc(i);
         } else if (flag == 3) { //sensitivity
             if(i < 9){
                 return "false";
@@ -100,6 +75,42 @@ public class CsvWriter {
         }
 
         return "error";
+    }
+
+    private String balancingFunc(int i){
+        String f = "false";
+        String t = "true";
+        if(i < 6){
+            return f;
+        } else if (i < 9) { //6-7-8
+            return t;
+        } else if (i < 12) {
+            return f;
+        } else if (i < 15) {
+            return t;
+        } else if (i < 18) {
+            return f;
+        } else if (i < 21) {
+            return t;
+        } else{
+            return "true";
+        }
+    }
+
+    private String featureSelectionFunc(int i){
+        if(i < 3){
+            return "false";
+        } else if (i < 6) {
+            return "true";
+        } else if (i < 12) {
+            return "false";
+        } else if (i < 18) {
+            return "true";
+        } else if (i < 21) {
+            return "false";
+        } else{
+            return "true";
+        }
     }
 
     public void csvFinal(FinalMetrics fm){
@@ -123,7 +134,6 @@ public class CsvWriter {
             List<List<String>> data = new ArrayList<>();
             for (int i = 0; i < tp.size() - 1; i++) {
 
-                System.out.println("iterazione:" + i);
                 int reminder = i % 3;
                 for (int j = 0; j < tp.get(0).size(); j++) { //era size - 1
                     List<String> temp = new ArrayList<>();
@@ -161,15 +171,15 @@ public class CsvWriter {
 
             }
 
-            FileWriter out = new FileWriter(projname + "FinalEval.csv");
-            CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers));
+            try (FileWriter out = new FileWriter(projname + "FinalEval.csv")) {
+                try (CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers))) {
 
-            for (List<String> row : data) {
-                printer.printRecord(row);
+                    for (List<String> row : data) {
+                        printer.printRecord(row);
+                    }
+
+                }
             }
-
-            printer.close();
-            out.close();
 
         } catch (IOException ioException){
 
