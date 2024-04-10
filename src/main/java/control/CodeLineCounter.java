@@ -127,27 +127,34 @@ public class CodeLineCounter {
 
     public void commFilePairerBis(RevCommit rc, Git git, List<List<RevCommit>> dividedCommits, List<JavaFile> ijfl) throws IOException {
         if (!rc.equals(dividedCommits.get(0).get(0)) && rc.getParentCount()>0) {
-            DiffFormatter formatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
-            formatter.setRepository(git.getRepository());
-            formatter.setDiffComparator(RawTextComparator.DEFAULT);
-            formatter.setDetectRenames(true);
 
-            ObjectId commitId = rc.getId();
-            RevCommit parent = rc.getParent(0);
-            if (parent != null) {
-                ObjectId parentId = parent.getId();
-                List<DiffEntry> diffs = formatter.scan(parentId, commitId);
-                for (DiffEntry diff : diffs) {
-                    for (JavaFile jf : ijfl) {
-                        if (jf.getFilename().equals(diff.getNewPath())) {
-                            List<RevCommit> fileCommits = jf.getCommitList();
-                            fileCommits.add(rc);
-                            jf.setCommitList(fileCommits);
-                            break;
-                        }
+            commFilePairerBisUnsmell(rc, git, dividedCommits, ijfl); //prova riduzione complessità
+
+
+        }
+    }
+
+    public void commFilePairerBisUnsmell(RevCommit rc, Git git, List<List<RevCommit>> dividedCommits, List<JavaFile> ijfl) throws IOException {
+        DiffFormatter formatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
+        formatter.setRepository(git.getRepository());
+        formatter.setDiffComparator(RawTextComparator.DEFAULT);
+        formatter.setDetectRenames(true);
+
+        ObjectId commitId = rc.getId();
+        RevCommit parent = rc.getParent(0);
+        if (parent != null) {
+            ObjectId parentId = parent.getId();
+            List<DiffEntry> diffs = formatter.scan(parentId, commitId);
+            for (DiffEntry diff : diffs) {
+                for (JavaFile jf : ijfl) {
+                    if (jf.getFilename().equals(diff.getNewPath())) {
+                        List<RevCommit> fileCommits = jf.getCommitList();
+                        fileCommits.add(rc);
+                        jf.setCommitList(fileCommits);
+                        break;
                     }
-
                 }
+
             }
         }
     }

@@ -4,34 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 2">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper2Testing.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper2Testing.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper2Training.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper2Training.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper3Testing.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper3Testing.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper3Training.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper3Training.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper4Testing.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper4Testing.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper4Training.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper4Training.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper5Testing.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper5Testing.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper5Training.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookkeeper5Training.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/BugController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/BugController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CodeLineCounter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/JiraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/JiraController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,7 +171,7 @@
       <workItem from="1711710290777" duration="8000" />
       <workItem from="1712147377242" duration="721000" />
       <workItem from="1712587102243" duration="3424000" />
-      <workItem from="1712735345731" duration="6149000" />
+      <workItem from="1712735345731" duration="6828000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -422,14 +397,20 @@
       <option name="project" value="LOCAL" />
       <updated>1684484201924</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="fixed some other smells 3">
+      <created>1712755531391</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1712755531391</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Now CleanBugs implements the right contraints and fixed av data retrival: some fields releaseDate were empty. Also started working on proportion incremental" />
     <MESSAGE value="fixed an indexing bug in releases retrival. Working on ProportionController.java" />
     <MESSAGE value="fixed a bug in proportion computing: now if ov == fv the result of their difference is forced to be 1" />
     <MESSAGE value="proportion is working, bugs are correctly halved." />
@@ -454,7 +435,8 @@
     <MESSAGE value="InstanceController.java half smells fix" />
     <MESSAGE value="InstanceController.java some smells fix" />
     <MESSAGE value="fixed some other smells 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 2" />
+    <MESSAGE value="fixed some other smells 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 3" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
