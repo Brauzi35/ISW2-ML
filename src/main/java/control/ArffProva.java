@@ -19,26 +19,29 @@ public class ArffProva {
             String newLineContent = "@attribute BUGGY {Yes,No}";
 
             // Leggi il contenuto del file originale
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            String line;
-            StringBuilder fileContent = new StringBuilder();
-            int currentLine = 1;
-            while ((line = reader.readLine()) != null) {
-                if (currentLine == lineToModify) {
-                    // Sostituisci la riga con il nuovo contenuto
-                    fileContent.append(newLineContent).append(System.lineSeparator());
-                } else {
-                    // Mantieni le righe originali
-                    fileContent.append(line).append(System.lineSeparator());
+            StringBuilder fileContent;
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                fileContent = new StringBuilder();
+                int currentLine = 1;
+                while ((line = reader.readLine()) != null) {
+                    if (currentLine == lineToModify) {
+                        // Sostituisci la riga con il nuovo contenuto
+                        fileContent.append(newLineContent).append(System.lineSeparator());
+                    } else {
+                        // Mantieni le righe originali
+                        fileContent.append(line).append(System.lineSeparator());
+                    }
+                    currentLine++;
                 }
-                currentLine++;
+                //reader.close();
             }
-            reader.close();
 
             // Scrivi il nuovo contenuto nel file ARFF
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-            writer.write(fileContent.toString());
-            writer.close();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                writer.write(fileContent.toString());
+                //writer.close();
+            }
         }
     }
 

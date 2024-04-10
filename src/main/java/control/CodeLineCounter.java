@@ -102,8 +102,10 @@ public class CodeLineCounter {
 
     public List<JavaFile> getFilesNew(RevCommit commit) throws IOException {
         ObjectId treeId = commit.getTree().getId();
-        Git git = Git.open(new File(this.localPath));
-        Repository repository = git.getRepository();
+        Repository repository;
+        try (Git git = Git.open(new File(this.localPath))) {
+            repository = git.getRepository();
+        }
         TreeWalk treeWalk = new TreeWalk(repository);
 
         treeWalk.reset(treeId);
@@ -128,13 +130,13 @@ public class CodeLineCounter {
     public void commFilePairerBis(RevCommit rc, Git git, List<List<RevCommit>> dividedCommits, List<JavaFile> ijfl) throws IOException {
         if (!rc.equals(dividedCommits.get(0).get(0)) && rc.getParentCount()>0) {
 
-            commFilePairerBisUnsmell(rc, git, dividedCommits, ijfl); //prova riduzione complessità
+            commFilePairerBisUnsmell(rc, git, ijfl); //prova riduzione complessità
 
 
         }
     }
 
-    public void commFilePairerBisUnsmell(RevCommit rc, Git git, List<List<RevCommit>> dividedCommits, List<JavaFile> ijfl) throws IOException {
+    public void commFilePairerBisUnsmell(RevCommit rc, Git git, List<JavaFile> ijfl) throws IOException {
         DiffFormatter formatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
         formatter.setRepository(git.getRepository());
         formatter.setDiffComparator(RawTextComparator.DEFAULT);
