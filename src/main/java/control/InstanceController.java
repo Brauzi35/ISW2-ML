@@ -78,11 +78,12 @@ public class InstanceController {
                     String content = new String(byteArrayOutputStream.toByteArray(), StandardCharsets.UTF_8);
 
                     int linesOfCode = 0;
-                    Scanner scanner = new Scanner(content);
-                    while (scanner.hasNextLine()) {
-                        scanner.nextLine().trim();
-                        linesOfCode++;
+                    try (Scanner scanner = new Scanner(content)) {
+                        while (scanner.hasNextLine()) {
+                            String bug = scanner.nextLine().trim();
+                            linesOfCode++;
 
+                        }
                     }
                     return linesOfCode;
                 }
