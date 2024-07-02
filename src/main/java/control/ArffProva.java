@@ -34,13 +34,13 @@ public class ArffProva {
                     }
                     currentLine++;
                 }
-                //reader.close();
+
             }
 
             // Scrivi il nuovo contenuto nel file ARFF
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
                 writer.write(fileContent.toString());
-                //writer.close();
+
             }
         }
     }

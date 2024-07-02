@@ -49,7 +49,7 @@ public class WorkflowController {
         List<Bug> av_bugs = bc.definitiveAvBuilder(done1, versions);
 
 
-        CodeLineCounter clc = new CodeLineCounter("C:\\Users\\vlrbr\\Desktop\\" + projectName.toLowerCase());
+        CodeLineCounter clc = new CodeLineCounter("C:\\Users\\vlrbr\\Desktop\\Testing\\" + projectName.toLowerCase());
         List<FinalInstance> finalInstances = clc.instanceListBuilder(projectName, versions);
 
         InstanceController ic = new InstanceController(projectName.toLowerCase());

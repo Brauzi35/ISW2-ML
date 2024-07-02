@@ -98,16 +98,17 @@ public class CsvWriter {
     }
 
     private String featureSelectionFunc(int i){
+        String f = "false";
         if(i < 3){
-            return "false";
+            return f;
         } else if (i < 6) {
             return "true";
         } else if (i < 12) {
-            return "false";
+            return f;
         } else if (i < 18) {
             return "true";
         } else if (i < 21) {
-            return "false";
+            return f;
         } else{
             return "true";
         }

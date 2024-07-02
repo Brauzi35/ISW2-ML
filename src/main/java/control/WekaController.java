@@ -55,7 +55,7 @@ public class WekaController {
 
         List<Bug> avBugs = bc.definitiveAvBuilder(done1, versions);
 
-        CodeLineCounter clc = new CodeLineCounter("C:\\Users\\vlrbr\\Desktop\\" + this.projName);
+        CodeLineCounter clc = new CodeLineCounter("C:\\Users\\vlrbr\\Desktop\\Testing\\" + this.projName);
         List<FinalInstance> finalInstances = clc.instanceListBuilder(projectName, versions);
 
         InstanceController ic = new InstanceController(this.projName);

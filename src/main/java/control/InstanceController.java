@@ -33,7 +33,7 @@ public class InstanceController {
     private Repository repository;
 
     public InstanceController(String projName) throws IOException {
-        this.localPathBk = "C:\\Users\\vlrbr\\Desktop\\" + projName;
+        this.localPathBk = "C:\\Users\\vlrbr\\Desktop\\Testing\\" + projName;
         this.git = Git.open(new File(this.localPathBk));
         this.repository = this.git.getRepository();
     }
@@ -80,7 +80,8 @@ public class InstanceController {
                     int linesOfCode = 0;
                     try (Scanner scanner = new Scanner(content)) {
                         while (scanner.hasNextLine()) {
-                            String bug = scanner.nextLine().trim();
+                            //String bug = scanner.nextLine().trim();
+                            scanner.nextLine().trim();
                             linesOfCode++;
 
                         }
@@ -97,6 +98,7 @@ public class InstanceController {
         return 0;
     }
 
+    /*
     public List<FinalInstance> locRepBis(List<List<FinalInstance>> instDividedByName, List<FinalInstance> finalInstanceList3){
         for (List<FinalInstance> li : instDividedByName) {
             for (FinalInstance i : li) {
@@ -124,6 +126,43 @@ public class InstanceController {
         return finalInstanceList3;
     }
 
+
+
+     */
+
+    public List<FinalInstance> locRepBis(List<List<FinalInstance>> instDividedByName, List<FinalInstance> finalInstanceList3) {
+        for (List<FinalInstance> li : instDividedByName) {
+            for (FinalInstance i : li) {
+                if (shouldUpdateSize(i, li)) {
+                    int ind = findInstanceIndex(finalInstanceList3, i);
+                    int curr = li.indexOf(i);
+                    if (ind != -1 && curr > 0) {
+                        updateSize(finalInstanceList3, li, ind, curr);
+                    }
+                }
+            }
+        }
+        return finalInstanceList3;
+    }
+
+    private boolean shouldUpdateSize(FinalInstance instance, List<FinalInstance> instanceList) {
+        return instance.getSize() == 0 && instanceList.size() > 1;
+    }
+
+    private int findInstanceIndex(List<FinalInstance> finalInstanceList, FinalInstance instance) {
+        for (FinalInstance j : finalInstanceList) {
+            if (j.getName().equals(instance.getName()) && j.getVersion().equals(instance.getVersion())) {
+                return finalInstanceList.indexOf(j);
+            }
+        }
+        return -1;
+    }
+
+    private void updateSize(List<FinalInstance> finalInstanceList, List<FinalInstance> instanceList, int instanceIndex, int currentIndex) {
+        int previousSize = instanceList.get(currentIndex - 1).getSize();
+        finalInstanceList.get(instanceIndex).setSize(previousSize);
+        instanceList.get(currentIndex).setSize(previousSize);
+    }
 
 
 
@@ -210,7 +249,7 @@ public class InstanceController {
     //we say that a class is buggy if is touched by a commit that reports a jira issue
 
 
-
+/*
     public LinesMetricCollector getLinesMetrics(FinalInstance i, Version first) throws IOException{
             int removedLines = 0;
             int addedLines = 0; //addedLoc
@@ -294,6 +333,97 @@ public class InstanceController {
 
 
 
+
+
+ */
+public LinesMetricCollector getLinesMetrics(FinalInstance i, Version first) throws IOException {
+    int removedLines = 0;
+    int addedLines = 0; //addedLoc
+    int maxLOC = 0;
+    double avgLOC = 0;
+    int churn = 0;
+    int maxChurn = 0;
+    double avgChurn = 0;
+
+    List<Integer> counter = new ArrayList<>();
+
+    for (RevCommit comm : i.getJavafile().getCommitList()) {
+        if (comm.getParentCount() > 0) {
+            RevCommit parentComm = comm.getParent(0);
+            try (DiffFormatter diffFormatter = createDiffFormatter()) {
+                List<DiffEntry> diffs = diffFormatter.scan(parentComm.getTree(), comm.getTree());
+                for (DiffEntry entry : diffs) {
+                    if (entry.getNewPath().equals(i.getName())) {
+                        Metrics metrics = calculateMetrics(i, first, comm, diffFormatter, entry);
+                        addedLines += metrics.addedLines;
+                        removedLines += metrics.removedLines;
+                        churn += metrics.churn;
+                        counter.add(metrics.tempAdd);
+
+                        maxLOC = Math.max(maxLOC, metrics.tempAdd);
+                        maxChurn = Math.max(maxChurn, metrics.churn);
+                    }
+                }
+            } catch (ArrayIndexOutOfBoundsException | MissingObjectException e) {
+                logException(e);
+            }
+        }
+    }
+
+    if (!counter.isEmpty()) {
+        avgLOC = (double) addedLines / counter.size();
+        avgChurn = (double) churn / counter.size();
+    }
+
+    return new LinesMetricCollector(removedLines, addedLines, maxLOC, avgLOC, churn, maxChurn, avgChurn);
+}
+
+    private DiffFormatter createDiffFormatter() {
+        DiffFormatter diffFormatter = new DiffFormatter(DisabledOutputStream.INSTANCE);
+        diffFormatter.setRepository(this.repository);
+        diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
+        return diffFormatter;
+    }
+
+    private Metrics calculateMetrics(FinalInstance i, Version first, RevCommit comm, DiffFormatter diffFormatter, DiffEntry entry) throws IOException {
+        int tempAdd = 0;
+        int tempRem = 0;
+        int currentDiff = 0;
+
+        if (isFirstCommitOfVersion(i, first, comm)) {
+            tempAdd = countLinesOfCode(comm, i.getName());
+        } else {
+            tempAdd = getAddedLines(diffFormatter, entry);
+            tempRem = getDeletedLines(diffFormatter, entry);
+        }
+
+        currentDiff = Math.abs(tempAdd - tempRem);
+
+        return new Metrics(tempAdd, tempRem, currentDiff);
+    }
+
+    private boolean isFirstCommitOfVersion(FinalInstance i, Version first, RevCommit comm) {
+        return i.getVersion().equals(first.getName()) && i.getJavafile().getCommitList().indexOf(comm) == 0;
+    }
+
+    private void logException(Exception e) {
+        Logger logger = Logger.getLogger(JiraController.class.getName());
+        logger.log(Level.INFO, e.getClass().getSimpleName(), e);
+    }
+
+    private static class Metrics {
+        int addedLines;
+        int removedLines;
+        int churn;
+        int tempAdd;
+
+        Metrics(int tempAdd, int tempRem, int churn) {
+            this.addedLines = tempAdd;
+            this.removedLines = tempRem;
+            this.churn = churn;
+            this.tempAdd = tempAdd;
+        }
+    }
 
 
 
