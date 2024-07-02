@@ -10,6 +10,7 @@ import java.util.List;
 
 
 public class ProportionController {
+    /*
     List<Bug> iterativeProportion(List<Bug> bugs, List<Version> versions) throws IOException {
 
         List<Bug> toDoBugs = new ArrayList<>();
@@ -78,6 +79,91 @@ public class ProportionController {
         //return toDoBugs;
         return retBugs;
     }
+
+     */
+
+    List<Bug> iterativeProportion(List<Bug> bugs, List<Version> versions) throws IOException {
+        List<Bug> toDoBugs = new ArrayList<>();
+        List<Bug> completeBugs = new ArrayList<>();
+        classifyBugs(bugs, toDoBugs, completeBugs);
+
+        calculateProportions(toDoBugs, completeBugs, versions);
+        updateInitialVersions(toDoBugs, versions);
+
+        return replaceBugs(bugs, toDoBugs);
+    }
+
+    private void classifyBugs(List<Bug> bugs, List<Bug> toDoBugs, List<Bug> completeBugs) {
+        int count = bugs.size();
+        for (Bug b : bugs) {
+            b.setIndex(count);
+            count--;
+            if (b.getIv() == null) {
+                toDoBugs.add(b);
+            } else if (b.getIv() != null && b.getOv().getIndex() != b.getFv().getIndex()) {
+                completeBugs.add(b);
+            }
+        }
+    }
+
+    private void calculateProportions(List<Bug> toDoBugs, List<Bug> completeBugs, List<Version> versions) throws IOException {
+        for (Bug b : toDoBugs) {
+            List<Bug> previousBugs = new ArrayList<>();
+            float retP = calculateRetP(b, completeBugs, previousBugs);
+
+            if (retP != 0) {
+                b.setIv(ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), retP, versions));
+            }
+        }
+    }
+
+    private float calculateRetP(Bug b, List<Bug> completeBugs, List<Bug> previousBugs) {
+        float totP = 0;
+        List<Float> pinc = new ArrayList<>();
+
+        for (Bug a : completeBugs) {
+            if (a.getFv().getIndex() < b.getOv().getIndex()) {
+                previousBugs.add(a);
+            }
+        }
+
+        if (!previousBugs.isEmpty()) {
+            for (Bug pb : previousBugs) {
+                float p = pCalculator(pb.getIv().getIndex(), pb.getOv().getIndex(), pb.getFv().getIndex());
+                pinc.add(p);
+                totP += p;
+            }
+            float retP = totP / pinc.size();
+            System.err.println("bug id: " + b.getKey() + " p is: " + retP);
+            return retP;
+        }
+        return 0;
+    }
+
+    private void updateInitialVersions(List<Bug> toDoBugs, List<Version> versions) throws IOException {
+        float median = coldStart();
+        for (Bug b : toDoBugs) {
+            if (b.getIv() == null) {
+                Version iv = ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), median, versions);
+                System.err.println("sto calcolando iv del bug: " + b.getKey() + " che dovrebbe essere: " + iv.getIndex());
+                b.setIv(iv);
+            }
+        }
+    }
+
+    private List<Bug> replaceBugs(List<Bug> bugs, List<Bug> toDoBugs) {
+        List<Bug> retBugs = new ArrayList<>(bugs);
+        for (Bug db : toDoBugs) {
+            for (int i = 0; i < retBugs.size(); i++) {
+                if (retBugs.get(i).getKey().equals(db.getKey())) {
+                    retBugs.set(i, db);
+                }
+            }
+        }
+        return retBugs;
+    }
+
+
     //gets indexes and computes (FV - IV) / (FV - OV)
     public float pCalculator(int iv, int ov, int fv){
         float p;

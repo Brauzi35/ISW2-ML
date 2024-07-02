@@ -23,13 +23,16 @@ public class WekaController {
     private String projName;
     private String path;
 
-    //private String projNameBis;
 
     public WekaController(String projName) {
         this.projName = projName;
-       // projNameBis = projName;
-        this.path = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\";
+        this.path = getDefaultPath();
     }
+
+    private String getDefaultPath() {
+        return "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\";
+    }
+
 
     static List<List<Double>> precision = new ArrayList<>();
     static List<List<Double>> recall = new ArrayList<>();
@@ -92,17 +95,19 @@ public class WekaController {
 
 
             String ta = "Testing.csv";
+            String tarff = "Testing.arff";
+            String trarff = "Training.arff";
 
             CsvWriter csvw = new CsvWriter();
-            csvw.csvBuilder(instancesTesting, partialName + "Testing.csv");
+            csvw.csvBuilder(instancesTesting, partialName + ta);
 
             ArffConverter ac = new ArffConverter();
-            ac.csv2arff(this.path + partialName + "Testing.csv", partialName + "Testing.arff");
+            ac.csv2arff(this.path + partialName + ta, partialName + tarff);
 
-            arffpathstesting.add(this.path + partialName + "Testing.arff");
+            arffpathstesting.add(this.path + partialName + tarff);
 
-            recalculator(partialName+"Training.csv",partialName+"Training.arff", this.projName.toUpperCase(),v.getIndex()-1);
-            arffpathstraining.add(this.path + partialName + "Training.arff");
+            recalculator(partialName+"Training.csv",partialName+trarff, this.projName.toUpperCase(),v.getIndex()-1);
+            arffpathstraining.add(this.path + partialName + trarff);
         }
 
 
@@ -404,7 +409,7 @@ public class WekaController {
 
 
         } catch (Exception e){
-            System.out.println("Naive feature selection error! \n"
+            System.out.println("Naive feature selection error!!! \n"
                     + e.getMessage());
         }
 
@@ -453,7 +458,7 @@ public class WekaController {
 
 
         } catch (Exception e){
-            System.out.println("Naive feature selection error! \n"
+            System.out.println("Naive feature selection error!! \n"
                     + e.getMessage());
         }
 
@@ -516,9 +521,9 @@ public class WekaController {
 
 
 
-    public void main(String args[]){
+    public void main(){
         try {
-            this.projName = "storm";
+            this.projName = "bookkeeper"; //storm
             //9 classifiers
             for(int n = 0; n<9; n++){
                 recall.add(new ArrayList<>());

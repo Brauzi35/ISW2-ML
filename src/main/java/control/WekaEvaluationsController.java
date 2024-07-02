@@ -1,27 +1,20 @@
 package control;
 
-import model.*;
-import weka.classifiers.Classifier;
-import weka.classifiers.CostMatrix;
-import weka.classifiers.meta.Bagging;
-import weka.classifiers.meta.CostSensitiveClassifier;
-import weka.classifiers.trees.RandomForest;
-
+import model.FinalMetrics;
 import model.Version;
 import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.CfsSubsetEval;
+import weka.classifiers.CostMatrix;
 import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.lazy.IBk;
+import weka.classifiers.meta.CostSensitiveClassifier;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.supervised.attribute.AttributeSelection;
 import weka.filters.supervised.instance.SMOTE;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,6 +39,7 @@ public class WekaEvaluationsController {
         this.projName = projName;
         projNameBis = projName;
     }
+
 
     private static void classify(String trainingPath, String testingPath, boolean os, boolean fs, boolean cs) throws Exception {
         DataSource source = new DataSource(trainingPath);
@@ -541,6 +535,10 @@ public class WekaEvaluationsController {
 
 
     }
+
+
+
+
 
 
 
