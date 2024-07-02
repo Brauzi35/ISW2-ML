@@ -2,21 +2,19 @@ package control;
 
 import model.Bug;
 import model.Version;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class JiraController {
     //da jira voglio prendere issues e versioni
@@ -88,7 +86,6 @@ public class JiraController {
     public List<Bug> getBugs(List<Version> versions) throws IOException {
         final int MaxDisplay = 1000;
 
-        //List<Version> versions = this.getAllVersions(); //potrebbe esserci (quasi sicuro) un problema con project name
         List<Bug> bugs = new ArrayList<>();
         BugController bc = new BugController();
         int upperBound = 0;
@@ -111,11 +108,7 @@ public class JiraController {
 
                 JSONObject jsonTrunc = bugsList.getJSONObject(lowerBound%MaxDisplay); //get single jsonObject from jsonArray
                 String key = jsonTrunc.get("key").toString();
-                /*
-                String version = jsonTrunc.getJSONObject(FIELDS).get("versions").toString();
-                String fv = jsonTrunc.getJSONObject(FIELDS).get("fixVersions").toString();
 
-                 */
                 String rDate = jsonTrunc.getJSONObject(FIELDS).get("resolutiondate").toString();
                 String cDate = jsonTrunc.getJSONObject(FIELDS).get("created").toString();
                 //building JSONarray containing av for the considered issue

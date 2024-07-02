@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 5">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 6">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/JiraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/JiraController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +172,9 @@
       <workItem from="1711710290777" duration="8000" />
       <workItem from="1712147377242" duration="721000" />
       <workItem from="1712587102243" duration="3424000" />
-      <workItem from="1712735345731" duration="9577000" />
+      <workItem from="1712735345731" duration="10718000" />
+      <workItem from="1715259279969" duration="598000" />
+      <workItem from="1715769478754" duration="96000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -425,14 +428,20 @@
       <option name="project" value="LOCAL" />
       <updated>1712766481672</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="fixed some other smells 6">
+      <created>1712767089579</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1712767089579</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed a bug in cold start: was considering the median for the single project" />
     <MESSAGE value="implemented commits and files info retrival with jgit" />
     <MESSAGE value="implemented full git commit and file retrival: now is possible ot obtain all project files with relative commits" />
     <MESSAGE value="implemented method locRepairer in InstanceController.java" />
@@ -457,7 +466,8 @@
     <MESSAGE value="fixed some other smells codeLineCounter" />
     <MESSAGE value="fixed some other smells 4" />
     <MESSAGE value="fixed some other smells 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 5" />
+    <MESSAGE value="fixed some other smells 6" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 6" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

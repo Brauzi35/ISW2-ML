@@ -42,9 +42,8 @@ public class ProportionController {
                 if(a.getFv().getIndex()<b.getOv().getIndex()) previousBugs.add(a); //building a list of all complete bugs that were closed before the toDoBug considered was opened
             }
 
-            if(previousBugs.isEmpty()) System.err.println("sul bug: " + b.getKey() + "devo fare cold start");
 
-            else{
+            if(!previousBugs.isEmpty()){
 
                 for(Bug pb : previousBugs){
                     float p = pCalculator(pb.getIv().getIndex(), pb.getOv().getIndex(), pb.getFv().getIndex());
@@ -57,7 +56,6 @@ public class ProportionController {
                 System.err.println("bug id: " + b.getKey() + " p is: " + retP);
             }
             if(retP!=0) b.setIv(ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), retP ,versions));
-            //
         }
         float median = coldStart();
         for(Bug b : toDoBugs){
@@ -123,7 +121,6 @@ public class ProportionController {
             if(b.getIv()!=null && b.getOv().getIndex()!=b.getFv().getIndex()){
 
                     p = pCalculator(b.getIv().getIndex(), b.getOv().getIndex(), b.getFv().getIndex());
-                    System.err.println(b.getKey() + "  p cold start: " + p);
                     allp.add(p);
 
             }
@@ -134,10 +131,8 @@ public class ProportionController {
         for(float f : allp){
             avg+= f;
         }
-        System.err.println("sum: " + avg);
-        avg = avg/ allp.size();
 
-        System.err.println("p is: " + avg);
+        avg = avg/ allp.size();
         return avg;
     }
 
