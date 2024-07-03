@@ -14,8 +14,8 @@ import org.apache.commons.csv.CSVPrinter;
 
 public class CsvWriter {
 
-    final String fls = "false";
-    final String tr = "true";
+    static final String fls = "false";
+    static final String tr = "true";
 
     public void csvBuilder(List<FinalInstance> finalInstances, String csvname) throws IOException {
         String[] headers = {"Version", "Filename", "NR", "NAUTHORS" ,"LOC", "LOC_ADDED", "AVGLOCADDED"

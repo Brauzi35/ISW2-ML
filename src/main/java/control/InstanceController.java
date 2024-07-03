@@ -84,7 +84,7 @@ public class InstanceController {
                         while (scanner.hasNextLine()) {
                             String res = scanner.nextLine().trim();
                             if(linesOfCode%1000 == 0){
-                                logger.info("Processing input: " + res);
+                                logger.info(res);
                             }
 
                             linesOfCode++;
@@ -95,9 +95,9 @@ public class InstanceController {
                 }
             }
         } catch(MissingObjectException mob){
-            Logger logger = Logger.getLogger(JiraController.class.getName());
+            Logger loggerj = Logger.getLogger(JiraController.class.getName());
             String out ="MissingObjectException";
-            logger.log(Level.INFO, out);
+            loggerj.log(Level.INFO, out);
 
         }
         return 0;
@@ -294,8 +294,8 @@ public LinesMetricCollector getLinesMetrics(FinalInstance i, Version first) thro
     }
 
     private void logException(Exception e) {
-        Logger logger = Logger.getLogger(JiraController.class.getName());
-        logger.log(Level.INFO, e.getClass().getSimpleName(), e);
+        Logger loggerjj = Logger.getLogger(JiraController.class.getName());
+        loggerjj.log(Level.INFO, e.getClass().getSimpleName(), e);
     }
 
     private static class Metrics {

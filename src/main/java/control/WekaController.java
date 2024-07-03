@@ -17,6 +17,7 @@ import weka.filters.supervised.instance.SMOTE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -382,7 +383,7 @@ public class WekaController {
             logger.info("precision: " + precision + "\n recall: " + recall + "\n auc: " + auc + "\n kappa: " + kappa);
 
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error Occurred!!!! ", e);
+            logger.log(Level.SEVERE, e.getMessage());
         }
     }
 }

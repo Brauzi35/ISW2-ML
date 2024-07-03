@@ -62,8 +62,8 @@ public class ProportionController {
                 pinc.add(p);
                 totP += p;
             }
-            float retP = totP / pinc.size();
-            return retP;
+
+            return (totP / pinc.size());
         }
         return 0;
     }
