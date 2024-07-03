@@ -14,6 +14,9 @@ import org.apache.commons.csv.CSVPrinter;
 
 public class CsvWriter {
 
+    final String fls = "false";
+    final String tr = "true";
+
     public void csvBuilder(List<FinalInstance> finalInstances, String csvname) throws IOException {
         String[] headers = {"Version", "Filename", "NR", "NAUTHORS" ,"LOC", "LOC_ADDED", "AVGLOCADDED"
                 , "MAXLOCADDED", "CHURN", "AVGCHURN", "MAXCHURN", "BUGGY"};
@@ -62,15 +65,15 @@ public class CsvWriter {
             return featureSelectionFunc(i);
         } else if (flag == 3) { //sensitivity
             if(i < 9){
-                return "false";
+                return fls;
             } else if (i < 12) {
-                return "true";
+                return tr;
             } else if (i < 15) {
-                return "false";
+                return fls;
             } else if (i < 21) {
-                return "true";
+                return tr;
             } else{
-                return "true";
+                return tr;
             }
         }
 
@@ -78,39 +81,38 @@ public class CsvWriter {
     }
 
     private String balancingFunc(int i){
-        String f = "false";
-        String t = "true";
+
         if(i < 6){
-            return f;
+            return fls;
         } else if (i < 9) { //6-7-8
-            return t;
+            return tr;
         } else if (i < 12) {
-            return f;
+            return fls;
         } else if (i < 15) {
-            return t;
+            return tr;
         } else if (i < 18) {
-            return f;
+            return fls;
         } else if (i < 21) {
-            return t;
+            return tr;
         } else{
-            return "true";
+            return tr;
         }
     }
 
     private String featureSelectionFunc(int i){
-        String f = "false";
+        String f = fls;
         if(i < 3){
             return f;
         } else if (i < 6) {
-            return "true";
+            return tr;
         } else if (i < 12) {
             return f;
         } else if (i < 18) {
-            return "true";
+            return tr;
         } else if (i < 21) {
             return f;
         } else{
-            return "true";
+            return tr;
         }
     }
 

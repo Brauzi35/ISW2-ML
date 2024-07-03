@@ -26,6 +26,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class InstanceController {
+    private static final Logger logger = Logger.getLogger(InstanceController.class.getName());
+
 
     private String localPathBk;
     private Git git;
@@ -80,8 +82,11 @@ public class InstanceController {
                     int linesOfCode = 0;
                     try (Scanner scanner = new Scanner(content)) {
                         while (scanner.hasNextLine()) {
-                            //String bug = scanner.nextLine().trim();
-                            scanner.nextLine().trim();
+                            String res = scanner.nextLine().trim();
+                            if(linesOfCode%1000 == 0){
+                                logger.info("Processing input: " + res);
+                            }
+
                             linesOfCode++;
 
                         }
@@ -97,38 +102,6 @@ public class InstanceController {
         }
         return 0;
     }
-
-    /*
-    public List<FinalInstance> locRepBis(List<List<FinalInstance>> instDividedByName, List<FinalInstance> finalInstanceList3){
-        for (List<FinalInstance> li : instDividedByName) {
-            for (FinalInstance i : li) {
-
-                if (i.getSize() == 0 && li.size() > 1) { //if loc = 0 and is not the first version
-                    int ind = -1;
-                    for (FinalInstance j : finalInstanceList3) {
-
-
-                        if (j.getName().equals(i.getName()) && j.getVersion().equals(i.getVersion())) {
-
-                            ind = finalInstanceList3.indexOf(j);
-                        }
-                    }
-                    int curr = li.indexOf(i);
-                    if (ind != -1 && curr > 0) {
-
-                        finalInstanceList3.get(ind).setSize(li.get(curr - 1).getSize());
-                        i.setSize(li.get(curr - 1).getSize());
-                    }
-
-                }
-            }
-        }
-        return finalInstanceList3;
-    }
-
-
-
-     */
 
     public List<FinalInstance> locRepBis(List<List<FinalInstance>> instDividedByName, List<FinalInstance> finalInstanceList3) {
         for (List<FinalInstance> li : instDividedByName) {
@@ -249,93 +222,7 @@ public class InstanceController {
     //we say that a class is buggy if is touched by a commit that reports a jira issue
 
 
-/*
-    public LinesMetricCollector getLinesMetrics(FinalInstance i, Version first) throws IOException{
-            int removedLines = 0;
-            int addedLines = 0; //addedLoc
-            int maxLOC = 0;
-            double avgLOC = 0;
-            int churn = 0;
-            int maxChurn = 0;
-            double avgChurn = 0;
 
-            List<Integer> counter = new ArrayList<>();
-
-            for(RevCommit comm : i.getJavafile().getCommitList()) {
-                RevCommit parentComm = comm.getParent(0);
-                if(comm.getParentCount()>0) {
-
-                    try (DiffFormatter diffFormatter = new DiffFormatter(DisabledOutputStream.INSTANCE)) {
-
-
-
-                        diffFormatter.setRepository(this.repository);
-                        diffFormatter.setDiffComparator(RawTextComparator.DEFAULT);
-
-                        List<DiffEntry> diffs = diffFormatter.scan(parentComm.getTree(), comm.getTree());
-                        for (DiffEntry entry : diffs) {
-                            if (entry.getNewPath().equals(i.getName())) {
-                                int tempAdd = 0;
-                                int tempRem = 0;
-                                if (i.getVersion().equals(first.getName()) && i.getJavafile().getCommitList().indexOf(comm) == 0) {
-                                    //cambiare
-                                    int tempcount = countLinesOfCode(comm, i.getName());
-                                    addedLines += tempcount;
-                                    tempAdd = tempcount;
-                                    counter.add(tempcount);
-                                } else {
-                                    tempAdd = getAddedLines(diffFormatter, entry);
-                                    tempRem = getDeletedLines(diffFormatter, entry);
-                                    counter.add(tempAdd);
-
-                                    addedLines += tempAdd;
-                                    removedLines += tempRem;
-                                }
-
-
-                                int currentLOC = tempAdd;
-                                int currentDiff = Math.abs(tempAdd - tempRem);
-
-
-                                churn = churn + currentDiff;
-
-                                if (currentLOC > maxLOC) {
-                                    maxLOC = currentLOC;
-                                }
-                                if (currentDiff > maxChurn) {
-                                    maxChurn = currentDiff;
-                                }
-
-
-                            }
-
-                        }
-
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        Logger logger = Logger.getLogger(JiraController.class.getName());
-                        String out ="ArrayIndexOutOfBoundsException";
-                        logger.log(Level.INFO, out);
-
-                    } catch (MissingObjectException moe){
-                        Logger logger = Logger.getLogger(JiraController.class.getName());
-                        String out ="MissingObjectException";
-                        logger.log(Level.INFO, out);
-                    }
-                }
-            }
-        if(!counter.isEmpty()) { //is not empty
-            avgLOC = (double)addedLines/counter.size();
-            avgChurn = (double)churn/counter.size();
-
-        }
-            return new LinesMetricCollector(removedLines, addedLines, maxLOC, avgLOC, churn, maxChurn, avgChurn);
-        }
-
-
-
-
-
- */
 public LinesMetricCollector getLinesMetrics(FinalInstance i, Version first) throws IOException {
     int removedLines = 0;
     int addedLines = 0; //addedLoc

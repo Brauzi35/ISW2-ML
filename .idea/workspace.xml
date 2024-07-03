@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 7 omg i'm flying">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 8 still working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +176,8 @@
       <workItem from="1712735345731" duration="10718000" />
       <workItem from="1715259279969" duration="598000" />
       <workItem from="1715769478754" duration="96000" />
-      <workItem from="1719927817073" duration="5326000" />
+      <workItem from="1719927817073" duration="7363000" />
+      <workItem from="1720017057982" duration="1388000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -451,14 +452,20 @@
       <option name="project" value="LOCAL" />
       <updated>1719930706260</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="fixed some other smells 8 still working">
+      <created>1719935051057</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1719935051057</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="implemented full git commit and file retrival: now is possible ot obtain all project files with relative commits" />
     <MESSAGE value="implemented method locRepairer in InstanceController.java" />
     <MESSAGE value="achived csv writing" />
     <MESSAGE value="csv commit" />
@@ -483,7 +490,8 @@
     <MESSAGE value="fixed some other smells 5" />
     <MESSAGE value="fixed some other smells 6" />
     <MESSAGE value="fixed some other smells 7 omg i'm flying" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 7 omg i'm flying" />
+    <MESSAGE value="fixed some other smells 8 still working" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 8 still working" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

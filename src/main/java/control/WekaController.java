@@ -523,7 +523,7 @@ public class WekaController {
 
     public void main(){
         try {
-            this.projName = "bookkeeper"; //storm
+            this.projName = "bookkeeper"; //bookkeeper or storm
             //9 classifiers
             for(int n = 0; n<9; n++){
                 recall.add(new ArrayList<>());

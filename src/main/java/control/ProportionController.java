@@ -5,82 +5,11 @@ import model.Version;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
 public class ProportionController {
-    /*
-    List<Bug> iterativeProportion(List<Bug> bugs, List<Version> versions) throws IOException {
 
-        List<Bug> toDoBugs = new ArrayList<>();
-        List<Bug> completeBugs = new ArrayList<>();
-
-        int count= bugs.size();
-
-
-        for(Bug b : bugs){
-            b.setIndex(count);
-            count--;
-
-            if(b.getIv()==null) {
-                toDoBugs.add(b);
-            }
-
-            else if(b.getIv()!= null && b.getOv().getIndex()!=b.getFv().getIndex()){
-                completeBugs.add(b);
-            }
-
-        }
-
-
-        for(Bug b : toDoBugs){
-            List<Bug> previousBugs = new ArrayList<>();
-            List<Float> pinc =new ArrayList<>();
-            float retP = 0;
-            float totP = 0;
-            for(Bug a : completeBugs){
-                if(a.getFv().getIndex()<b.getOv().getIndex()) previousBugs.add(a); //building a list of all complete bugs that were closed before the toDoBug considered was opened
-            }
-
-
-            if(!previousBugs.isEmpty()){
-
-                for(Bug pb : previousBugs){
-                    float p = pCalculator(pb.getIv().getIndex(), pb.getOv().getIndex(), pb.getFv().getIndex());
-                    pinc.add(p);
-                    totP += p;
-
-                }
-
-                retP = totP/pinc.size();
-                System.err.println("bug id: " + b.getKey() + " p is: " + retP);
-            }
-            if(retP!=0) b.setIv(ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), retP ,versions));
-        }
-        float median = coldStart();
-        for(Bug b : toDoBugs){
-            if(b.getIv()==null){
-
-                Version iv = ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), median ,versions);
-                System.err.println("sto calcolando iv del bug: " + b.getKey() + " che dovrebbe essere: "+ iv.getIndex());
-                b.setIv(iv);
-            }
-        }
-
-        List<Bug> retBugs = bugs;
-        for(Bug b : retBugs){
-            for(Bug db : toDoBugs){
-                if(db.getKey().equals(b.getKey())){
-                    Collections.replaceAll(retBugs, b, db);
-                }
-            }
-        }
-        //return toDoBugs;
-        return retBugs;
-    }
-
-     */
 
     List<Bug> iterativeProportion(List<Bug> bugs, List<Version> versions) throws IOException {
         List<Bug> toDoBugs = new ArrayList<>();
@@ -106,7 +35,7 @@ public class ProportionController {
         }
     }
 
-    private void calculateProportions(List<Bug> toDoBugs, List<Bug> completeBugs, List<Version> versions) throws IOException {
+    private void calculateProportions(List<Bug> toDoBugs, List<Bug> completeBugs, List<Version> versions){
         for (Bug b : toDoBugs) {
             List<Bug> previousBugs = new ArrayList<>();
             float retP = calculateRetP(b, completeBugs, previousBugs);
@@ -134,7 +63,6 @@ public class ProportionController {
                 totP += p;
             }
             float retP = totP / pinc.size();
-            System.err.println("bug id: " + b.getKey() + " p is: " + retP);
             return retP;
         }
         return 0;
@@ -145,7 +73,6 @@ public class ProportionController {
         for (Bug b : toDoBugs) {
             if (b.getIv() == null) {
                 Version iv = ivCalculator(b.getFv().getIndex(), b.getOv().getIndex(), median, versions);
-                System.err.println("sto calcolando iv del bug: " + b.getKey() + " che dovrebbe essere: " + iv.getIndex());
                 b.setIv(iv);
             }
         }
@@ -212,7 +139,6 @@ public class ProportionController {
             }
         }
 
-        //Collections.sort(all_p);
         float avg = 0;
         for(float f : allp){
             avg+= f;
