@@ -210,7 +210,7 @@ public class CsvWriter {
             for (int i = 0; i < tp.size(); i++) {
                 int reminder = i % 3;
                 for (int j = 0; j < tp.get(i).size(); j++) {
-                    System.out.println("size tp: " + tp.get(i).size()+" i: "+i+" j: "+j);
+
                     if (tp.get(i).size() <= j || fp.get(i).size() <= j || tn.get(i).size() <= j || fn.get(i).size() <= j ||
                             precision.get(i).size() <= j || recall.get(i).size() <= j || auc.get(i).size() <= j || kappa.get(i).size() <= j) {
                         continue; // Salta gli indici non validi

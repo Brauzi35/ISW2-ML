@@ -19,8 +19,12 @@ import weka.filters.supervised.instance.SMOTE;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WekaEvaluationsController2 {
+
+    private static final Logger LOGGER = Logger.getLogger(WekaEvaluationsController2.class.getName());
 
     private String projName;
 
@@ -85,8 +89,8 @@ public class WekaEvaluationsController2 {
                 filteredTraining = Filter.useFilter(training, smoteFilter); //faccio solo il training perché sto facendo OVER
 
             }
-            if(!cs){
-                if (filteredTraining.numInstances() > 0 && filteredTesting.numInstances() > 0) {
+            if(!cs && filteredTraining.numInstances() > 0 && filteredTesting.numInstances() > 0){
+
                     eval = new Evaluation(testing);
                     randomForestClassifier.buildClassifier(filteredTraining); //if ex os oversamlped
                     eval.evaluateModel(randomForestClassifier, filteredTesting);
@@ -123,10 +127,10 @@ public class WekaEvaluationsController2 {
                     fn.get(index + 2).add(eval.numFalseNegatives(0));
                     tp.get(index + 2).add(eval.numTruePositives(0));
                     tn.get(index + 2).add(eval.numTrueNegatives(0));
-                }
+
             }
-            if(cs){
-                if (filteredTraining.numInstances() > 0 && filteredTesting.numInstances() > 0) {
+            if(cs && filteredTraining.numInstances() > 0 && filteredTesting.numInstances() > 0){
+
                     CostMatrix costMatrix = new CostMatrix(2); // 2x2 matrix -  CFN = 10*CFP
                     costMatrix.setCell(0, 0, 0.0);
                     costMatrix.setCell(1, 0, 10.0);
@@ -181,14 +185,15 @@ public class WekaEvaluationsController2 {
                     fn.get(index + 2).add(eval.numFalseNegatives(0));
                     tp.get(index + 2).add(eval.numTruePositives(0));
                     tn.get(index + 2).add(eval.numTrueNegatives(0));
-                }
+
             }
 
 
 
 
         }catch (Exception e){
-            System.out.println("error classify: "+e.getMessage() + " index: " + index);
+            LOGGER.log(Level.SEVERE, "Error in classify: " + e.getMessage() + " index: " + index, e);
+
         }
 
     }
@@ -251,8 +256,7 @@ public class WekaEvaluationsController2 {
 
             }
 
-            System.out.println("precision: " + precision + "\n recall: " + recall + "\n auc: " +
-                    auc + "\n kappa: " + kappa + "\n tp: " + tp + "\n tn: " + tn + "\n fp: " + fp + "\n fn: " + fn);
+
             CsvWriter csvWriter = new CsvWriter();
 
             List<List<Double>> precision2 = precision;
@@ -285,7 +289,8 @@ public class WekaEvaluationsController2 {
             csvWriter.csvFinal(fm);
 
         } catch (Exception e){
-            System.out.println("errore evaluator: "+ e.getStackTrace());
+            LOGGER.log(Level.SEVERE, "Error in classify: " + e.getMessage());
+
 
         }
     }
