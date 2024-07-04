@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 10 still working">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 11 still working">
+      <change afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/InstanceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/ProportionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,22 +61,14 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Application.WekaEvaluationsController">
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="control" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.WekaEvaluationsController2">
     <configuration name="ArffProva" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="control.ArffProva" />
-      <module name="ISW2-ML" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="control.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="CodeLineCounter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="control.CodeLineCounter" />
       <module name="ISW2-ML" />
       <extension name="coverage">
         <pattern>
@@ -117,6 +106,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="WekaEvaluationsController2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="control.WekaEvaluationsController2" />
+      <module name="ISW2-ML" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="control.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WorkflowController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="control.WorkflowController" />
       <module name="ISW2-ML" />
@@ -132,11 +134,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.WekaEvaluationsController2" />
         <item itemvalue="Application.WekaEvaluationsController" />
         <item itemvalue="Application.WorkflowController" />
         <item itemvalue="Application.ArffProva" />
         <item itemvalue="Application.WekaController" />
-        <item itemvalue="Application.CodeLineCounter" />
       </list>
     </recent_temporary>
   </component>
@@ -180,7 +182,7 @@
       <workItem from="1715259279969" duration="598000" />
       <workItem from="1715769478754" duration="96000" />
       <workItem from="1719927817073" duration="7363000" />
-      <workItem from="1720017057982" duration="4934000" />
+      <workItem from="1720017057982" duration="16388000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -476,14 +478,20 @@
       <option name="project" value="LOCAL" />
       <updated>1720020449300</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="fixed some other smells 11 still working">
+      <created>1720023488949</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1720023488949</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="csv commit" />
     <MESSAGE value="fixed bug in buggy yes or no computation" />
     <MESSAGE value="fixed bug in buggy yes or no computation regarding short message format" />
     <MESSAGE value="milestone 2 completed" />
@@ -508,7 +516,8 @@
     <MESSAGE value="fixed some other smells 8 still working" />
     <MESSAGE value="fixed some other smells 9 still working" />
     <MESSAGE value="fixed some other smells 10 still working" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 10 still working" />
+    <MESSAGE value="fixed some other smells 11 still working" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 11 still working" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

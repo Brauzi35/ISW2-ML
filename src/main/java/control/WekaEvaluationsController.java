@@ -41,6 +41,7 @@ public class WekaEvaluationsController {
     }
 
 
+
     private static void classify(String trainingPath, String testingPath, boolean os, boolean fs, boolean cs) throws Exception {
         DataSource source = new DataSource(trainingPath);
         Instances training = source.getDataSet();
@@ -150,7 +151,7 @@ public class WekaEvaluationsController {
                 tp.get(5).add(eval.numTruePositives(0));
                 tn.get(5).add(eval.numTrueNegatives(0));
 
-            } 
+            }
             else if (!fs && !cs && os) {
 
                 SMOTE smoteFilter = new SMOTE();
@@ -168,7 +169,7 @@ public class WekaEvaluationsController {
                 fn.get(6).add(eval.numFalseNegatives(0));
                 tp.get(6).add(eval.numTruePositives(0));
                 tn.get(6).add(eval.numTrueNegatives(0));
-                
+
 
                 eval = new Evaluation(testing);
                 naiveBayesClassifier.buildClassifier(oversampledData);
@@ -181,7 +182,7 @@ public class WekaEvaluationsController {
                 fn.get(7).add(eval.numFalseNegatives(0));
                 tp.get(7).add(eval.numTruePositives(0));
                 tn.get(7).add(eval.numTrueNegatives(0));
-               
+
                 eval = new Evaluation(testing);
                 ibkClassifier.buildClassifier(oversampledData);
                 eval.evaluateModel(ibkClassifier, testing);
@@ -193,7 +194,7 @@ public class WekaEvaluationsController {
                 fn.get(8).add(eval.numFalseNegatives(0));
                 tp.get(8).add(eval.numTruePositives(0));
                 tn.get(8).add(eval.numTrueNegatives(0));
-                
+
 
             } else if (!fs && cs && !os) {
 
@@ -251,8 +252,8 @@ public class WekaEvaluationsController {
                 fn.get(11).add(eval.numFalseNegatives(0));
                 tp.get(11).add(eval.numTruePositives(0));
                 tn.get(11).add(eval.numTrueNegatives(0));
-                
-                
+
+
             } else if (fs && !cs && os) {
                 BestFirst search = new BestFirst();
                 CfsSubsetEval evalSub = new CfsSubsetEval();
@@ -299,7 +300,7 @@ public class WekaEvaluationsController {
                     fn.get(13).add(eval.numFalseNegatives(0));
                     tp.get(13).add(eval.numTruePositives(0));
                     tn.get(13).add(eval.numTrueNegatives(0));
-                   
+
                     //ibk
                     eval = new Evaluation(testing);
                     ibkClassifier.buildClassifier(oversampledDataSel);
@@ -312,7 +313,7 @@ public class WekaEvaluationsController {
                     fn.get(14).add(eval.numFalseNegatives(0));
                     tp.get(14).add(eval.numTruePositives(0));
                     tn.get(14).add(eval.numTrueNegatives(0));
-                    
+
                 } else {
                     System.out.println("error");
                 }
