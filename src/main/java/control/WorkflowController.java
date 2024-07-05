@@ -93,7 +93,7 @@ public class WorkflowController {
         ArffConverter ac = new ArffConverter();
         ac.csv2arff("C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\output.csv", "output.arff");
 
-        WekaController wc = new WekaController(projectName.toLowerCase());
+        WekaController wc = new WekaController(projectName.toLowerCase(), "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\");
         wc.walkForward(finalInstancesHalved, versions.subList(0, versions.size() / 2));
         }
     }

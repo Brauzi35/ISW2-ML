@@ -23,13 +23,13 @@ import java.util.logging.Logger;
 public class WekaController {
 
     private static final Logger logger = Logger.getLogger(WekaController.class.getName());
-    private static final String DEFAULT_PATH = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\";
+
     private String projName;
     private String path;
 
-    public WekaController(String projName) {
+    public WekaController(String projName, String path) {
         this.projName = projName;
-        this.path = DEFAULT_PATH;
+        this.path = path;
     }
 
     static List<List<Double>> precision = new ArrayList<>();

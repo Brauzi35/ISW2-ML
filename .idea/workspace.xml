@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="csv writer isn't smelly no more">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="WorkflowController.java isn't smelly no more">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" afterDir="false" />
@@ -182,7 +182,7 @@
       <workItem from="1715259279969" duration="598000" />
       <workItem from="1715769478754" duration="96000" />
       <workItem from="1719927817073" duration="7363000" />
-      <workItem from="1720017057982" duration="22327000" />
+      <workItem from="1720017057982" duration="23768000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -506,14 +506,20 @@
       <option name="project" value="LOCAL" />
       <updated>1720186167946</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="WorkflowController.java isn't smelly no more">
+      <created>1720187329225</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1720187329225</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed pom, don't know why it was broken though" />
     <MESSAGE value="fixed versions: I was halving them too soon" />
     <MESSAGE value="now it also works for STORM" />
     <MESSAGE value="fixed a bug in WorkflowController.java and removed some smells" />
@@ -538,7 +544,8 @@
     <MESSAGE value="fixed some other smells 12 still working" />
     <MESSAGE value="fixed some other smells 13 still working" />
     <MESSAGE value="csv writer isn't smelly no more" />
-    <option name="LAST_COMMIT_MESSAGE" value="csv writer isn't smelly no more" />
+    <MESSAGE value="WorkflowController.java isn't smelly no more" />
+    <option name="LAST_COMMIT_MESSAGE" value="WorkflowController.java isn't smelly no more" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

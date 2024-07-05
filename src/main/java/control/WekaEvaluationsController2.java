@@ -41,7 +41,7 @@ public class WekaEvaluationsController2 {
 
     public WekaEvaluationsController2(String projName) {
         this.projName = projName;
-        projNameBis = projName;
+
     }
 
 
