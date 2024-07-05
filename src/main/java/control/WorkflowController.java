@@ -6,8 +6,11 @@ import model.Version;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class WorkflowController {
+    private static final Logger logger = Logger.getLogger(WekaController.class.getName());
     private static String projectName = "BOOKKEEPER"; //change to STORM or BOOKKEEPER depending on the project
 
     public static List<FinalInstance> instancesHalver(List<Version> versions, List<FinalInstance> instances) {
@@ -31,28 +34,33 @@ public class WorkflowController {
         List<Version> versions = jc.getAllVersions();
         //get half versions
         for(Version v : versions){
-            System.out.println(v.getIndex() + " " + v.getName() + " date:" + v.getReleaseDate());
+
+            String m = v.getIndex() + " " + v.getName() + " date:" + v.getReleaseDate();
+            logger.log(Level.INFO,  m);
         }
         List<Bug> bugs = jc.getBugs(versions);
         for(Bug b : bugs){
-            System.out.println("key  " + b.getKey() + "  opening version: " + b.getOv().getIndex() + "  fixed version:  " +  b.getFv().getIndex());
+            String m2 = "key  " + b.getKey() + "  opening version: " + b.getOv().getIndex() + "  fixed version:  " +  b.getFv().getIndex();
+            logger.log(Level.INFO,  m2);
             if(b.getIv()!=null){
-                System.out.println("indice iv: " + b.getIv().getIndex());
+
+                String m3 = "indice iv: " + b.getIv().getIndex();
+                logger.log(Level.INFO,  m3);
             }
         }
-        System.out.println(bugs.size());
+
         ProportionController pc = new ProportionController();
         List<Bug> done = pc.iterativeProportion(bugs, versions);
 
         List<Bug> done1 = bc.bugTrimmer(done);
-        List<Bug> av_bugs = bc.definitiveAvBuilder(done1, versions);
+        List<Bug> avbugs = bc.definitiveAvBuilder(done1, versions);
 
 
         CodeLineCounter clc = new CodeLineCounter("C:\\Users\\vlrbr\\Desktop\\Testing\\" + projectName.toLowerCase());
         List<FinalInstance> finalInstances = clc.instanceListBuilder(projectName, versions);
 
         InstanceController ic = new InstanceController(projectName.toLowerCase());
-        List<FinalInstance> buggyFinalInstances = ic.isBuggy2(finalInstances, av_bugs);
+        List<FinalInstance> buggyFinalInstances = ic.isBuggy2(finalInstances, avbugs);
         for(FinalInstance i : finalInstances){
 
 
@@ -60,9 +68,9 @@ public class WorkflowController {
                 i.setBuggyness("Yes");
             }
 
+            
 
-
-            System.out.println(i.getJavafile().getFilename() + " " + i.getVersion() +
+            String m4 = i.getJavafile().getFilename() + " " + i.getVersion() +
                     "\n has this number of loc: " + i.getSize() +
                     "\n and this number of authors: " + i.getnAuthors() +
                     "\n and this number of commits: " + i.getNr() +
@@ -72,8 +80,10 @@ public class WorkflowController {
                     "\n and this churn: " + i.getChurn() +
                     "\n and this avgChurn: " + i.getAvgChurn() +
                     "\n and this maxChurn: " + i.getMaxChurn() +
-                    "\n is this class buggy? " + i.getBuggyness());
+                    "\n is this class buggy? " + i.getBuggyness();
+            logger.log(Level.INFO,  m4);
         }
+
 
         List<FinalInstance> finalInstancesHalved = instancesHalver(versions, finalInstances);
 

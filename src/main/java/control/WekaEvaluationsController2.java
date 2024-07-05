@@ -221,7 +221,7 @@ public class WekaEvaluationsController2 {
     }
 
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         try {
             projNameBis = "bookkeeper"; //bookkeeper or storm
 
@@ -245,8 +245,8 @@ public class WekaEvaluationsController2 {
                 if(v.getIndex() == 0 || v.getIndex() == 1){
                     continue;
                 }
-                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis+ String.valueOf(v.getIndex()) +"Training.arff";
-                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis + String.valueOf(v.getIndex()) +"Testing.arff";
+                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis+ v.getIndex() +"Training.arff";
+                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\"+ projNameBis + v.getIndex() +"Testing.arff";
                 classify(trainingPath, testingPath, false, false, false,0);
                 classify(trainingPath, testingPath, true, false, false,3);
                 classify(trainingPath, testingPath, false, true, false,6);

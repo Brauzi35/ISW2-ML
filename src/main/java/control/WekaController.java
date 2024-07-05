@@ -17,7 +17,6 @@ import weka.filters.supervised.instance.SMOTE;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -379,8 +378,8 @@ public class WekaController {
                 String testingPath = this.path + this.projName + v.getIndex() + "Testing.arff";
                 wekaFlowClassification(trainingPath, testingPath);
             }
-
-            logger.info("precision: " + precision + "\n recall: " + recall + "\n auc: " + auc + "\n kappa: " + kappa);
+            String msg = "precision: " + precision + "\n recall: " + recall + "\n auc: " + auc + "\n kappa: " + kappa;
+            logger.log(Level.INFO, msg);
 
         } catch (Exception e) {
             logger.log(Level.SEVERE, e.getMessage());
