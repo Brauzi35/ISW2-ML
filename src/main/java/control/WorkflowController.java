@@ -30,7 +30,6 @@ public class WorkflowController {
         BugController bc = new BugController();
         List<Version> versions = jc.getAllVersions();
         //get half versions
-        //versions = versions.subList(0, versions.size()/2);
         for(Version v : versions){
             System.out.println(v.getIndex() + " " + v.getName() + " date:" + v.getReleaseDate());
         }

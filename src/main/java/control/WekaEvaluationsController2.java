@@ -192,7 +192,9 @@ public class WekaEvaluationsController2 {
 
 
         }catch (Exception e){
-            LOGGER.log(Level.SEVERE, "Error in classify: " + e.getMessage() + " index: " + index, e);
+            Logger logger = Logger.getLogger(JiraController.class.getName());
+            String out = "error in classify";
+            logger.log(Level.INFO, out);
 
         }
 
@@ -289,7 +291,9 @@ public class WekaEvaluationsController2 {
             csvWriter.csvFinal(fm);
 
         } catch (Exception e){
-            LOGGER.log(Level.SEVERE, "Error in classify: " + e.getMessage());
+            Logger logger = Logger.getLogger(JiraController.class.getName());
+            String out = "Error in classify";
+            logger.log(Level.SEVERE, out);
 
 
         }

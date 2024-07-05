@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 12 still working">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="fixed some other smells 13 still working">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WorkflowController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,8 +135,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.WekaEvaluationsController2" />
-        <item itemvalue="Application.WekaEvaluationsController" />
         <item itemvalue="Application.WorkflowController" />
+        <item itemvalue="Application.WekaEvaluationsController" />
         <item itemvalue="Application.ArffProva" />
         <item itemvalue="Application.WekaController" />
       </list>
@@ -182,7 +182,7 @@
       <workItem from="1715259279969" duration="598000" />
       <workItem from="1715769478754" duration="96000" />
       <workItem from="1719927817073" duration="7363000" />
-      <workItem from="1720017057982" duration="17785000" />
+      <workItem from="1720017057982" duration="21278000" />
     </task>
     <task id="LOCAL-00001" summary="Added Bug and Version entities">
       <created>1680596375273</created>
@@ -492,14 +492,20 @@
       <option name="project" value="LOCAL" />
       <updated>1720087719381</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="fixed some other smells 13 still working">
+      <created>1720089133782</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1720089133782</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed bug in buggy yes or no computation regarding short message format" />
     <MESSAGE value="milestone 2 completed" />
     <MESSAGE value="fixed pom, don't know why it was broken though" />
     <MESSAGE value="fixed versions: I was halving them too soon" />
@@ -524,7 +530,8 @@
     <MESSAGE value="fixed some other smells 10 still working" />
     <MESSAGE value="fixed some other smells 11 still working" />
     <MESSAGE value="fixed some other smells 12 still working" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 12 still working" />
+    <MESSAGE value="fixed some other smells 13 still working" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed some other smells 13 still working" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
