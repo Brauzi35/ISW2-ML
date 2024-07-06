@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class WorkflowController {
-    private static final Logger logger = Logger.getLogger(WekaController.class.getName());
+    private static final Logger logger = Logger.getLogger(WorkflowController.class.getName());
     private static String projectName = "BOOKKEEPER"; //change to STORM or BOOKKEEPER depending on the project
 
     public static List<FinalInstance> instancesHalver(List<Version> versions, List<FinalInstance> instances) {
