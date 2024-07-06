@@ -165,7 +165,7 @@ public class ProportionController {
         return calculateMedian(vals);
     }
 
-    public static float calculateMedian(ArrayList<Float> list) {
+    public static float calculateMedian(List<Float> list) {
         // Ordina la lista
         Collections.sort(list);
 
