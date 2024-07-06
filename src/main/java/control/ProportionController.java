@@ -5,6 +5,7 @@ import model.Version;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -122,8 +123,7 @@ public class ProportionController {
         return iv;
     }
 
-    public float coldStart() throws IOException {
-        String projname = "TAJO";
+    public float coldStartInside(String projname) throws IOException {
         float p;
         ArrayList<Float> allp = new ArrayList<>();
         JiraController jc = new JiraController(projname);
@@ -146,6 +146,37 @@ public class ProportionController {
 
         avg = avg/ allp.size();
         return avg;
+    }
+
+    public float coldStart() throws IOException {
+        ArrayList<Float> vals = new ArrayList<>();
+        String[] projectNames = {
+                "AVRO",
+                "OPENJPA",
+                "ZOOKEEPER",
+                "SYNCOPE",
+                "TAJO"
+        };
+
+        for (String name : projectNames) {
+            vals.add(coldStartInside(name));
+        }
+
+        return calculateMedian(vals);
+    }
+
+    public static float calculateMedian(ArrayList<Float> list) {
+        // Ordina la lista
+        Collections.sort(list);
+
+        int length = list.size();
+        if (length % 2 == 0) {
+            // Se il numero di elementi è pari, calcola la media dei due elementi centrali
+            return (list.get(length / 2 - 1) + list.get(length / 2)) / 2.0f;
+        } else {
+            // Se il numero di elementi è dispari, prendi l'elemento centrale
+            return list.get(length / 2);
+        }
     }
 
 }
