@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="coldstart is now immaculate">
-      <change beforePath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/CsvWriter.java" afterDir="false" />
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="lil fixes 2">
+      <change afterPath="$PROJECT_DIR$/src/main/java/control/AcumeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +54,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;go.import.settings.migrated&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vlrbr/IdeaProjects/ISW2-ML/ACUME&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -59,13 +63,16 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\vlrbr\IdeaProjects\ISW2-ML\ACUME" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="control" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.WekaEvaluationsController2">
-    <configuration name="ArffProva" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="control.ArffProva" />
+  <component name="RunManager" selected="Application.AcumeController">
+    <configuration name="AcumeController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="control.AcumeController" />
       <module name="ISW2-ML" />
       <extension name="coverage">
         <pattern>
@@ -77,8 +84,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WekaController" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="control.WekaController" />
+    <configuration name="ArffProva" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="control.ArffProva" />
       <module name="ISW2-ML" />
       <extension name="coverage">
         <pattern>
@@ -131,11 +138,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.AcumeController" />
         <item itemvalue="Application.WekaEvaluationsController2" />
         <item itemvalue="Application.WorkflowController" />
         <item itemvalue="Application.WekaEvaluationsController" />
         <item itemvalue="Application.ArffProva" />
-        <item itemvalue="Application.WekaController" />
       </list>
     </recent_temporary>
   </component>
@@ -179,21 +186,9 @@
       <workItem from="1715259279969" duration="598000" />
       <workItem from="1715769478754" duration="96000" />
       <workItem from="1719927817073" duration="7363000" />
-      <workItem from="1720017057982" duration="28656000" />
-    </task>
-    <task id="LOCAL-00002" summary="Added an empty Jira Controller">
-      <created>1680597408537</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1680597408537</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Bug.java update">
-      <created>1680598075389</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1680598075389</updated>
+      <workItem from="1720017057982" duration="44630000" />
+      <workItem from="1720607871564" duration="595000" />
+      <workItem from="1720985947500" duration="6203000" />
     </task>
     <task id="LOCAL-00004" summary="Implemented version retrival and ordering">
       <created>1680623938339</created>
@@ -524,15 +519,27 @@
       <option name="project" value="LOCAL" />
       <updated>1720256015469</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="lil fixes">
+      <created>1720258259984</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1720258259984</updated>
+    </task>
+    <task id="LOCAL-00052" summary="lil fixes 2">
+      <created>1720258403656</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1720258403656</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="removed some smells" />
-    <MESSAGE value="Creating new csv" />
     <MESSAGE value="evaded the end of my life" />
     <MESSAGE value="removed smells from CodeLineCounter.java" />
     <MESSAGE value="csv writer smells fix" />
@@ -556,7 +563,9 @@
     <MESSAGE value="WorkflowController.java isn't smelly no more 2" />
     <MESSAGE value="last smell removal" />
     <MESSAGE value="coldstart is now immaculate" />
-    <option name="LAST_COMMIT_MESSAGE" value="coldstart is now immaculate" />
+    <MESSAGE value="lil fixes" />
+    <MESSAGE value="lil fixes 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="lil fixes 2" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>
