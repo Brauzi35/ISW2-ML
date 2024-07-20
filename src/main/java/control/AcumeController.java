@@ -228,7 +228,6 @@ public class AcumeController {
             logger.log(Level.SEVERE, "Error in acume method", e);
         }
 
-        logger.log(Level.INFO, "Completed acume method with trainingPath: " + trainingPath + ", testingPath: " + testingPath + ", os: " + os + ", fs: " + fs + ", cs: " + cs + ", index: " + index);
     }
 
     public static void main(String[] args) throws Exception {
