@@ -78,7 +78,6 @@ public class AcumeController {
         }
     }
     public static void acumeFiles(Instances testing, Classifier classifier, int idx, String filename, int version) throws Exception {
-        logger.log(Level.INFO, "Starting acumeFiles method with classifier: " + filename + " and index: " + idx);
         // Define the directory and file path
         String filePath = String.format("%s/%d%s_tv%d.csv", DIRECTORY_PATH, idx, filename, version - 1);
 
@@ -99,8 +98,8 @@ public class AcumeController {
         for (int i = 0; i < testing.numInstances(); i++) {
             try {
                 Instance instance = testing.instance(i);
-                int l = findLastAttributeIndex(instance);;
-                int size= findLargestNumericAttributeIndex(instance);;
+                int l = findLastAttributeIndex(instance);
+                int size= findLargestNumericAttributeIndex(instance);
                 double[] distribution = classifier.distributionForInstance(instance);
                 String[] data = {
                         String.valueOf(i + 1),
@@ -123,7 +122,6 @@ public class AcumeController {
 
 
     public static void acume(String trainingPath, String testingPath, boolean os, boolean fs, boolean cs, int index, int version) throws Exception {
-        logger.log(Level.INFO, "Starting acume method with trainingPath: " + trainingPath + ", testingPath: " + testingPath + ", os: " + os + ", fs: " + fs + ", cs: " + cs + ", index: " + index);
 
         ConverterUtils.DataSource source = new ConverterUtils.DataSource(trainingPath);
         Instances training = source.getDataSet();
@@ -247,7 +245,6 @@ public class AcumeController {
                 }
                 String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + PROJNAME + v.getIndex() + "Training.arff";
                 String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + PROJNAME + v.getIndex() + "Testing.arff";
-                logger.log(Level.INFO, "Processing version: " + v.getIndex());
                 acume(trainingPath, testingPath, false, false, false, 0, v.getIndex());
                 acume(trainingPath, testingPath, true, false, false, 3, v.getIndex());
                 acume(trainingPath, testingPath, false, true, false, 6, v.getIndex());
