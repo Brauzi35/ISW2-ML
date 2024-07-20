@@ -1,12 +1,12 @@
 package control;
 
 import com.opencsv.CSVWriter;
+import com.opencsv.ICSVWriter;
 import model.Version;
 import weka.attributeSelection.BestFirst;
 import weka.attributeSelection.CfsSubsetEval;
 import weka.classifiers.Classifier;
 import weka.classifiers.CostMatrix;
-import weka.classifiers.Evaluation;
 import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.meta.CostSensitiveClassifier;
@@ -28,7 +28,8 @@ import java.util.logging.Logger;
 public class AcumeController {
 
     private static final Logger logger = Logger.getLogger(AcumeController.class.getName());
-    static final String projNameBis = "bookkeeper"; //bookkeeper or storm
+    static final String PROJNAME = "bookkeeper"; //bookkeeper or storm
+    private static final String DIRECTORY_PATH = "ACUME";
     static int iteration = 0;
 
 
@@ -52,32 +53,43 @@ public class AcumeController {
     public static int findLastAttributeIndex(Instance instance) {
         return instance.numAttributes() - 1;
     }
-    public static void acumeFiles(Instances testing, Classifier classifier, int idx, String filename, int version) throws Exception {
-        logger.log(Level.INFO, "Starting acumeFiles method with classifier: " + filename + " and index: " + idx);
-        // Define the directory and file path
-        System.out.println(idx+filename);
-        String directoryPath = "ACUME";
-        String filePath = directoryPath + "/" + idx + filename + "_tv"+(version-1)+".csv";
-
-        // Create the directory if it doesn't exist
+    private static void createDirectoryIfNotExists(String directoryPath) {
         File directory = new File(directoryPath);
         if (!directory.exists()) {
             directory.mkdir();
         }
-
-        // Create the file
-        if(iteration == 0) {
+    }
+    public static void initfile(String filePath) throws IOException {
+        if (iteration == 0) {
             iteration++;
             File file = new File(filePath);
             if (file.exists()) {
-                file.delete(); // Delete the file if it exists
+                boolean r1 = file.delete();
+                if(!r1){
+                    logger.log(Level.SEVERE, "could not delete file");
+
+                }
             }
-            file.createNewFile(); // Create a new file
+            boolean r2 = file.createNewFile();
+            if(!r2){
+                logger.log(Level.SEVERE, "could not create file");
+
+            }
         }
+    }
+    public static void acumeFiles(Instances testing, Classifier classifier, int idx, String filename, int version) throws Exception {
+        logger.log(Level.INFO, "Starting acumeFiles method with classifier: " + filename + " and index: " + idx);
+        // Define the directory and file path
+        String filePath = String.format("%s/%d%s_tv%d.csv", DIRECTORY_PATH, idx, filename, version - 1);
+
+        createDirectoryIfNotExists(DIRECTORY_PATH);
+
+        initfile(filePath);
 
         // Create FileWriter and CSVWriter objects
         FileWriter outputfile = new FileWriter(filePath);
-        CSVWriter writer = new CSVWriter(outputfile, CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+        CSVWriter writer = new CSVWriter(outputfile, ICSVWriter.DEFAULT_SEPARATOR, ICSVWriter.NO_QUOTE_CHARACTER, ICSVWriter.DEFAULT_ESCAPE_CHARACTER, ICSVWriter.DEFAULT_LINE_END);
+
 
         // Write header to the CSV file
         String[] header = {"Instance", "Size", "Probability (Yes)", "Actual Buggy"};
@@ -87,8 +99,8 @@ public class AcumeController {
         for (int i = 0; i < testing.numInstances(); i++) {
             try {
                 Instance instance = testing.instance(i);
-                int l = findLastAttributeIndex(instance);//10;
-                int size= findLargestNumericAttributeIndex(instance);//3;
+                int l = findLastAttributeIndex(instance);;
+                int size= findLargestNumericAttributeIndex(instance);;
                 double[] distribution = classifier.distributionForInstance(instance);
                 String[] data = {
                         String.valueOf(i + 1),
@@ -107,7 +119,6 @@ public class AcumeController {
         // Close the writer
         writer.close();
 
-        logger.log(Level.INFO, "Completed acumeFiles method with classifier: " + filename + " and index: " + idx);
     }
 
 
@@ -226,7 +237,7 @@ public class AcumeController {
         try {
 
 
-            JiraController jc = new JiraController(projNameBis.toUpperCase());
+            JiraController jc = new JiraController(PROJNAME.toUpperCase());
             List<Version> versions = jc.getAllVersions();
             versions = versions.subList(0, versions.size() / 2);
 
@@ -234,8 +245,8 @@ public class AcumeController {
                 if (v.getIndex() == 0 || v.getIndex() == 1) {
                     continue;
                 }
-                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + projNameBis + v.getIndex() + "Training.arff";
-                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + projNameBis + v.getIndex() + "Testing.arff";
+                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + PROJNAME + v.getIndex() + "Training.arff";
+                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + PROJNAME + v.getIndex() + "Testing.arff";
                 logger.log(Level.INFO, "Processing version: " + v.getIndex());
                 acume(trainingPath, testingPath, false, false, false, 0, v.getIndex());
                 acume(trainingPath, testingPath, true, false, false, 3, v.getIndex());
