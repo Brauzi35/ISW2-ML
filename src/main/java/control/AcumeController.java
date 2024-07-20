@@ -28,13 +28,36 @@ import java.util.logging.Logger;
 public class AcumeController {
 
     private static final Logger logger = Logger.getLogger(AcumeController.class.getName());
+    static final String projNameBis = "bookkeeper"; //bookkeeper or storm
+    static int iteration = 0;
 
-    public static void acumeFiles(Instances testing, Classifier classifier, int idx) throws Exception {
-        logger.log(Level.INFO, "Starting acumeFiles method with classifier: " + classifier.getClass().getSimpleName() + " and index: " + idx);
 
+    public static int findLargestNumericAttributeIndex(Instance instance) {
+        int largestNumericIndex = -1;
+        double largestValue = Double.NEGATIVE_INFINITY;
+
+        for (int i = 0; i < instance.numAttributes(); i++) {
+            if (instance.attribute(i).isNumeric()) {
+                double value = instance.value(i);
+                if (value > largestValue) {
+                    largestValue = value;
+                    largestNumericIndex = i;
+                }
+            }
+        }
+
+        return largestNumericIndex;
+    }
+
+    public static int findLastAttributeIndex(Instance instance) {
+        return instance.numAttributes() - 1;
+    }
+    public static void acumeFiles(Instances testing, Classifier classifier, int idx, String filename, int version) throws Exception {
+        logger.log(Level.INFO, "Starting acumeFiles method with classifier: " + filename + " and index: " + idx);
         // Define the directory and file path
+        System.out.println(idx+filename);
         String directoryPath = "ACUME";
-        String filePath = directoryPath + "/" + idx + classifier.getClass().getSimpleName() + ".csv";
+        String filePath = directoryPath + "/" + idx + filename + "_tv"+(version-1)+".csv";
 
         // Create the directory if it doesn't exist
         File directory = new File(directoryPath);
@@ -43,11 +66,14 @@ public class AcumeController {
         }
 
         // Create the file
-        File file = new File(filePath);
-        if (file.exists()) {
-            file.delete(); // Delete the file if it exists
+        if(iteration == 0) {
+            iteration++;
+            File file = new File(filePath);
+            if (file.exists()) {
+                file.delete(); // Delete the file if it exists
+            }
+            file.createNewFile(); // Create a new file
         }
-        file.createNewFile(); // Create a new file
 
         // Create FileWriter and CSVWriter objects
         FileWriter outputfile = new FileWriter(filePath);
@@ -59,26 +85,33 @@ public class AcumeController {
 
         // Predict probabilities for each instance in the testing data and write to CSV
         for (int i = 0; i < testing.numInstances(); i++) {
-            Instance instance = testing.instance(i);
-            double[] distribution = classifier.distributionForInstance(instance);
+            try {
+                Instance instance = testing.instance(i);
+                int l = findLastAttributeIndex(instance);//10;
+                int size= findLargestNumericAttributeIndex(instance);//3;
+                double[] distribution = classifier.distributionForInstance(instance);
+                String[] data = {
+                        String.valueOf(i + 1),
+                        String.valueOf(instance.value(size)),
+                        String.valueOf(distribution[1]),
+                        instance.stringValue(l)
+                };
 
-            String[] data = {
-                    "Instance " + (i + 1),
-                    String.valueOf(instance.value(3)),
-                    String.valueOf(distribution[1]),
-                    instance.stringValue(10)
-            };
-            writer.writeNext(data);
+                writer.writeNext(data);
+            }catch (Exception e){
+                logger.log(Level.SEVERE, "exceprion in probs");
+            }
+
         }
 
         // Close the writer
         writer.close();
 
-        logger.log(Level.INFO, "Completed acumeFiles method with classifier: " + classifier.getClass().getSimpleName() + " and index: " + idx);
+        logger.log(Level.INFO, "Completed acumeFiles method with classifier: " + filename + " and index: " + idx);
     }
 
 
-    public static void acume(String trainingPath, String testingPath, boolean os, boolean fs, boolean cs, int index) throws Exception {
+    public static void acume(String trainingPath, String testingPath, boolean os, boolean fs, boolean cs, int index, int version) throws Exception {
         logger.log(Level.INFO, "Starting acume method with trainingPath: " + trainingPath + ", testingPath: " + testingPath + ", os: " + os + ", fs: " + fs + ", cs: " + cs + ", index: " + index);
 
         ConverterUtils.DataSource source = new ConverterUtils.DataSource(trainingPath);
@@ -122,35 +155,31 @@ public class AcumeController {
                 filteredTraining = Filter.useFilter(training, smoteFilter); //faccio solo il training perché sto facendo OVER
             }
 
-            if (!cs && filteredTraining.numInstances() > 0 && filteredTesting.numInstances() > 0) {
+            if (!cs && (filteredTraining.numInstances() > 0 && filteredTesting.numInstances() > 0)) {
                 logger.log(Level.INFO, "Cost-sensitive classification is disabled");
 
-                try {
+
                     logger.log(Level.INFO, "Building and evaluating RandomForest classifier");
                     randomForestClassifier.buildClassifier(filteredTraining);
-                    acumeFiles(filteredTesting, randomForestClassifier, index);
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Error in RandomForest classifier", e);
-                }
+                    acumeFiles(filteredTesting, randomForestClassifier, index, "RandomForest", version);
 
-                try {
+
+
                     logger.log(Level.INFO, "Building and evaluating NaiveBayes classifier");
                     naiveBayesClassifier.buildClassifier(filteredTraining);
-                    acumeFiles(filteredTesting, naiveBayesClassifier, index);
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Error in NaiveBayes classifier", e);
-                }
+                    acumeFiles(filteredTesting, naiveBayesClassifier, index, "NaiveBayes", version);
 
-                try {
+
+
                     logger.log(Level.INFO, "Building and evaluating IBk classifier");
                     ibkClassifier.buildClassifier(filteredTraining);
-                    acumeFiles(filteredTesting, ibkClassifier, index);
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Error in IBk classifier", e);
-                }
+
+                    acumeFiles(filteredTesting, ibkClassifier, index, "IBk", version);
+
+
             }
 
-            if (cs && filteredTraining.numInstances() > 0 && filteredTesting.numInstances() > 0) {
+            if (cs && (filteredTraining.numInstances() > 0 && filteredTesting.numInstances() > 0)) {
                 logger.log(Level.INFO, "Cost-sensitive classification is enabled");
 
                 CostMatrix costMatrix = new CostMatrix(2); // 2x2 matrix -  CFN = 10*CFP
@@ -161,35 +190,30 @@ public class AcumeController {
 
                 CostSensitiveClassifier costSensitiveClassifier = new CostSensitiveClassifier();
 
-                try {
+
                     logger.log(Level.INFO, "Building and evaluating CostSensitive RandomForest classifier");
                     costSensitiveClassifier.setClassifier(randomForestClassifier);
                     costSensitiveClassifier.setCostMatrix(costMatrix);
                     costSensitiveClassifier.buildClassifier(filteredTraining);
-                    acumeFiles(filteredTesting, costSensitiveClassifier, index);
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Error in CostSensitive RandomForest classifier", e);
-                }
+                    acumeFiles(filteredTesting, costSensitiveClassifier, index, "RandomForest", version);
 
-                try {
+
+
                     logger.log(Level.INFO, "Building and evaluating CostSensitive NaiveBayes classifier");
                     costSensitiveClassifier.setClassifier(naiveBayesClassifier);
                     costSensitiveClassifier.setCostMatrix(costMatrix);
                     costSensitiveClassifier.buildClassifier(filteredTraining);
-                    acumeFiles(filteredTesting, costSensitiveClassifier, index);
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Error in CostSensitive NaiveBayes classifier", e);
-                }
+                    acumeFiles(filteredTesting, costSensitiveClassifier, index, "NaiveBayes", version);
 
-                try {
+
+
                     logger.log(Level.INFO, "Building and evaluating CostSensitive IBk classifier");
                     costSensitiveClassifier.setClassifier(ibkClassifier);
                     costSensitiveClassifier.setCostMatrix(costMatrix);
                     costSensitiveClassifier.buildClassifier(filteredTraining);
-                    acumeFiles(filteredTesting, costSensitiveClassifier, index);
-                } catch (Exception e) {
-                    logger.log(Level.SEVERE, "Error in CostSensitive IBk classifier", e);
-                }
+                    acumeFiles(filteredTesting, costSensitiveClassifier, index, "IBk", version);
+
+
             }
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error in acume method", e);
@@ -199,27 +223,33 @@ public class AcumeController {
     }
 
     public static void main(String[] args) throws Exception {
-        String projNameBis = "bookkeeper"; //bookkeeper or storm
+        try {
 
-        JiraController jc = new JiraController(projNameBis.toUpperCase());
-        List<Version> versions = jc.getAllVersions();
-        versions = versions.subList(0, versions.size() / 2);
 
-        for (Version v : versions) {
-            if (v.getIndex() == 0 || v.getIndex() == 1) {
-                continue;
+            JiraController jc = new JiraController(projNameBis.toUpperCase());
+            List<Version> versions = jc.getAllVersions();
+            versions = versions.subList(0, versions.size() / 2);
+
+            for (Version v : versions) {
+                if (v.getIndex() == 0 || v.getIndex() == 1) {
+                    continue;
+                }
+                String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + projNameBis + v.getIndex() + "Training.arff";
+                String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + projNameBis + v.getIndex() + "Testing.arff";
+                logger.log(Level.INFO, "Processing version: " + v.getIndex());
+                acume(trainingPath, testingPath, false, false, false, 0, v.getIndex());
+                acume(trainingPath, testingPath, true, false, false, 3, v.getIndex());
+                acume(trainingPath, testingPath, false, true, false, 6, v.getIndex());
+                acume(trainingPath, testingPath, false, false, true, 9, v.getIndex());
+                acume(trainingPath, testingPath, true, false, true, 15, v.getIndex());
+                acume(trainingPath, testingPath, false, true, true, 18, v.getIndex());
             }
-            String trainingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + projNameBis + v.getIndex() + "Training.arff";
-            String testingPath = "C:\\Users\\vlrbr\\IdeaProjects\\ISW2-ML\\" + projNameBis + v.getIndex() + "Testing.arff";
-            logger.log(Level.INFO, "Processing version: " + v.getIndex());
-            acume(trainingPath, testingPath, false, false, false, 0);
-            acume(trainingPath, testingPath, true, false, false, 3);
-            acume(trainingPath, testingPath, false, true, false, 6);
-            acume(trainingPath, testingPath, false, false, true, 9);
-            acume(trainingPath, testingPath, true, true, false, 12);
-            acume(trainingPath, testingPath, true, false, true, 15);
-            acume(trainingPath, testingPath, false, true, true, 18);
-            acume(trainingPath, testingPath, true, true, true, 21);
+        }catch (Exception e){
+            Logger logger = Logger.getLogger(JiraController.class.getName());
+            String out = "Error in acume";
+            logger.log(Level.SEVERE, out);
+
+
         }
     }
 }

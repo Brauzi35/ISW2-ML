@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="lil fixes 2">
-      <change afterPath="$PROJECT_DIR$/src/main/java/control/AcumeController.java" afterDir="false" />
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="aggiunto acume">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/control/AcumeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/AcumeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -64,6 +63,9 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\vlrbr\IdeaProjects\ISW2-ML\ACUME" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\vlrbr\IdeaProjects\ISW2-ML\ACUME" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -188,14 +190,8 @@
       <workItem from="1719927817073" duration="7363000" />
       <workItem from="1720017057982" duration="44630000" />
       <workItem from="1720607871564" duration="595000" />
-      <workItem from="1720985947500" duration="6203000" />
-    </task>
-    <task id="LOCAL-00004" summary="Implemented version retrival and ordering">
-      <created>1680623938339</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1680623938339</updated>
+      <workItem from="1720985947500" duration="9926000" />
+      <workItem from="1721375175961" duration="21812000" />
     </task>
     <task id="LOCAL-00005" summary="Implemented getBugs in JiraController - is still not working">
       <created>1680626943776</created>
@@ -533,14 +529,31 @@
       <option name="project" value="LOCAL" />
       <updated>1720258403656</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="aggiunto acume">
+      <created>1721137411922</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1721137411922</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="evaded the end of my life" />
     <MESSAGE value="removed smells from CodeLineCounter.java" />
     <MESSAGE value="csv writer smells fix" />
     <MESSAGE value="InstanceController.java half smells fix" />
@@ -565,7 +578,8 @@
     <MESSAGE value="coldstart is now immaculate" />
     <MESSAGE value="lil fixes" />
     <MESSAGE value="lil fixes 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="lil fixes 2" />
+    <MESSAGE value="aggiunto acume" />
+    <option name="LAST_COMMIT_MESSAGE" value="aggiunto acume" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

@@ -10,6 +10,7 @@ import weka.classifiers.bayes.NaiveBayes;
 import weka.classifiers.lazy.IBk;
 import weka.classifiers.meta.CostSensitiveClassifier;
 import weka.classifiers.trees.RandomForest;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
@@ -191,6 +192,8 @@ public class WekaEvaluationsController2 {
 
 
 
+
+
         }catch (Exception e){
             Logger logger = Logger.getLogger(JiraController.class.getName());
             String out = "error in classify";
@@ -198,6 +201,23 @@ public class WekaEvaluationsController2 {
 
         }
 
+    }
+
+    public static void acumeFiles(Instances testing, RandomForest randomForestClassifier, NaiveBayes naiveBayesClassifier, IBk ibkClassifier) throws Exception {
+        // Predict probabilities for each instance in the testing data
+        for (int i = 0; i < testing.numInstances(); i++) {
+            Instance instance = testing.instance(i);
+            double[] distributionRF = randomForestClassifier.distributionForInstance(instance);
+            double[] distributionNB = naiveBayesClassifier.distributionForInstance(instance);
+            double[] distributionIBK = ibkClassifier.distributionForInstance(instance);
+            System.out.println("Instance " + (i + 1) + ":");
+            System.out.println("Size " + instance.value(3));
+            System.out.println("Probability of being buggy RF (Yes): " + distributionRF[1]);
+            System.out.println("Probability of being buggy NB (Yes): " + distributionNB[1]);
+            System.out.println("Probability of being buggy IBK (Yes): " + distributionIBK[1]);
+            System.out.println("actual buggy:" + instance.stringValue(10));
+            System.out.println();
+        }
     }
 
 
