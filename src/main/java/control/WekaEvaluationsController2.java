@@ -227,7 +227,7 @@ public class WekaEvaluationsController2 {
 
     public static void main(String[] args) throws IOException {
         try {
-            projNameBis = "bookkeeper"; //bookkeeper or storm
+            projNameBis = "storm"; //bookkeeper or storm
 
             //25 classifiers
             for (int n = 0; n < 25; n++) {

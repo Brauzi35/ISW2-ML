@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="tolto smell acume">
+    <list default="true" id="6ed895a8-a63a-4b16-9644-0573604e10c7" name="Changes" comment="tolto smell 3 acume">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentazione-ISW2ML.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/AcumeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/AcumeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/control/WekaEvaluationsController2.java" afterDir="false" />
     </list>
@@ -190,21 +192,7 @@
       <workItem from="1720017057982" duration="44630000" />
       <workItem from="1720607871564" duration="595000" />
       <workItem from="1720985947500" duration="9926000" />
-      <workItem from="1721375175961" duration="23818000" />
-    </task>
-    <task id="LOCAL-00007" summary="Printing successfully bugs, not sure if cleanBugs implements the right constraints">
-      <created>1680713835304</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1680713835304</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Now CleanBugs implements the right contraints and fixed av data retrival: some fields releaseDate were empty. Also started working on proportion incremental">
-      <created>1681203415801</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1681203415801</updated>
+      <workItem from="1721375175961" duration="29216000" />
     </task>
     <task id="LOCAL-00009" summary="fixed an indexing bug in releases retrival. Working on ProportionController.java">
       <created>1681379783040</created>
@@ -535,7 +523,21 @@
       <option name="project" value="LOCAL" />
       <updated>1721486754709</updated>
     </task>
-    <option name="localTasksCounter" value="56" />
+    <task id="LOCAL-00056" summary="tolto smell 2 acume">
+      <created>1721487017126</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1721487017126</updated>
+    </task>
+    <task id="LOCAL-00057" summary="tolto smell 3 acume">
+      <created>1721487096331</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1721487096331</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,8 +555,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="csv writer smells fix" />
-    <MESSAGE value="InstanceController.java half smells fix" />
     <MESSAGE value="InstanceController.java some smells fix" />
     <MESSAGE value="fixed some other smells 2" />
     <MESSAGE value="fixed some other smells 3" />
@@ -578,7 +578,9 @@
     <MESSAGE value="lil fixes 2" />
     <MESSAGE value="aggiunto acume" />
     <MESSAGE value="tolto smell acume" />
-    <option name="LAST_COMMIT_MESSAGE" value="tolto smell acume" />
+    <MESSAGE value="tolto smell 2 acume" />
+    <MESSAGE value="tolto smell 3 acume" />
+    <option name="LAST_COMMIT_MESSAGE" value="tolto smell 3 acume" />
   </component>
   <component name="VgoProject">
     <integration-enabled>false</integration-enabled>

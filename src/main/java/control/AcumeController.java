@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 public class AcumeController {
 
     private static final Logger logger = Logger.getLogger(AcumeController.class.getName());
-    static final String PROJNAME = "bookkeeper"; //bookkeeper or storm
+    static final String PROJNAME = "storm"; //bookkeeper or storm
     private static final String DIRECTORY_PATH = "ACUME";
     static int iteration = 0;
 
